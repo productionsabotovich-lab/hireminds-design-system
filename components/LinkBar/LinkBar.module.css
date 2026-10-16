@@ -1,0 +1,7 @@
+.bar {
+  display: flex;
+  align-items: center;
+}
+
+.gap-sm { gap: var(--space-4); }
+.gap-md { gap: var(--space-5); }

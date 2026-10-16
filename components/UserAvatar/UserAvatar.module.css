@@ -1,0 +1,64 @@
+/**
+ * Pattern: data/products/hireminds/design/system/patterns/user-avatar.md
+ */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+  overflow: hidden;
+  /* solid color fallback via CSS var; overridden by .accent */
+  background: var(--av-color, var(--ink));
+}
+
+/* Gradient accent — current user */
+.accent {
+  background: linear-gradient(135deg, var(--accent), oklch(0.55 0.18 200));
+}
+
+/* Sizes */
+.size-xs {
+  width: 18px;
+  height: 18px;
+  font-size: 9.5px;
+}
+
+.size-sm {
+  width: 24px;
+  height: 24px;
+  font-size: 10.5px;
+}
+
+.size-md {
+  width: 28px;
+  height: 28px;
+  font-size: 11.5px;
+}
+
+.size-lg {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+/* Shapes */
+.shape-circle {
+  border-radius: 999px;
+}
+
+.shape-square {
+  border-radius: var(--r-sm, 4px);
+}
+
+/* Image inside avatar */
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}

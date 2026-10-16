@@ -1,0 +1,57 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Hireminds</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; }
+  .ink { fill: var(--ink); }
+  .acc { fill: var(--accent); }
+  .soft { fill: var(--accent-soft); }
+  .frost { fill: var(--line-2); }
+  .halo { fill: var(--accent-soft); }
+  .blk { rx: var(--r-lg); }
+  .sat { rx: var(--r-md); }
+  .words { position: absolute; left: var(--space-8); bottom: var(--space-8); max-width: 440px; }
+  .name { margin: 0; font-family: var(--font-display); font-size: 80px; line-height: .92; font-weight: 600; letter-spacing: -0.038em; color: var(--ink); }
+  .tag { margin: var(--space-3) 0 0 2px; font-size: 13.5px; line-height: 20px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 480 288" width="480" height="288">
+      <!--
+        blocks      ink 240×272 slab bled off the top and right (the graphite the brand is known by) · accent-soft 112×160 (the tint) · line-2 80×64 (frost relief) · accent 80×80 once (the one green) — ≈31% of 960×288
+        arrangement one tall ink slab with three satellites to its left, bottoms on one line space-8 above the edge, space-4 gutters
+        pattern     dot grid, from "precise, technical, mono, a 4px grid" and "green strictly as a point": 42 Dot-xs (3px) dots in line-2 at a space-4 pitch on the slab, one of them accent with an accent-soft halo like the status Dot
+        scales      sides in space-4 multiples; gutters space-4; pitch space-4; slab and tint corners r-lg, satellites r-md, dots 999px
+      -->
+      <rect class="soft blk" x="32" y="96" width="112" height="160" rx="8"/>
+      <rect class="frost sat" x="160" y="96" width="80" height="64" rx="6"/>
+      <rect class="acc sat" x="160" y="176" width="80" height="80" rx="6"/>
+      <rect class="ink blk" x="256" y="-16" width="240" height="272" rx="8"/>
+      <g class="frost">
+        <circle cx="288" cy="160" r="1.5"/><circle cx="304" cy="160" r="1.5"/><circle cx="320" cy="160" r="1.5"/><circle cx="336" cy="160" r="1.5"/><circle cx="352" cy="160" r="1.5"/><circle cx="368" cy="160" r="1.5"/><circle cx="384" cy="160" r="1.5"/>
+        <circle cx="288" cy="176" r="1.5"/><circle cx="304" cy="176" r="1.5"/><circle cx="320" cy="176" r="1.5"/><circle cx="336" cy="176" r="1.5"/><circle cx="352" cy="176" r="1.5"/><circle cx="368" cy="176" r="1.5"/><circle cx="384" cy="176" r="1.5"/>
+        <circle cx="288" cy="192" r="1.5"/><circle cx="304" cy="192" r="1.5"/><circle cx="320" cy="192" r="1.5"/><circle cx="336" cy="192" r="1.5"/><circle cx="352" cy="192" r="1.5"/><circle cx="368" cy="192" r="1.5"/><circle cx="384" cy="192" r="1.5"/>
+        <circle cx="288" cy="208" r="1.5"/><circle cx="304" cy="208" r="1.5"/><circle cx="320" cy="208" r="1.5"/><circle cx="336" cy="208" r="1.5"/><circle cx="368" cy="208" r="1.5"/><circle cx="384" cy="208" r="1.5"/>
+        <circle cx="288" cy="224" r="1.5"/><circle cx="304" cy="224" r="1.5"/><circle cx="320" cy="224" r="1.5"/><circle cx="336" cy="224" r="1.5"/><circle cx="352" cy="224" r="1.5"/><circle cx="368" cy="224" r="1.5"/><circle cx="384" cy="224" r="1.5"/>
+        <circle cx="288" cy="240" r="1.5"/><circle cx="304" cy="240" r="1.5"/><circle cx="320" cy="240" r="1.5"/><circle cx="336" cy="240" r="1.5"/><circle cx="352" cy="240" r="1.5"/><circle cx="368" cy="240" r="1.5"/><circle cx="384" cy="240" r="1.5"/>
+      </g>
+      <circle class="halo" cx="352" cy="208" r="6"/>
+      <circle class="acc" cx="352" cy="208" r="3"/>
+    </svg>
+  </div>
+  <div class="words">
+    <h1 class="name">Hireminds</h1>
+    <p class="tag">Графит, моно-метки и зелёный акцент — строго точечно.</p>
+  </div>
+</div>
+</body>
+</html>

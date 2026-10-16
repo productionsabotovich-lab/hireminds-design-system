@@ -1,0 +1,33 @@
+.foot {
+  display: flex;
+  align-items: center;
+  padding-top: var(--space-7);
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.center {
+  justify-content: center;
+  gap: var(--space-5);
+}
+
+.inline {
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.inlineLink {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--mute);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.12s;
+}
+
+.inlineLink:hover {
+  color: var(--ink);
+}

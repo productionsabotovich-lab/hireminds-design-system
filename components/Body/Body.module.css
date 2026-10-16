@@ -1,0 +1,20 @@
+.body {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  margin: 0;
+}
+
+.base {
+  font-size: 13.5px;
+  line-height: 1.48;
+}
+
+.small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.tone-mute  { color: var(--mute); }
+.tone-ink   { color: var(--ink); }
+.tone-ink-2 { color: var(--ink-2); }
+.tone-ink-3 { color: var(--ink-3); }

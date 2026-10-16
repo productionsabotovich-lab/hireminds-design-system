@@ -1,0 +1,24 @@
+.lead {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  margin: 0;
+  max-width: 480px;
+}
+
+/* size=page (default) */
+.page {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* size=hero */
+.hero {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* tone */
+.tone-mute { color: var(--mute); }
+.tone-ink-3 { color: var(--ink-3); }
+
+.center { text-align: center; }

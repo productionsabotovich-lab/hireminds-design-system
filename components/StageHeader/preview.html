@@ -1,0 +1,23 @@
+<!-- @dsCard group="Typography" height=290 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>StageHeader — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div',{style:{maxWidth:480}},
+    h(H.StageHeader,{kicker:'Hireminds · S2',heading:h(F,null,'Команда, которая ',h('em',null,'доводит'),' до конца'),lead:'Агенты берут задачу, пишут код, проходят ревью и присылают отчёт.'}))
+  );
+</script>
+</body>
+</html>

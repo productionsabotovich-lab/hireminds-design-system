@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "types": []
+  },
+  "include": ["components/**/*.ts", "components/**/*.tsx", "types/**/*.d.ts"],
+  "exclude": ["components/**/*.stories.tsx"]
+}

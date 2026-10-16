@@ -1,0 +1,92 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+}
+
+.fieldWrap {
+  position: relative;
+}
+
+.field {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-3);
+  background: var(--surface);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+  box-sizing: border-box;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.field::placeholder {
+  color: var(--dim);
+}
+
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent-soft);
+}
+
+.field:disabled {
+  background: var(--bg-2);
+  color: var(--mute);
+  cursor: not-allowed;
+}
+
+.fieldError {
+  border-color: var(--danger);
+}
+
+.fieldError:focus {
+  box-shadow: 0 0 0 2.5px var(--danger-soft);
+}
+
+/* room for eye toggle */
+.fieldWrap:has(.eye) .field {
+  padding-right: 36px;
+}
+
+.eye {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  color: var(--dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.eye:hover {
+  color: var(--ink-2);
+}
+
+.error {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--danger);
+  margin: 0;
+  line-height: 1.35;
+}

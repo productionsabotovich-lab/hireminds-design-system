@@ -1,0 +1,39 @@
+.dot {
+  display: inline-block;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* sizes */
+.size-xs { width: 3px;  height: 3px; }
+.size-sm { width: 5px;  height: 5px; }
+.size-md { width: 6px;  height: 6px; }
+
+/* tones */
+.tone-accent  { background: var(--accent); }
+.tone-warn    { background: var(--warn); }
+.tone-danger  { background: var(--danger); }
+.tone-dim     { background: var(--dim); }
+.tone-ink     { background: var(--ink); }
+.tone-mute    { background: var(--mute); }
+
+/* variants — halo */
+.variant-status.tone-accent, .variant-kicker.tone-accent {
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.variant-status.tone-warn {
+  box-shadow: 0 0 0 3px var(--warn-soft);
+}
+.variant-status.tone-danger {
+  box-shadow: 0 0 0 3px var(--danger-soft);
+}
+
+/* pulse */
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse {
+  animation: dotPulse 2s ease-in-out infinite;
+}

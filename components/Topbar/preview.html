@@ -1,0 +1,25 @@
+<!-- @dsCard group="Layout" height=140 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Topbar — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div',{className:'pv-col',style:{gap:12}},
+    h('div',{style:{border:'1px solid var(--line)',borderRadius:'var(--r-lg)',overflow:'hidden'}},
+      h(H.Topbar,{left:h(H.Brand,{onClick:function(){}}),center:h(H.Crumb,{leadingChevron:true,items:[{label:'Settings',href:'#'},{label:'acme-engineering',mono:true},{label:'General',active:true}]}),right:h(H.UserAvatar,{name:'Антон Саботович',size:'md',shape:'circle'})})),
+    h(H.Topbar,{variant:'auth',left:h(H.Brand,{onClick:function(){}}),right:h(H.TopbarStatus,{label:'Ждём подтверждения'})}))
+  );
+</script>
+</body>
+</html>

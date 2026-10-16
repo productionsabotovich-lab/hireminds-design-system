@@ -1,0 +1,25 @@
+<!-- @dsCard group="Forms" height=250 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Input — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div',{className:'pv-col',style:{width:320}},
+    h(H.Input,{id:'email',type:'email',label:'Email',placeholder:'you@company.com'}),
+    h(H.Input,{id:'pass',type:'password',label:'Пароль',defaultValue:'graphite',error:'Минимум 8 символов'}),
+    h(H.Input,{id:'key',label:'Ключ Anthropic',font:'mono',defaultValue:'sk-ant-api03-••••••••3f2a',disabled:true}))
+  );
+</script>
+</body>
+</html>

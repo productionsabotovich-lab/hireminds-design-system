@@ -1,0 +1,27 @@
+<!-- @dsCard group="Feedback" height=64 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Dot — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div',{className:'pv-row',style:{gap:18}},
+    h(H.Dot,{variant:'status',tone:'accent',size:'md'}),
+    h(H.Dot,{variant:'status',tone:'warn',size:'md'}),
+    h(H.Dot,{variant:'status',tone:'danger',size:'md'}),
+    h(H.Dot,{variant:'presence',tone:'accent',size:'sm',pulse:true}),
+    h('span',{className:'pv-row',style:{gap:6,color:'var(--mute)',fontSize:12}},'Анна',h(H.Dot,{}),'Senior dev',h(H.Dot,{}),'online'))
+  );
+</script>
+</body>
+</html>

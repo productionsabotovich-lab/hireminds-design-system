@@ -1,0 +1,38 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.auth {
+  border-bottom: none;
+  background: transparent;
+  padding: 18px 32px;
+  height: auto;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}

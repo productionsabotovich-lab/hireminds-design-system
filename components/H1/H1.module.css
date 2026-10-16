@@ -1,0 +1,36 @@
+.h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.h1 em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+
+/* size=display (default): 28-32px auth forms */
+.display {
+  font-size: 30px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+/* size=hero: 38-46px aside stage */
+.hero {
+  font-size: 42px;
+  letter-spacing: -0.038em;
+  line-height: 1.02;
+}
+
+/* size=section: 22-26px settings, dashboard */
+.section {
+  font-size: 24px;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+}
+
+.center {
+  text-align: center;
+}

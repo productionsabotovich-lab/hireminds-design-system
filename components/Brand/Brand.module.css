@@ -1,0 +1,43 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 9px; /* no token for 9px — exact spec value */
+  text-decoration: none;
+  cursor: default;
+}
+
+.wrapClickable {
+  cursor: pointer;
+  border-radius: var(--r-md);
+  padding: 3px;
+  margin: -3px;
+  transition: background 120ms;
+}
+
+.wrapClickable:hover {
+  background: var(--bg-2);
+}
+
+.mark {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-md);
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}

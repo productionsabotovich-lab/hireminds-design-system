@@ -1,0 +1,94 @@
+/**
+ * Pattern: data/products/hireminds/design/system/patterns/terminal-forecast.md
+ * Mockup: e1-byok.html — секция «ЧТО ПРОИЗОЙДЁТ ПОСЛЕ»
+ *
+ * Светлый surface, monospace, зелёная точка-индикатор, timeline arrows.
+ */
+
+.root {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--sh-1);
+  overflow: hidden;
+}
+
+.hd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  flex-shrink: 0;
+}
+
+.ttl { color: var(--mute); }
+
+.sub {
+  margin-left: auto;
+  color: var(--dim);
+}
+
+.body {
+  padding: 12px 14px;
+  background: var(--inset);
+  border-radius: 0 0 6px 6px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.arrow {
+  color: var(--mute);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .03em;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.val {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  margin-left: auto;
+  text-align: right;
+}
+
+.valAcc {
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-left: auto;
+  text-align: right;
+}
+
+.footerRow {
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.footerLabel {
+  color: var(--mute);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}

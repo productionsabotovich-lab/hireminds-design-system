@@ -1,0 +1,23 @@
+.caption {
+  display: inline;
+  font-weight: 400;
+  margin: 0;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+}
+
+.font-ui {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  letter-spacing: 0;
+}
+
+.upper { text-transform: uppercase; }
+
+.tone-dim   { color: var(--dim); }
+.tone-mute  { color: var(--mute); }
+.tone-ink-3 { color: var(--ink-3); }

@@ -1,0 +1,26 @@
+<!-- @dsCard group="Navigation" height=190 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>NavLink — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement, F = React.Fragment;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('nav',{className:'pv-col',style:{gap:2,width:220}},
+    h(H.NavLink,{href:'#',active:true,icon:h('svg',{width:16,height:16,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round'},h('rect',{x:3,y:3,width:7,height:7}),h('rect',{x:14,y:3,width:7,height:7}),h('rect',{x:14,y:14,width:7,height:7}),h('rect',{x:3,y:14,width:7,height:7}))},'Dashboard'),
+    h(H.NavLink,{href:'#',icon:h('svg',{width:16,height:16,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round'},h('path',{d:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'})),badge:{kind:'count',value:'3'}},'Чаты'),
+    h(H.NavLink,{href:'#',icon:h('svg',{width:16,height:16,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7,strokeLinecap:'round',strokeLinejoin:'round'},h('circle',{cx:9,cy:8,r:4}),h('path',{d:'M2 21a7 7 0 0 1 14 0'}),h('path',{d:'M16 4a4 4 0 0 1 0 8'}),h('path',{d:'M22 21a7 7 0 0 0-4-6.3'})),badge:{kind:'soon'}},'AI-команда'),
+    h(H.NavLink,{href:'#',tone:'danger'},'Danger zone'))
+  );
+</script>
+</body>
+</html>

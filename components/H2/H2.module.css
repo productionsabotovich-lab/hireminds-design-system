@@ -1,0 +1,25 @@
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.h2 em {
+  font-style: normal;
+  color: var(--accent-ink);
+}
+
+/* size=section (default): card-header, settings section */
+.section {
+  font-size: 15px;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+/* size=hero: empty-dashboard hero, stage aside */
+.hero {
+  font-size: 38px;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}

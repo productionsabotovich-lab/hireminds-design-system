@@ -1,0 +1,40 @@
+.plate {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  border: 1px solid transparent;
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* variants */
+.success {
+  background: var(--accent-soft);
+  border-color: oklch(0.84 0.1 150);
+  color: var(--accent-ink);
+}
+
+.warning {
+  background: var(--warn-soft);
+  border-color: oklch(0.88 0.08 65);
+  color: var(--warn-ink);
+}
+
+.error {
+  background: var(--danger-soft);
+  border-color: oklch(0.88 0.08 25);
+  color: var(--danger-ink);
+}
+
+.info {
+  background: var(--bg-2);
+  border-color: var(--line);
+  color: var(--ink-3);
+}
