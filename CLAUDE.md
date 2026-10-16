@@ -20,6 +20,22 @@
 - **preview.html:** первая строка `<!-- @dsCard group="…" height=N -->`, затем документ, который рендерит
   `window.Hireminds.<Comp>` через `React.createElement` с реальными текстами продукта.
 
+## Заявки из Linear
+
+Заявки на доработку приходят задачами в Linear: команда **HIR** (Hireminds), метка **`design-system`**.
+Их заводят Антон, Claude в чате/Claude Design и сессия платформы `hireminds-pdlc-fd`
+(репо `productionsabotovich-lab/hireminds-platform`, webapp подключает эту систему зависимостью).
+
+- **Где смотреть:** в начале сессии и по просьбе — задачи HIR с меткой `design-system` в статусах `Backlog` и `Todo`.
+- **Взял в работу:** статус `In Progress`, комментарий «взял» и короткий план (какие файлы, какие компоненты).
+- **Непонятно, что делать** или нет критерия «готово» — вопрос комментарием, статус не меняй, не угадывай.
+- **Сделал:** `npm run build && npm run typecheck && npm run check`, покажи Антону превью/скриншоты и переведи в `In Review`.
+- **Антон одобрил:** коммит, push в `main`, затем `Done` с комментарием: ссылка на коммит
+  `https://github.com/productionsabotovich-lab/hireminds-design-system/commit/<sha>`, что поменялось
+  (компоненты, пропсы, токены) и что обновить в платформе.
+- **Не про дизайн-систему** — комментарий, статус не трогай. Дубль — `Duplicate` со ссылкой на оригинал.
+- После `Done`, если сессия `hireminds-pdlc-fd` запущена, коротко напиши ей (SendMessage), что вышло и какой коммит.
+
 ## Проверка перед тем как сказать «готово»
 
 ```bash
@@ -30,7 +46,8 @@ npm run build && npm run typecheck && npm run check
 
 ## Публикация
 
-Ничего не публикуй (GitHub, витрина-артефакт, Claude Design) без явного «да» от человека.
+Ничего не публикуй (GitHub, витрина-артефакт, Claude Design) без явного «да» от человека;
+одобрение задачи из Linear Антоном (см. «Заявки из Linear») и есть такое «да» для её коммита и push.
 Витрина: `npm run pack:artifact`, затем публикация файлов `out/artifact/project/` в артефакт
 https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx — индекс `project/design-system.json` читается и
 обновляется последним. Claude Design — через `/design-sync`, который запускает человек.
