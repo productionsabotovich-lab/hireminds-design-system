@@ -14,7 +14,7 @@ export interface SwitcherProps {
   tabs: SwitcherTab[];
   activeId: string;
   onSelect: (id: string) => void;
-  className?: string;
+  className?: string | undefined;
 }
 
 /**

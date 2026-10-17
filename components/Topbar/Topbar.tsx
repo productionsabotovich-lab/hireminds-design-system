@@ -1,24 +1,24 @@
 /**
  * Pattern: data/products/hireminds/design/system/patterns/topbar.md
  */
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Topbar.module.css";
 
 /** Topbar — horizontal header layout with left / center / right slots */
 export interface TopbarProps {
   /** Left slot — typically Brand or back button */
-  left?: ReactNode;
+  left?: ReactNode | undefined;
   /** Center slot — page title or breadcrumbs */
-  center?: ReactNode;
+  center?: ReactNode | undefined;
   /** Right slot — account menu, actions */
-  right?: ReactNode;
+  right?: ReactNode | undefined;
   /**
    * "app" (default) — with bottom border, used in dashboard
    * "auth" — no border, transparent bg, used on auth pages
    */
-  variant?: "app" | "auth";
+  variant?: "app" | "auth" | undefined;
   /** Extra CSS classes */
-  className?: string;
+  className?: string | undefined;
 }
 
 /**

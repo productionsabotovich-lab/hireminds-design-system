@@ -9,17 +9,17 @@ export interface UserAvatarProps {
   /** Полное имя — из него вычисляются инициалы */
   name: string;
   /** URL аватарки (если есть — рендерится вместо инициалов) */
-  image?: string | null;
+  image?: string | null | undefined;
   /** Размер */
-  size?: "xs" | "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg" | undefined;
   /** Форма */
-  shape?: "circle" | "square";
+  shape?: "circle" | "square" | undefined;
   /**
    * Цвет фона:
    * - 'accent' — gradient (для текущего пользователя)
    * - строка HEX или CSS-переменная — solid цвет
    */
-  color?: "accent" | string;
+  color?: "accent" | string | undefined;
 }
 
 function getInitials(name: string): string {

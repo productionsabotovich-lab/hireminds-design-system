@@ -11,14 +11,14 @@ import s from "./TerminalForecast.module.css";
 export interface TerminalForecastItem {
   text: string;
   /** Выделить зелёным — важный шаг */
-  accent?: boolean;
+  accent?: boolean | undefined;
 }
 
 export interface TerminalForecastProps {
   /** Заголовок блока, например «ЧТО ПРОИЗОЙДЁТ» */
   title: string;
   /** Метка справа в заголовке, например «ПОСЛЕ» */
-  subtitle?: string;
+  subtitle?: string | undefined;
   items: TerminalForecastItem[];
   footer?: {
     label: string;

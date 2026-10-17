@@ -12,7 +12,7 @@ interface PasswordChecklistProps {
   hasDigit: boolean;
   hasUpper: boolean;
   notLeaked: boolean;
-  checkingLeak?: boolean;
+  checkingLeak?: boolean | undefined;
 }
 
 export function PasswordChecklist({ hasLength, hasDigit, hasUpper, notLeaked, checkingLeak }: PasswordChecklistProps) {
@@ -32,7 +32,7 @@ function CheckItem({
   children,
 }: {
   ok: boolean;
-  loading?: boolean;
+  loading?: boolean | undefined;
   children: React.ReactNode;
 }) {
   return (

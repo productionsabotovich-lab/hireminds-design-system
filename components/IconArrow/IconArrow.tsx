@@ -3,14 +3,14 @@ import s from "./IconArrow.module.css";
 
 export interface IconArrowProps {
   /** Direction */
-  direction?: "right" | "left" | "up" | "down";
+  direction?: "right" | "left" | "up" | "down" | undefined;
   /** Type */
-  variant?: "arrow" | "chevron" | "send";
+  variant?: "arrow" | "chevron" | "send" | undefined;
   /** Size in px */
-  size?: 11 | 12 | 13 | 14 | 16 | 18;
+  size?: 11 | 12 | 13 | 14 | 16 | 18 | undefined;
 }
 
-const PATHS: Record<string, Record<string, string>> = {
+const PATHS: Record<NonNullable<IconArrowProps["variant"]>, Record<NonNullable<IconArrowProps["direction"]>, string>> = {
   arrow: {
     right: "M5 12h14m-6-6l6 6-6 6",
     left: "M19 12H5m6-6l-6 6 6 6",
@@ -36,7 +36,7 @@ export function IconArrow({
   variant = "arrow",
   size = 14,
 }: IconArrowProps) {
-  const path = PATHS[variant]?.[direction] ?? PATHS.arrow.right;
+  const path = PATHS[variant][direction];
   const strokeWidth = variant === "chevron" ? 1.6 : 2;
 
   return (

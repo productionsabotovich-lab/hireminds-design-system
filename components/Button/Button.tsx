@@ -3,7 +3,7 @@
  * Pattern: data/products/hireminds/design/system/patterns/button.md
  */
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Button.module.css";
 
 /** Button — primary action, secondary, ghost, danger */
@@ -13,17 +13,17 @@ export type ButtonSize = "sm" | "md" | "lg";
 export interface ButtonProps {
   /** Button content */
   children: ReactNode;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
+  variant?: ButtonVariant | undefined;
+  size?: ButtonSize | undefined;
   /** Disabled state */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
   /** Show spinner instead of children */
-  loading?: boolean;
+  loading?: boolean | undefined;
   /** icon rendered before children */
-  icon?: ReactNode;
-  type?: "button" | "submit" | "reset";
-  onClick?: () => void;
-  className?: string;
+  icon?: ReactNode | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
+  onClick?: (() => void) | undefined;
+  className?: string | undefined;
 }
 
 /**

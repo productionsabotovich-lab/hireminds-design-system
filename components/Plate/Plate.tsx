@@ -9,11 +9,11 @@ import styles from "./Plate.module.css";
 export type PlateVariant = "success" | "warning" | "error" | "info";
 
 export interface PlateProps {
-  variant?: PlateVariant;
+  variant?: PlateVariant | undefined;
   /** Main text content */
   children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
 }
 
 const variantIcons: Record<PlateVariant, React.ReactNode> = {

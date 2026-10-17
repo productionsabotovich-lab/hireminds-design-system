@@ -11,10 +11,10 @@ import styles from "./PasswordStrengthMeter.module.css";
 
 export interface PasswordStrengthMeterProps {
   password: string;
-  checkLeaked?: boolean;
-  onLeakedChange?: (leaked: boolean) => void;
-  onScoreChange?: (score: number) => void;
-  className?: string;
+  checkLeaked?: boolean | undefined;
+  onLeakedChange?: ((leaked: boolean) => void) | undefined;
+  onScoreChange?: ((score: number) => void) | undefined;
+  className?: string | undefined;
 }
 
 /**

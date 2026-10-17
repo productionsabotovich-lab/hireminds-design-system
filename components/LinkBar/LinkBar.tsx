@@ -14,12 +14,12 @@ export interface LinkBarProps {
    * 'plain'  → just gap (default)
    * 'dotted' → separator Dot between each
    */
-  separator?: "plain" | "dotted";
+  separator?: "plain" | "dotted" | undefined;
   /**
    * 'sm' → space-4 (16px), default
    * 'md' → space-5 (20px)
    */
-  gap?: "sm" | "md";
+  gap?: "sm" | "md" | undefined;
 }
 
 export function LinkBar({ links, separator = "plain", gap = "sm" }: LinkBarProps) {

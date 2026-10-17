@@ -7,7 +7,7 @@ export interface H3Props {
    * 'card'   → 15px (checklist-card heading, settings sub-section) — default
    * 'inline' → 13-14px (timeline step, trust title, danger-row title)
    */
-  size?: "card" | "inline";
+  size?: "card" | "inline" | undefined;
   children: ReactNode;
 }
 

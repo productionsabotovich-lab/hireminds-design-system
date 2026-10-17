@@ -3,11 +3,11 @@ import s from "./BrandSignature.module.css";
 
 export interface BrandSignatureProps {
   /** Additional segment after HM (e.g., "auth.v2", "S2") */
-  version?: string;
+  version?: string | undefined;
   /** Year */
-  year?: number;
+  year?: number | undefined;
   /** Custom segments — overrides default HM · {version} · {year} */
-  segments?: string[];
+  segments?: string[] | undefined;
 }
 
 export function BrandSignature({
