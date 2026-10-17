@@ -1,0 +1,85 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* sizes: 20px вместо 17px из макета — читаемость 11.5px в таблицах */
+.sm {
+  height: 20px;
+  padding: 0 var(--space-2);
+  font-size: 11.5px;
+}
+.md {
+  height: 24px;
+  padding: 0 10px; /* макет: 0 9-10px */
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  gap: 6px; /* макет */
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: currentColor;
+}
+.md .dot {
+  width: 6px;
+  height: 6px;
+}
+
+/* tones: текст — -ink своей семьи на -soft (AA) */
+.accent {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.accent .dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 2px oklch(0.78 0.16 150 / 0.35);
+}
+
+.warn {
+  background: var(--warn-soft);
+  color: var(--warn-ink);
+}
+.warn .dot {
+  background: var(--warn);
+  box-shadow: 0 0 0 2px oklch(0.85 0.12 65 / 0.45);
+}
+
+.danger {
+  background: var(--danger-soft);
+  color: var(--danger-ink);
+}
+.danger .dot {
+  background: var(--danger);
+  box-shadow: 0 0 0 2px oklch(0.8 0.12 25 / 0.35);
+}
+
+.dim {
+  background: var(--inset);
+  color: var(--mute);
+}
+.dim .dot {
+  background: var(--dim);
+}
+
+.pulse {
+  animation: pillPulse 2s ease-in-out infinite;
+}
+@keyframes pillPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+}

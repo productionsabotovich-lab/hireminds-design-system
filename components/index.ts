@@ -102,3 +102,21 @@ export type { PageFooterProps } from "./PageFooter";
 
 export { StepIndicator } from "./StepIndicator";
 export type { StepIndicatorProps } from "./StepIndicator";
+
+export { Pill } from "./Pill";
+export type { PillProps, PillTone } from "./Pill";
+
+export { Table } from "./Table";
+export type { TableProps, TableColumn, TableRow } from "./Table";
+
+export { EmptyState } from "./EmptyState";
+export type { EmptyStateProps } from "./EmptyState";
+
+export { Select } from "./Select";
+export type { SelectProps, SelectOption } from "./Select";
+
+export { DescriptionList } from "./DescriptionList";
+export type { DescriptionListProps, DescriptionItem } from "./DescriptionList";
+
+export { ConfirmDialog } from "./ConfirmDialog";
+export type { ConfirmDialogProps } from "./ConfirmDialog";

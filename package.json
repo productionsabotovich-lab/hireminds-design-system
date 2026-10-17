@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "description": "Hireminds design system «B2 · Frost Graphite»: tokens, base styles and UI components.",
+  "exports": {
+    "./components": "./components/index.ts",
+    "./tokens/tokens.css": "./tokens/tokens.css",
+    "./styles/base.css": "./styles/base.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "components",
+    "tokens",
+    "styles",
+    "fonts"
+  ],
   "scripts": {
     "build:tokens": "node scripts/build-tokens.mjs",
     "build:bundle": "node scripts/build-bundle.mjs",
