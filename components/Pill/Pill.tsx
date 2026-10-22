@@ -4,20 +4,20 @@
  * Status badge: short text on a soft fill of its color family, optional halo dot.
  * Not interactive.
  */
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import s from "./Pill.module.css";
 
 export type PillTone = "accent" | "warn" | "danger" | "dim";
 
 export interface PillProps {
   /** Color family: accent — идёт/успех, warn — ждёт человека, danger — блокер, dim — нейтральное/завершённое */
-  tone?: PillTone;
+  tone?: PillTone | undefined;
   /** sm — 20px, inline in tables; md — 24px, mono uppercase near headings */
-  size?: "sm" | "md";
+  size?: "sm" | "md" | undefined;
   /** Halo dot before text */
-  dot?: boolean;
+  dot?: boolean | undefined;
   /** Pulse the dot (live process) */
-  pulse?: boolean;
+  pulse?: boolean | undefined;
   children: ReactNode;
 }
 

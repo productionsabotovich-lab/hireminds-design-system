@@ -8,13 +8,13 @@ export interface DotProps {
    * 'kicker'    → accent with halo, used as ::before in Kicker
    * 'presence'  → agent online/offline indicator
    */
-  variant?: "status" | "separator" | "kicker" | "presence";
+  variant?: "status" | "separator" | "kicker" | "presence" | undefined;
   /** Dot color */
-  tone?: "accent" | "warn" | "danger" | "dim" | "ink" | "mute";
+  tone?: "accent" | "warn" | "danger" | "dim" | "ink" | "mute" | undefined;
   /** Size */
-  size?: "xs" | "sm" | "md";
+  size?: "xs" | "sm" | "md" | undefined;
   /** Pulse animation (for live indicator) */
-  pulse?: boolean;
+  pulse?: boolean | undefined;
 }
 
 export function Dot({

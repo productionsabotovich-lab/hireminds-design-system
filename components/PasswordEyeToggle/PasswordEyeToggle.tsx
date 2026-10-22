@@ -10,7 +10,7 @@ import s from "./PasswordEyeToggle.module.css";
 interface PasswordEyeToggleProps {
   visible: boolean;
   onToggle: () => void;
-  className?: string;
+  className?: string | undefined;
 }
 
 export function PasswordEyeToggle({ visible, onToggle, className }: PasswordEyeToggleProps) {

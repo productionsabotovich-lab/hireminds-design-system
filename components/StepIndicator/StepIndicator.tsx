@@ -8,9 +8,9 @@ export interface StepIndicatorProps {
    * 'short'   → "step 1 / 3" (mono, for form-top) — default
    * 'verbose' → "Шаг 1 из 3" (mono for Kicker / page-kicker)
    */
-  format?: "short" | "verbose";
+  format?: "short" | "verbose" | undefined;
   /** Optional contextual label appended after step */
-  scope?: string;
+  scope?: string | undefined;
 }
 
 export function StepIndicator({

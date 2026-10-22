@@ -4,13 +4,13 @@ import { Dot } from "../Dot";
 import s from "./FormHeader.module.css";
 
 export interface FormHeaderProps {
-  kicker?: string;
-  withDot?: boolean;
+  kicker?: string | undefined;
+  withDot?: boolean | undefined;
   /** 'accent' (green, default) or 'mute' (gray) */
-  kickerTone?: "accent" | "mute";
+  kickerTone?: "accent" | "mute" | undefined;
   heading: ReactNode;
-  lead?: ReactNode;
-  headingSize?: "sm" | "md" | "lg" | "xl";
+  lead?: ReactNode | undefined;
+  headingSize?: "sm" | "md" | "lg" | "xl" | undefined;
 }
 
 export function FormHeader({ kicker, withDot = true, kickerTone = "accent", heading, lead, headingSize = "md" }: FormHeaderProps) {

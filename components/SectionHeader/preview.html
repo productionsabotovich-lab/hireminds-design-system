@@ -1,0 +1,23 @@
+<!-- @dsCard group="Layout" height=110 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>SectionHeader — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(H.Stack,{gap:5},
+      h(H.SectionHeader,{count:15},'События'),
+      h(H.SectionHeader,null,'Фазы'),
+      h(H.SectionHeader,{count:5,action:h(H.ExternalLink,{href:'#',variant:'action'},'Открыть в Web UI Temporal')},'Запуски'))
+  );
+</script>
+</body>
+</html>

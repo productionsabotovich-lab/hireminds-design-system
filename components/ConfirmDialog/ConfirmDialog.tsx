@@ -3,7 +3,8 @@
  * Modal confirmation for a destructive or irreversible action.
  * Focus starts on the safe button; Escape and backdrop click cancel.
  */
-import { ReactNode, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import { Button } from "../Button";
 import s from "./ConfirmDialog.module.css";
 
@@ -12,15 +13,15 @@ export interface ConfirmDialogProps {
   /** Question: «Отменить запуск?» */
   title: string;
   /** Consequence in one or two sentences */
-  children?: ReactNode;
+  children?: ReactNode | undefined;
   /** Action verb: «Отменить» */
   confirmLabel: string;
   /** Safe way out */
-  cancelLabel?: string;
+  cancelLabel?: string | undefined;
   /** danger — red confirm button for irreversible actions */
-  tone?: "default" | "danger";
+  tone?: "default" | "danger" | undefined;
   /** Request in flight: confirm shows a spinner, both buttons disabled */
-  loading?: boolean;
+  loading?: boolean | undefined;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -46,8 +47,8 @@ export function ConfirmDialog({
       if (e.key === "Escape" && !loading) onCancel();
       if (e.key === "Tab" && panel.current) {
         const btns = Array.from(panel.current.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"));
-        if (!btns.length) return;
         const first = btns[0], last = btns[btns.length - 1];
+        if (!first || !last) return;
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }

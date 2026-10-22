@@ -8,7 +8,7 @@ export interface HelpProps {
    * 'error'   — danger-ink (validation message)
    * 'success' — accent-ink (validation OK)
    */
-  tone?: "default" | "error" | "success";
+  tone?: "default" | "error" | "success" | undefined;
   children: ReactNode;
 }
 

@@ -3,17 +3,17 @@
  * Data table: header row in mono caps, rows on surface, optional clickable rows.
  * Columns and rows are plain data — the table is described by JSON.
  */
-import { KeyboardEvent, ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import s from "./Table.module.css";
 
 export interface TableColumn {
   key: string;
   label: string;
-  align?: "left" | "right";
+  align?: "left" | "right" | undefined;
   /** CSS width, e.g. "120px" or "30%" */
-  width?: string;
+  width?: string | undefined;
   /** Geist Mono for keys, durations, numbers */
-  mono?: boolean;
+  mono?: boolean | undefined;
 }
 
 export interface TableRow {
@@ -25,11 +25,11 @@ export interface TableProps {
   columns: TableColumn[];
   rows: TableRow[];
   /** Makes rows clickable (mouse and Enter) */
-  onRowClick?: (id: string) => void;
+  onRowClick?: ((id: string) => void) | undefined;
   /** Accessible name, visually hidden */
-  caption?: string;
+  caption?: string | undefined;
   /** Rows 36px instead of 44px — for tables inside cards */
-  dense?: boolean;
+  dense?: boolean | undefined;
 }
 
 export function Table({ columns, rows, onRowClick, caption, dense = false }: TableProps) {

@@ -4,10 +4,10 @@ import s from "./Body.module.css";
 
 export interface BodyProps {
   /** mute (default), ink, ink-2, ink-3 */
-  tone?: "mute" | "ink" | "ink-2" | "ink-3";
+  tone?: "mute" | "ink" | "ink-2" | "ink-3" | undefined;
   /** 'base' (13-13.5px) / 'small' (12-12.5px) */
-  size?: "base" | "small";
-  className?: string;
+  size?: "base" | "small" | undefined;
+  className?: string | undefined;
   children: ReactNode;
 }
 

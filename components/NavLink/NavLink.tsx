@@ -5,7 +5,7 @@ import s from "./NavLink.module.css";
 
 interface NavLinkBadgeProps {
   kind: "count" | "soon";
-  value?: string;
+  value?: string | undefined;
 }
 
 function NavLinkBadge({ kind, value }: NavLinkBadgeProps) {
@@ -19,16 +19,16 @@ function NavLinkBadge({ kind, value }: NavLinkBadgeProps) {
 export interface NavLinkProps {
   href: string;
   /** Active state */
-  active?: boolean;
+  active?: boolean | undefined;
   /** Icon (24x24, currentColor stroke) */
-  icon?: ReactNode;
+  icon?: ReactNode | undefined;
   /** Badge: count number or soon-tag */
-  badge?: NavLinkBadgeProps;
+  badge?: NavLinkBadgeProps | undefined;
   /**
    * 'default' — standard
    * 'danger'  — Danger zone (var(--danger-ink))
    */
-  tone?: "default" | "danger";
+  tone?: "default" | "danger" | undefined;
   children: ReactNode;
 }
 

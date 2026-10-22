@@ -26,9 +26,9 @@ export type TerminalVariant = "mac" | "log" | "config";
 export interface TerminalBoxProps {
   variant: TerminalVariant;
   /** Только для variant="mac" — текст в title bar */
-  title?: string;
+  title?: string | undefined;
   children: React.ReactNode;
-  className?: string;
+  className?: string | undefined;
 }
 
 export function TerminalBox({
@@ -63,7 +63,7 @@ export function TerminalBox({
 /* ── Sub-components ─────────────────────────────────────────────────────── */
 
 interface TerminalLineProps {
-  timestamp?: React.ReactNode;
+  timestamp?: React.ReactNode | undefined;
   children: React.ReactNode;
 }
 
@@ -106,7 +106,7 @@ export function TerminalLineArr({ timestamp, children }: TerminalLineProps) {
 interface TerminalKVProps {
   label: string;
   children: React.ReactNode;
-  accent?: boolean;
+  accent?: boolean | undefined;
 }
 
 /** Key-value пара для variant="config" */

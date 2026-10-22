@@ -5,14 +5,14 @@ import s from "./BackLink.module.css";
 
 export interface BackLinkProps {
   /** href for <a> */
-  href?: string;
+  href?: string | undefined;
   /** or onClick for <button> (back action in flow) */
-  onClick?: () => void;
+  onClick?: (() => void) | undefined;
   /**
    * 'subtle' → mute color, no border (default)
    * 'button' → ink-2, padding, hover bg (onboarding actions)
    */
-  variant?: "subtle" | "button";
+  variant?: "subtle" | "button" | undefined;
   children: ReactNode;
 }
 

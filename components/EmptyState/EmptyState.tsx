@@ -3,18 +3,18 @@
  *
  * "Nothing here yet" in place of a list or table: dashed frame, title, text, next step.
  */
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import s from "./EmptyState.module.css";
 
 export interface EmptyStateProps {
   /** mini — one line in a sidebar; block — in place of a table or page section */
-  variant?: "mini" | "block";
+  variant?: "mini" | "block" | undefined;
   /** Short title, block only: «Запусков нет» */
-  title?: string;
+  title?: string | undefined;
   /** What to do next */
   children: ReactNode;
   /** Next step: Button, ExternalLink or a command, block only */
-  action?: ReactNode;
+  action?: ReactNode | undefined;
 }
 
 export function EmptyState({ variant = "block", title, children, action }: EmptyStateProps) {

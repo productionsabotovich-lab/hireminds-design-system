@@ -8,12 +8,12 @@ export interface StageHeaderProps {
   /** Main heading, supports <em> for accent color */
   heading: ReactNode;
   /** Lead paragraph under heading */
-  lead?: ReactNode;
+  lead?: ReactNode | undefined;
   /**
    * 'aside' → H1 hero 46px (for AsidePanel in SplitLayout) — default
    * 'hero'  → H2 hero 38px (for hero-block in Card)
    */
-  variant?: "aside" | "hero";
+  variant?: "aside" | "hero" | undefined;
 }
 
 export function StageHeader({
