@@ -7,10 +7,10 @@ export interface LeadProps {
    * 'page' → 13.5-14px (under H1 of page) — default
    * 'hero' → 14.5-15px (under H1 in hero / stage)
    */
-  size?: "page" | "hero";
+  size?: "page" | "hero" | undefined;
   /** mute (light) / ink-3 (darker, for centered hero) */
-  tone?: "mute" | "ink-3";
-  align?: "left" | "center";
+  tone?: "mute" | "ink-3" | undefined;
+  align?: "left" | "center" | undefined;
   children: ReactNode;
 }
 

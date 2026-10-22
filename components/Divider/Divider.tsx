@@ -3,15 +3,15 @@ import s from "./Divider.module.css";
 
 export interface DividerProps {
   /** Orientation */
-  orientation?: "horizontal" | "vertical";
+  orientation?: "horizontal" | "vertical" | undefined;
   /**
    * 'subtle' → 1px solid var(--line) (default)
    * 'strong' → 1px solid var(--line-2)
    * 'dashed' → 1px dashed var(--line-2)
    */
-  weight?: "subtle" | "strong" | "dashed";
+  weight?: "subtle" | "strong" | "dashed" | undefined;
   /** Optional center label e.g. "или email" */
-  label?: string;
+  label?: string | undefined;
 }
 
 export function Divider({ orientation = "horizontal", weight = "subtle", label }: DividerProps) {

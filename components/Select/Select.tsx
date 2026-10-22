@@ -11,18 +11,18 @@ export interface SelectOption {
 
 export interface SelectProps {
   id: string;
-  label?: string;
+  label?: string | undefined;
   options: SelectOption[];
-  value?: string;
+  value?: string | undefined;
   /** Shown first and not selectable again: «Выберите проект» */
-  placeholder?: string;
-  disabled?: boolean;
+  placeholder?: string | undefined;
+  disabled?: boolean | undefined;
   /** md — 36px like Input; sm — 28px for toolbars */
-  size?: "sm" | "md";
+  size?: "sm" | "md" | undefined;
   /** Label to the left of the control (toolbars) instead of above */
-  inlineLabel?: boolean;
-  onChange?: (value: string) => void;
-  className?: string;
+  inlineLabel?: boolean | undefined;
+  onChange?: ((value: string) => void) | undefined;
+  className?: string | undefined;
 }
 
 export function Select({

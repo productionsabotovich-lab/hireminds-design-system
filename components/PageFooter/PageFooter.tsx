@@ -6,15 +6,15 @@ import s from "./PageFooter.module.css";
 
 export interface PageFooterProps {
   /** Left part — BrandSignature props or custom node */
-  brand?: { version?: string; year?: number; segments?: string[] };
+  brand?: { version?: string; year?: number; segments?: string[] } | undefined;
   /** Links on the right */
-  links?: LinkBarLink[];
+  links?: LinkBarLink[] | undefined;
   /**
    * 'between' → brand left, links right (default)
    * 'center'  → everything centered in one line
    * 'inline'  → brand + links in one line via separator-dot (stage-foot)
    */
-  layout?: "between" | "center" | "inline";
+  layout?: "between" | "center" | "inline" | undefined;
 }
 
 export function PageFooter({ brand, links = [], layout = "between" }: PageFooterProps) {

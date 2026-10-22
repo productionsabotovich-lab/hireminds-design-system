@@ -7,17 +7,17 @@ import s from "./Crumb.module.css";
 
 export interface CrumbItem {
   label: string;
-  href?: string;
+  href?: string | undefined;
   /** Рендерить mono шрифтом (для slug/code-like сегментов) */
-  mono?: boolean;
+  mono?: boolean | undefined;
   /** Последний (текущий) сегмент — bold ink, не кликабельный */
-  active?: boolean;
+  active?: boolean | undefined;
 }
 
 export interface CrumbProps {
   items: CrumbItem[];
   /** Show chevron before first item (when Brand is to the left) */
-  leadingChevron?: boolean;
+  leadingChevron?: boolean | undefined;
 }
 
 function ChevronIcon() {

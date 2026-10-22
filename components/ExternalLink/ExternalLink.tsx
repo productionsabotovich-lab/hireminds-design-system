@@ -9,9 +9,9 @@ export interface ExternalLinkProps {
    * 'inline' → UI 11.5-12px, ink-2, underline, for legal/in-paragraph
    * 'action' → UI 11.5-13px, accent-ink, with → arrow on right
    */
-  variant?: "footer" | "inline" | "action";
+  variant?: "footer" | "inline" | "action" | undefined;
   /** Open in new tab */
-  newTab?: boolean;
+  newTab?: boolean | undefined;
   children: ReactNode;
 }
 

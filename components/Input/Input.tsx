@@ -10,19 +10,19 @@ import styles from "./Input.module.css";
 /** Input — text, password, email with label, error, eye toggle */
 export interface InputProps {
   id: string;
-  type?: "text" | "password" | "email";
-  label?: string;
-  placeholder?: string;
-  value?: string;
-  defaultValue?: string;
-  error?: string;
-  disabled?: boolean;
-  autoComplete?: string;
+  type?: "text" | "password" | "email" | undefined;
+  label?: string | undefined;
+  placeholder?: string | undefined;
+  value?: string | undefined;
+  defaultValue?: string | undefined;
+  error?: string | undefined;
+  disabled?: boolean | undefined;
+  autoComplete?: string | undefined;
   /** Font family: "ui" (default Inter) or "mono" (Geist Mono) */
-  font?: "ui" | "mono";
-  onChange?: (value: string) => void;
-  onBlur?: () => void;
-  className?: string;
+  font?: "ui" | "mono" | undefined;
+  onChange?: ((value: string) => void) | undefined;
+  onBlur?: (() => void) | undefined;
+  className?: string | undefined;
 }
 
 /**

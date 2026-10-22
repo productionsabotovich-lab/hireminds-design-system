@@ -7,15 +7,15 @@ export interface CaptionProps {
    * 'mono' → Geist Mono, uppercase, tracking 0.06-0.14em — default
    * 'ui'   → Inter, normal case, tracking 0
    */
-  font?: "mono" | "ui";
+  font?: "mono" | "ui" | undefined;
   /**
    * 'dim'   → --dim (lightest, default)
    * 'mute'  → --mute (standard)
    * 'ink-3' → --ink-3 (accented sub-label)
    */
-  tone?: "dim" | "mute" | "ink-3";
+  tone?: "dim" | "mute" | "ink-3" | undefined;
   /** Only for font='mono': force uppercase. Default true */
-  uppercase?: boolean;
+  uppercase?: boolean | undefined;
   children: ReactNode;
 }
 

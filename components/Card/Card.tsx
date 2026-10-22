@@ -1,19 +1,19 @@
 /**
  * Pattern: data/products/hireminds/design/system/patterns/card.md
  */
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Card.module.css";
 
 /** Card — container with optional header, body, footer slots */
 export interface CardProps {
   /** Card header — title string or custom ReactNode */
-  header?: ReactNode;
+  header?: ReactNode | undefined;
   /** Card body content */
   children: ReactNode;
   /** Card footer — actions or meta */
-  footer?: ReactNode;
+  footer?: ReactNode | undefined;
   /** Extra CSS classes on the outer card element */
-  className?: string;
+  className?: string | undefined;
 }
 
 /**

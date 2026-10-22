@@ -8,8 +8,17 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "noEmit": true,
-    "types": []
+    "types": [],
+    "verbatimModuleSyntax": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["components/**/*.ts", "components/**/*.tsx", "types/**/*.d.ts"],
-  "exclude": ["components/**/*.stories.tsx"]
+  "include": [
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "types/**/*.d.ts"
+  ],
+  "exclude": [
+    "components/**/*.stories.tsx"
+  ]
 }

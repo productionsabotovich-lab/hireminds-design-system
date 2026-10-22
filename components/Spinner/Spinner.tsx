@@ -5,11 +5,11 @@ import styles from "./Spinner.module.css";
 /** Spinner — inline loading indicator */
 export interface SpinnerProps {
   /** Diameter in px */
-  size?: number;
+  size?: number | undefined;
   /** CSS color value or variable */
-  color?: string;
+  color?: string | undefined;
   /** aria-label for screen readers */
-  label?: string;
+  label?: string | undefined;
 }
 
 /**

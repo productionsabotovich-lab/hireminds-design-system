@@ -8,8 +8,8 @@ export interface H1Props {
    * 'hero'    → 38-46px (auth stage with large whitespace)
    * 'section' → 22-26px (dashboard h1 / settings page-h)
    */
-  size?: "display" | "hero" | "section";
-  align?: "left" | "center";
+  size?: "display" | "hero" | "section" | undefined;
+  align?: "left" | "center" | undefined;
   children: ReactNode;
 }
 

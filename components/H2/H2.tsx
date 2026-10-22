@@ -7,7 +7,7 @@ export interface H2Props {
    * 'section' → 15-15.5px (card-header, settings section) — default
    * 'hero'    → 38-46px (empty-dashboard hero, stage aside)
    */
-  size?: "section" | "hero";
+  size?: "section" | "hero" | undefined;
   children: ReactNode;
 }
 

@@ -3,19 +3,19 @@
  * Pattern: data/products/hireminds/design/system/patterns/kicker.md
  */
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Kicker.module.css";
 
 /** Kicker — mono uppercase sub-heading, e.g. "RESET PASSWORD · STEP 3 / 3" */
 export interface KickerProps {
   children: ReactNode;
   /** Green check circle before text */
-  withTick?: boolean;
+  withTick?: boolean | undefined;
   /** Green accent dot with halo before text */
-  withDot?: boolean;
+  withDot?: boolean | undefined;
   /** 'accent' (green, default) or 'mute' (gray) */
-  tone?: "accent" | "mute";
-  className?: string;
+  tone?: "accent" | "mute" | undefined;
+  className?: string | undefined;
 }
 
 /**

@@ -5,10 +5,10 @@ import Link from "next/link";
 import styles from "./Brand.module.css";
 
 export interface BrandProps {
-  name?: string;
-  mark?: string;
-  href?: string;
-  onClick?: () => void;
+  name?: string | undefined;
+  mark?: string | undefined;
+  href?: string | undefined;
+  onClick?: (() => void) | undefined;
 }
 
 export function Brand({ name = "Hireminds", mark, href = "/", onClick }: BrandProps) {
