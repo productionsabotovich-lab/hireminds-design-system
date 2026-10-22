@@ -1,0 +1,34 @@
+<!-- @dsCard group="Data" height=230 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Table — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-key { font-family: var(--font-mono); font-size: 12px; color: var(--mute); margin-right: 8px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  function task(k, t) { return h('span', null, h('span',{className:'pv-key'},k), t); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(H.Table,{
+      caption:'Запуски проекта',
+      onRowClick:function(){},
+      columns:[
+        {key:'task',label:'Задача'},
+        {key:'phase',label:'Фаза',width:'80px'},
+        {key:'state',label:'Состояние',width:'170px'},
+        {key:'time',label:'В фазе',align:'right',mono:true,width:'100px'}],
+      rows:[
+        {id:'1',cells:{task:task('HIR-31','Экспорт отчёта в CSV'),phase:'Code',state:h(H.Pill,{tone:'accent',dot:true,pulse:true},'Выполняется'),time:'12 мин'}},
+        {id:'2',cells:{task:task('HIR-28','Роли проекта'),phase:'Review',state:h(H.Pill,{tone:'warn',dot:true},'Ожидает решения'),time:'2 ч 05 мин'}},
+        {id:'3',cells:{task:task('HIR-24','Вход по ссылке'),phase:'Done',state:h(H.Pill,{tone:'dim'},'Завершён'),time:'—'}}]
+    })
+  );
+</script>
+</body>
+</html>

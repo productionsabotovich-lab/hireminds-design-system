@@ -1,0 +1,56 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: rgba(17, 20, 24, 0.32); /* ink с прозрачностью — затемнение под модалкой */
+  animation: fade 120ms ease-out;
+}
+
+.panel {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-3);
+  padding: var(--space-6);
+  animation: pop 160ms ease-out;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.text {
+  margin-top: var(--space-2);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+}
+@keyframes pop {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .backdrop, .panel { animation: none; }
+}
