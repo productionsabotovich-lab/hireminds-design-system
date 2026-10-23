@@ -10,13 +10,20 @@ export interface CodeChipProps {
   newTab?: boolean | undefined;
   /** Подсказка при наведении, например полный путь или смысл значения */
   title?: string | undefined;
+  /** md — 12px, в тексте и строках; sm — 10.5px, в Caption и строках меты */
+  size?: "md" | "sm" | undefined;
 }
 
-export function CodeChip({ children, href, newTab = false, title }: CodeChipProps) {
-  const code = <code className={s.chip}>{children}</code>;
+export function CodeChip({ children, href, newTab = false, title, size = "md" }: CodeChipProps) {
+  const cls = [s.chip, s[size]].join(" ");
   if (!href) {
-    return title ? <span title={title}>{code}</span> : code;
+    return (
+      <code className={cls} title={title}>
+        {children}
+      </code>
+    );
   }
+  const code = <code className={cls}>{children}</code>;
   return (
     <a
       href={href}
