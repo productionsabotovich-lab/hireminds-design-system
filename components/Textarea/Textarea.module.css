@@ -1,0 +1,93 @@
+/* Те же токены, что у Input: подпись, рамка line-3 (3:1), фокус accent с кольцом accent-soft.
+   Зазор подписи и поля 5px и паддинги 8/12px — как у Input (точные значения из макета). */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+}
+
+.req {
+  font-weight: 400;
+  color: var(--mute);
+}
+
+.field {
+  width: 100%;
+  min-height: 76px;
+  padding: var(--space-2) 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-3);
+  background: var(--surface);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+  resize: vertical;
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+  box-sizing: border-box;
+}
+
+.field::placeholder {
+  color: var(--dim);
+}
+
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2.5px var(--accent-soft);
+}
+
+.field:disabled {
+  background: var(--bg-2);
+  color: var(--mute);
+  cursor: not-allowed;
+  resize: none;
+}
+
+.fieldError {
+  border-color: var(--danger);
+}
+
+.fieldError:focus {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2.5px var(--danger-soft);
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.help,
+.error {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+.help {
+  color: var(--mute);
+}
+
+.error {
+  color: var(--danger-ink);
+}
+
+.count {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
