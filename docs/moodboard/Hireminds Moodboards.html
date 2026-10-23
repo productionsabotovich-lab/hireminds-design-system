@@ -1,0 +1,1697 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>Hireminds — UI moodboards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: #0a0a0b;
+  color: #e6e6e6;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.page-hd {
+  padding: 56px 64px 24px;
+  max-width: 1880px;
+  margin: 0 auto;
+}
+.page-hd .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.16em;
+  color: #6e6e75;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.page-hd h1 {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 40px; font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1.02;
+  margin: 0 0 12px 0;
+  color: #fafafa;
+  max-width: 920px;
+}
+.page-hd p {
+  font-size: 15px; line-height: 1.55;
+  color: #95959e;
+  margin: 0; max-width: 800px;
+}
+
+.boards {
+  padding: 24px 64px 96px;
+  max-width: 1880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.boards-hero { padding: 16px 64px 8px; max-width: 1880px; margin: 0 auto; }
+.boards-hero h2 {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 22px; font-weight: 600;
+  letter-spacing: -0.02em; color: #fafafa; margin: 0 0 6px 0;
+}
+.boards-hero p { font-size: 13.5px; color: #95959e; margin: 0; }
+.boards .full { grid-column: 1 / -1; }
+
+/* Board wrapper */
+.board {
+  background: #111114;
+  border: 1px solid #1c1c20;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.board-hd {
+  padding: 22px 28px 20px;
+  border-bottom: 1px solid #1c1c20;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 16px; flex-shrink: 0;
+}
+.board-hd .meta { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.board-hd .mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; letter-spacing: .14em;
+  color: #6e6e75; text-transform: uppercase;
+}
+.board-hd h2 {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 26px; font-weight: 600;
+  letter-spacing: -0.025em; line-height: 1;
+  margin: 0; color: #fafafa;
+}
+.board-hd .verdict {
+  font-size: 12.5px; color: #95959e;
+  max-width: 380px; text-align: right; line-height: 1.45;
+  flex-shrink: 0;
+}
+.board-hd .verdict b { color: #d9d9dd; font-weight: 500; }
+
+.board-body {
+  background: var(--bg, #fff);
+  color: var(--ink, #0a0a0b);
+  padding: 28px;
+  display: grid;
+  gap: 22px;
+  font-family: var(--font-ui, 'Inter'), sans-serif;
+}
+
+/* Shared atoms */
+.tile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--mute);
+  margin-bottom: 10px; display: block;
+}
+
+.swatch-row { display: flex; gap: 0; height: 56px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+.swatch-row > div { flex: 1; display: flex; align-items: flex-end; padding: 6px 8px; }
+.swatch-row > div span { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .04em; color: rgba(0,0,0,.55); }
+.swatch-row > div.dark span { color: rgba(255,255,255,.65); }
+
+.type-stack { display: flex; flex-direction: column; gap: 12px; }
+.type-stack .row .lab { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--mute); letter-spacing: .06em; margin-top: 3px; text-transform: uppercase; opacity: .7; }
+
+/* Role cards row — unified across all boards */
+.role-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.role-card {
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius, 14px);
+  padding: 16px;
+  background: var(--surface, #fff);
+  display: flex; flex-direction: column;
+  gap: 10px; min-height: 168px;
+  position: relative;
+}
+.role-card .glyph {
+  width: 38px; height: 38px;
+  border-radius: var(--glyph-radius, 10px);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 14px; color: white;
+  letter-spacing: -0.01em;
+}
+.role-card .rname {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+}
+.role-card h4 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin: 0; color: var(--ink);
+}
+.role-card p {
+  font-size: 12.5px; line-height: 1.5;
+  color: var(--mute); margin: 0;
+}
+.role-card p strong { color: var(--ink); font-weight: 500; }
+.role-card.featured { background: var(--ink); }
+.role-card.featured h4, .role-card.featured p { color: var(--bg); }
+.role-card.featured p { opacity: .68; }
+.role-card.featured p strong { color: var(--bg); opacity: 1; }
+.role-card.featured .rname { color: var(--accent); opacity: 1; }
+.role-card .badge {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: .12em; text-transform: uppercase;
+  background: var(--accent); color: white;
+  padding: 2px 7px; border-radius: 999px; font-weight: 600;
+}
+
+/* Icons grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+.icon-grid > div {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  color: var(--ink-2, var(--ink));
+}
+.icon-grid > div.acc { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* Mini UI */
+.ui-mock {
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius, 14px);
+  background: var(--surface, #fff);
+  overflow: hidden;
+}
+.ui-mock .row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto auto;
+  gap: 12px; align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.ui-mock .row:last-child { border-bottom: none; }
+.ui-mock .row.featured { background: var(--ink); color: var(--bg); }
+.ui-mock .row.featured .who, .ui-mock .row.featured .sub { color: rgba(255,255,255,.6); }
+.ui-mock .row.featured .ttl { color: var(--bg); }
+.ui-mock .av {
+  width: 28px; height: 28px;
+  border-radius: var(--avatar-radius, 999px);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-family: var(--font-display);
+  font-weight: 600; font-size: 11px;
+}
+.ui-mock .body { min-width: 0; }
+.ui-mock .who { font-size: 10.5px; color: var(--mute); font-weight: 500; margin-bottom: 2px; }
+.ui-mock .ttl { font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; }
+.ui-mock .sub { font-size: 11.5px; color: var(--mute); font-family: var(--font-mono); margin-top: 2px; }
+.sla {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: .06em; font-weight: 600;
+  padding: 3px 7px; border-radius: var(--pill-radius, 999px);
+  white-space: nowrap;
+}
+.sla.urgent { background: var(--accent-soft); color: var(--accent-ink); }
+.sla.muted { background: var(--inset); color: var(--mute); }
+.cta {
+  font-family: var(--font-ui), sans-serif;
+  font-size: 12px; font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--btn-radius, 8px);
+  background: var(--accent); color: white;
+  border: 0; cursor: pointer; letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+/* Avatar palette demo */
+.av-row { display: flex; gap: 8px; align-items: center; }
+.av-row .av {
+  width: 28px; height: 28px;
+  border-radius: var(--avatar-radius, 999px);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-family: var(--font-display);
+  font-weight: 600; font-size: 11px;
+}
+
+/* ============================================================ */
+/* BOARD VARIABLES                                                */
+/* ============================================================ */
+
+/* A — Linear-cool */
+.board.A {
+  --bg: #fafbfc;
+  --ink: #0d1117;
+  --ink-2: #2c333d;
+  --mute: #6b7280;
+  --line: #e5e7eb;
+  --surface: #ffffff;
+  --inset: #f3f4f6;
+  --accent: #3b82f6;
+  --accent-soft: #dbeafe;
+  --accent-ink: #1e3a8a;
+  --font-display: 'Inter Tight', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  --card-radius: 6px;
+  --glyph-radius: 6px;
+  --avatar-radius: 4px;
+  --pill-radius: 4px;
+  --btn-radius: 5px;
+}
+
+/* B — Linear-dense green (cool, plotно как linear, accent зелёный) */
+.board.B {
+  --bg: #fafbfa;
+  --ink: #0a0f0c;
+  --ink-2: #2a322d;
+  --mute: #6a7370;
+  --line: #e4e8e5;
+  --surface: #ffffff;
+  --inset: #eef2ef;
+  --accent: oklch(0.62 0.19 150);
+  --accent-soft: oklch(0.94 0.04 150);
+  --accent-ink: oklch(0.32 0.12 150);
+  --font-display: 'Inter Tight', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  --card-radius: 6px;
+  --glyph-radius: 6px;
+  --avatar-radius: 4px;
+  --pill-radius: 4px;
+  --btn-radius: 5px;
+}
+
+/* C — Mono-lab */
+.board.C {
+  --bg: #fcfcfd;
+  --ink: #0a0a0a;
+  --ink-2: #2a2a2a;
+  --mute: #7c7c83;
+  --line: #e6e6ea;
+  --surface: #ffffff;
+  --inset: #f4f4f6;
+  --accent: oklch(0.62 0.19 150);
+  --accent-soft: oklch(0.94 0.04 150);
+  --accent-ink: oklch(0.32 0.12 150);
+  --font-display: 'JetBrains Mono', monospace;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --card-radius: 2px;
+  --glyph-radius: 2px;
+  --avatar-radius: 2px;
+  --pill-radius: 2px;
+  --btn-radius: 2px;
+}
+
+/* D — Editorial cool */
+.board.D {
+  --bg: #f7f8f9;
+  --ink: #0c1117;
+  --ink-2: #2c3340;
+  --mute: #6a7280;
+  --line: #e2e5ea;
+  --surface: #ffffff;
+  --inset: #eef0f3;
+  --accent: oklch(0.62 0.19 150);
+  --accent-soft: oklch(0.94 0.04 150);
+  --accent-ink: oklch(0.32 0.12 150);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --card-radius: 14px;
+  --glyph-radius: 10px;
+  --avatar-radius: 999px;
+  --pill-radius: 999px;
+  --btn-radius: 8px;
+}
+
+/* E — Sharp green */
+.board.E {
+  --bg: #ffffff;
+  --ink: #0a0a0c;
+  --ink-2: #28282d;
+  --mute: #797982;
+  --line: #ececef;
+  --surface: #f9fafb;
+  --inset: #f3f4f6;
+  --accent: oklch(0.62 0.19 150);
+  --accent-soft: oklch(0.94 0.04 150);
+  --accent-ink: oklch(0.32 0.12 150);
+  --font-display: 'Inter Tight', sans-serif;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  --card-radius: 12px;
+  --glyph-radius: 12px;
+  --avatar-radius: 999px;
+  --pill-radius: 999px;
+  --btn-radius: 8px;
+}
+
+/* Full UI demos */
+.full-demo {
+  background: var(--bg);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+</style>
+</head>
+<body>
+
+<div class="page-hd">
+  <div class="tag">Hireminds · UI direction · v3</div>
+  <h1>Пять направлений с одинаковой структурой — выбираем одно.</h1>
+  <p>Все мудборды показывают <b style="color:#d9d9dd">одно и то же</b>: палитру, типографику, карточки ролей из деки, иконки и мини-UI с одинаковыми approval-строками. Это даёт честное сравнение. Зелёный (из деки) сохранён как акцент в B–E; A показывает альтернативу с синим. Тёплые off-white заменены на холодные / нейтральные.</p>
+</div>
+
+<div class="boards">
+
+  <!-- =================================================== -->
+  <!-- A — Linear-cool                                       -->
+  <!-- =================================================== -->
+  <div class="board A">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">A · Linear-cool</div>
+        <h2>Pure Linear</h2>
+      </div>
+      <div class="verdict">
+        Холодный серый <b>+ #3B82F6</b>. Edge-to-edge, 6px радиусы, mono-цифры. Ближе всего к настоящему Linear.
+      </div>
+    </div>
+    <div class="board-body">
+
+      <div>
+        <span class="tile-label">Палитра</span>
+        <div class="swatch-row">
+          <div style="background:#0d1117" class="dark"><span>#0D1117</span></div>
+          <div style="background:#2c333d" class="dark"><span>#2C333D</span></div>
+          <div style="background:#6b7280"><span>#6B7280</span></div>
+          <div style="background:#e5e7eb"><span>#E5E7EB</span></div>
+          <div style="background:#fafbfc"><span>#FAFBFC</span></div>
+          <div style="background:#3b82f6" class="dark"><span>#3B82F6</span></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Типографика · Inter Tight + Inter + Geist Mono</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.025em;line-height:1.05;color:#0d1117;">Доброе утро, <span style="color:#3b82f6;">Олег</span></div>
+            <div class="lab">Inter Tight · 28/600 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#2c333d;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Geist Mono',monospace;font-size:11px;color:#6b7280;letter-spacing:.04em;">HM-142 · 3h24m · +156/-24 · ci ✓</div>
+            <div class="lab">Geist Mono · 11/400 · meta</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#6b7280">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:#3b82f6">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Аватары · квадратные 4px</span>
+        <div class="av-row">
+          <span class="av" style="background:#6b7280">А</span>
+          <span class="av" style="background:#6b7280">А</span>
+          <span class="av" style="background:#3b82f6">Д</span>
+          <span class="av" style="background:#6b7280">К</span>
+          <span class="av" style="background:#6b7280">Л</span>
+          <span class="av" style="background:#6b7280">И</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Иконки · Lucide stroke 1.5</span>
+        <div class="icon-grid">
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 3v12a3 3 0 1 0 3 3M6 3a3 3 0 1 1 0 6M18 21V9a3 3 0 1 0-3-3M18 21a3 3 0 1 0 0-6"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Мини-UI · approvals row</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:#3b82f6">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Merge PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">⚡ 3h 24m</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6b7280">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1d 6h</span>
+            <button class="cta" style="background:#fff;color:#0d1117;border:1px solid #e5e7eb">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6b7280">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12h</span>
+            <button class="cta" style="background:#fff;color:#0d1117;border:1px solid #e5e7eb">Обсудить</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =================================================== -->
+  <!-- B — Linear-dense green                                -->
+  <!-- =================================================== -->
+  <div class="board B">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">B · Linear + green</div>
+        <h2>Linear-dense green</h2>
+      </div>
+      <div class="verdict">
+        Тот же плотный layout, но <b>зелёный из деки</b>. Холодный нейтральный серый.
+      </div>
+    </div>
+    <div class="board-body">
+
+      <div>
+        <span class="tile-label">Палитра</span>
+        <div class="swatch-row">
+          <div style="background:#0a0f0c" class="dark"><span>#0A0F0C</span></div>
+          <div style="background:#2a322d" class="dark"><span>#2A322D</span></div>
+          <div style="background:#6a7370"><span>#6A7370</span></div>
+          <div style="background:#e4e8e5"><span>#E4E8E5</span></div>
+          <div style="background:#fafbfa"><span>#FAFBFA</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Типографика · Inter Tight + Inter + Geist Mono</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.025em;line-height:1.05;color:#0a0f0c;">Доброе утро, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">Inter Tight · 28/600 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#2a322d;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Geist Mono',monospace;font-size:11px;color:#6a7370;letter-spacing:.04em;">HM-142 · 3h24m · +156/-24 · ci ✓</div>
+            <div class="lab">Geist Mono · 11/400 · meta</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#6a7370">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150)">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Аватары · квадратные 4px</span>
+        <div class="av-row">
+          <span class="av" style="background:#6a7370">А</span>
+          <span class="av" style="background:#6a7370">А</span>
+          <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+          <span class="av" style="background:#6a7370">К</span>
+          <span class="av" style="background:#6a7370">Л</span>
+          <span class="av" style="background:#6a7370">И</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Иконки · Lucide stroke 1.5</span>
+        <div class="icon-grid">
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 3v12a3 3 0 1 0 3 3M6 3a3 3 0 1 1 0 6M18 21V9a3 3 0 1 0-3-3M18 21a3 3 0 1 0 0-6"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Мини-UI · approvals row</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Merge PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">⚡ 3h 24m</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6a7370">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1d 6h</span>
+            <button class="cta" style="background:#fff;color:#0a0f0c;border:1px solid #e4e8e5">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6a7370">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12h</span>
+            <button class="cta" style="background:#fff;color:#0a0f0c;border:1px solid #e4e8e5">Обсудить</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =================================================== -->
+  <!-- C — Mono-lab                                          -->
+  <!-- =================================================== -->
+  <div class="board C">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">C · Mono-lab</div>
+        <h2>Terminal energy</h2>
+      </div>
+      <div class="verdict">
+        <b>Всё на JetBrains Mono</b>. Радиус 2px, нейтральный фон, зелёный акцент. Vercel CLI vibe.
+      </div>
+    </div>
+    <div class="board-body">
+
+      <div>
+        <span class="tile-label">Палитра</span>
+        <div class="swatch-row">
+          <div style="background:#0a0a0a" class="dark"><span>#0A0A0A</span></div>
+          <div style="background:#2a2a2a" class="dark"><span>#2A2A2A</span></div>
+          <div style="background:#7c7c83"><span>#7C7C83</span></div>
+          <div style="background:#e6e6ea"><span>#E6E6EA</span></div>
+          <div style="background:#fcfcfd"><span>#FCFCFD</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Типографика · JetBrains Mono на всём</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:500;letter-spacing:-0.02em;line-height:1.05;color:#0a0a0a;">/morning, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">JetBrains Mono · 24/500 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#2a2a2a;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7c7c83;letter-spacing:.04em;">[HM-142] sla=3h24m diff=+156/-24 ci=✓</div>
+            <div class="lab">JetBrains Mono · 11/400 · meta</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">BA</div>
+            <div class="rname">role.01</div>
+            <h4 style="font-family:'JetBrains Mono',monospace;">business_analyst</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">key</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150);font-family:'JetBrains Mono',monospace;">Dv</div>
+            <div class="rname">role.03</div>
+            <h4 style="font-family:'JetBrains Mono',monospace;">developer</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Аватары · квадратные 2px, mono инициалы</span>
+        <div class="av-row">
+          <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">А</span>
+          <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">А</span>
+          <span class="av" style="background:oklch(0.62 0.19 150);font-family:'JetBrains Mono',monospace;">Д</span>
+          <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">К</span>
+          <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">Л</span>
+          <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">И</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Иконки · sharp, stroke 1.75</span>
+        <div class="icon-grid">
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="butt"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="butt"><path d="M6 3v12a3 3 0 1 0 3 3M6 3a3 3 0 1 1 0 6M18 21V9a3 3 0 1 0-3-3M18 21a3 3 0 1 0 0-6"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Мини-UI · approvals row</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150);font-family:'JetBrains Mono',monospace;">Д</span>
+            <div class="body">
+              <div class="who" style="font-family:'JetBrains Mono',monospace;">Дима · Разработчик</div>
+              <div class="ttl" style="font-family:'JetBrains Mono',monospace;font-weight:500;">[PR-142] add_billing_webhook</div>
+            </div>
+            <span class="sla urgent" style="background:transparent;border:1px solid oklch(0.62 0.19 150);color:oklch(0.62 0.19 150);">3h24m</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">А</span>
+            <div class="body">
+              <div class="who" style="font-family:'JetBrains Mono',monospace;">Анна · BA</div>
+              <div class="ttl" style="font-family:'JetBrains Mono',monospace;font-weight:500;">[STORY-4] goal-3.draft</div>
+            </div>
+            <span class="sla muted" style="border-radius:2px;">1d6h</span>
+            <button class="cta" style="background:#fff;color:#0a0a0a;border:1px solid #e6e6ea">open</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#0a0a0a;font-family:'JetBrains Mono',monospace;">И</span>
+            <div class="body">
+              <div class="who" style="font-family:'JetBrains Mono',monospace;">Иван · TL</div>
+              <div class="ttl" style="font-family:'JetBrains Mono',monospace;font-weight:500;">[ARCH] redis_vs_inmem</div>
+            </div>
+            <span class="sla muted" style="border-radius:2px;">12h</span>
+            <button class="cta" style="background:#fff;color:#0a0a0a;border:1px solid #e6e6ea">discuss</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =================================================== -->
+  <!-- D — Editorial cool                                    -->
+  <!-- =================================================== -->
+  <div class="board D">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">D · Editorial cool</div>
+        <h2>Editorial green</h2>
+      </div>
+      <div class="verdict">
+        Space Grotesk + <b>холодный нейтральный</b> вместо тёплого off-white. Карточки с большими радиусами.
+      </div>
+    </div>
+    <div class="board-body">
+
+      <div>
+        <span class="tile-label">Палитра — холодный нейтральный</span>
+        <div class="swatch-row">
+          <div style="background:#0c1117" class="dark"><span>#0C1117</span></div>
+          <div style="background:#2c3340" class="dark"><span>#2C3340</span></div>
+          <div style="background:#6a7280"><span>#6A7280</span></div>
+          <div style="background:#e2e5ea"><span>#E2E5EA</span></div>
+          <div style="background:#f7f8f9"><span>#F7F8F9</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Типографика · Space Grotesk + Inter</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:500;letter-spacing:-0.025em;line-height:1.05;color:#0c1117;">Доброе утро, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">Space Grotesk · 30/500 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#2c3340;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6a7280;letter-spacing:.04em;">TASK-12 · SLA 3Ч 24М · diff +45 / −12</div>
+            <div class="lab">JetBrains Mono · 11/400 · meta</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#6a7280">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150)">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Аватары · круглые</span>
+        <div class="av-row">
+          <span class="av" style="background:#6a7280">А</span>
+          <span class="av" style="background:#6a7280">А</span>
+          <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+          <span class="av" style="background:#6a7280">К</span>
+          <span class="av" style="background:#6a7280">Л</span>
+          <span class="av" style="background:#6a7280">И</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Иконки · Lucide stroke 1.75</span>
+        <div class="icon-grid">
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 3v12a3 3 0 1 0 3 3M6 3a3 3 0 1 1 0 6M18 21V9a3 3 0 1 0-3-3M18 21a3 3 0 1 0 0-6"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Мини-UI · approvals row</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Замёрджить PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">⚡ SLA 3Ч 24М</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6a7280">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1Д 6Ч</span>
+            <button class="cta" style="background:#fff;color:#0c1117;border:1px solid #e2e5ea">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#6a7280">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12Ч</span>
+            <button class="cta" style="background:#fff;color:#0c1117;border:1px solid #e2e5ea">Обсудить</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- =================================================== -->
+  <!-- E — Sharp green                                       -->
+  <!-- =================================================== -->
+  <div class="board E">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">E · Sharp green</div>
+        <h2>Sharp accent</h2>
+      </div>
+      <div class="verdict">
+        Чистый белый, <b>зелёный — главный визуальный сигнал</b>. Inter Tight жирный. Продуктовая дерзость.
+      </div>
+    </div>
+    <div class="board-body">
+
+      <div>
+        <span class="tile-label">Палитра — белый + один яркий</span>
+        <div class="swatch-row">
+          <div style="background:#0a0a0c" class="dark"><span>#0A0A0C</span></div>
+          <div style="background:#28282d" class="dark"><span>#28282D</span></div>
+          <div style="background:#797982"><span>#797982</span></div>
+          <div style="background:#ececef"><span>#ECECEF</span></div>
+          <div style="background:#ffffff"><span>#FFFFFF</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Типографика · Inter Tight 700 для display</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:34px;font-weight:700;letter-spacing:-0.035em;line-height:1.02;color:#0a0a0c;">Доброе утро, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">Inter Tight · 34/700 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#28282d;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Geist Mono',monospace;font-size:11px;color:#797982;letter-spacing:.04em;">HM-142 · 3h24m · +156/-24 · ci ✓</div>
+            <div class="lab">Geist Mono · 11/400 · meta</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#797982">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150)">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Аватары · круглые</span>
+        <div class="av-row">
+          <span class="av" style="background:#797982">А</span>
+          <span class="av" style="background:#797982">А</span>
+          <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+          <span class="av" style="background:#797982">К</span>
+          <span class="av" style="background:#797982">Л</span>
+          <span class="av" style="background:#797982">И</span>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Иконки · Lucide stroke 2</span>
+        <div class="icon-grid">
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+          <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3v12a3 3 0 1 0 3 3M6 3a3 3 0 1 1 0 6M18 21V9a3 3 0 1 0-3-3M18 21a3 3 0 1 0 0-6"/></svg></div>
+          <div class="acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg></div>
+        </div>
+      </div>
+
+      <div>
+        <span class="tile-label">Мини-UI · approvals row</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Merge PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">SLA 3Ч 24М</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#797982">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1Д 6Ч</span>
+            <button class="cta" style="background:#fff;color:#0a0a0c;border:1px solid #ececef">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#797982">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12Ч</span>
+            <button class="cta" style="background:#fff;color:#0a0a0c;border:1px solid #ececef">Обсудить</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="boards-hero" style="margin-top:8px;">
+  <h2>+ Холоднее: B1 и B2</h2>
+  <p>Та же плотная Linear-структура, что в B. Разные «холодные» вариации: B1 — синий-серый (как Linear но в зелёной гамме), B2 — графитно-морозный, нейтральный.</p>
+</div>
+
+<div class="boards">
+
+  <!-- B1 — Slate cool green -->
+  <div class="board" style="
+    --bg: #f8fafc;
+    --ink: #0f172a;
+    --ink-2: #1e293b;
+    --mute: #64748b;
+    --line: #e2e8f0;
+    --surface: #ffffff;
+    --inset: #f1f5f9;
+    --accent: oklch(0.62 0.19 150);
+    --accent-soft: oklch(0.94 0.04 150);
+    --accent-ink: oklch(0.32 0.12 150);
+    --font-display: 'Inter Tight', sans-serif;
+    --font-ui: 'Inter', sans-serif;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+    --card-radius: 6px;
+    --glyph-radius: 6px;
+    --avatar-radius: 4px;
+    --pill-radius: 4px;
+    --btn-radius: 5px;">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">B1 · slate cool</div>
+        <h2>Slate + green</h2>
+      </div>
+      <div class="verdict">
+        Slate-палитра (синеватый серый). Холоднее B, фон с лёгким сине-стальным оттенком. Зелёный остаётся.
+      </div>
+    </div>
+    <div class="board-body">
+      <div>
+        <span class="tile-label">Палитра</span>
+        <div class="swatch-row">
+          <div style="background:#0f172a" class="dark"><span>#0F172A</span></div>
+          <div style="background:#1e293b" class="dark"><span>#1E293B</span></div>
+          <div style="background:#64748b"><span>#64748B</span></div>
+          <div style="background:#e2e8f0"><span>#E2E8F0</span></div>
+          <div style="background:#f8fafc"><span>#F8FAFC</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Типографика · та же что в B</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.025em;line-height:1.05;color:#0f172a;">Доброе утро, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">Inter Tight · 28/600 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#1e293b;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#64748b">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150)">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Мини-UI</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Merge PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">⚡ 3h 24m</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#64748b">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1d 6h</span>
+            <button class="cta" style="background:#fff;color:#0f172a;border:1px solid #e2e8f0">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#64748b">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12h</span>
+            <button class="cta" style="background:#fff;color:#0f172a;border:1px solid #e2e8f0">Обсудить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B2 — Frost graphite green -->
+  <div class="board" style="
+    --bg: #fbfcfd;
+    --ink: #111418;
+    --ink-2: #2a2e35;
+    --mute: #707880;
+    --line: #e4e7eb;
+    --surface: #ffffff;
+    --inset: #f0f2f5;
+    --accent: oklch(0.62 0.19 150);
+    --accent-soft: oklch(0.94 0.04 150);
+    --accent-ink: oklch(0.32 0.12 150);
+    --font-display: 'Inter Tight', sans-serif;
+    --font-ui: 'Inter', sans-serif;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+    --card-radius: 6px;
+    --glyph-radius: 6px;
+    --avatar-radius: 4px;
+    --pill-radius: 4px;
+    --btn-radius: 5px;">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">B2 · frost graphite</div>
+        <h2>Frost + green</h2>
+      </div>
+      <div class="verdict">
+        Графитно-морозный, без синевы и без зелени в нейтралях. Самый «чистый» холод. Зелёный — только как акцент.
+      </div>
+    </div>
+    <div class="board-body">
+      <div>
+        <span class="tile-label">Палитра</span>
+        <div class="swatch-row">
+          <div style="background:#111418" class="dark"><span>#111418</span></div>
+          <div style="background:#2a2e35" class="dark"><span>#2A2E35</span></div>
+          <div style="background:#707880"><span>#707880</span></div>
+          <div style="background:#e4e7eb"><span>#E4E7EB</span></div>
+          <div style="background:#fbfcfd"><span>#FBFCFD</span></div>
+          <div style="background:oklch(0.62 0.19 150)" class="dark"><span>green</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Типографика · та же что в B</span>
+        <div class="type-stack">
+          <div class="row">
+            <div style="font-family:'Inter Tight',sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.025em;line-height:1.05;color:#111418;">Доброе утро, <span style="color:oklch(0.62 0.19 150);">Олег</span></div>
+            <div class="lab">Inter Tight · 28/600 · h1</div>
+          </div>
+          <div class="row">
+            <div style="font-family:'Inter',sans-serif;font-size:14px;line-height:1.5;color:#2a2e35;">AI-команда сделала работу за вечер. Четыре решения ждут вас.</div>
+            <div class="lab">Inter · 14/400 · body</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Карточки ролей</span>
+        <div class="role-cards">
+          <div class="role-card">
+            <div class="glyph" style="background:#707880">BA</div>
+            <div class="rname">Роль · 01</div>
+            <h4>Бизнес-аналитик</h4>
+            <p><strong>Сам пишет user stories</strong> из обсуждений в Slack.</p>
+          </div>
+          <div class="role-card featured">
+            <div class="badge">ключевая</div>
+            <div class="glyph" style="background:oklch(0.62 0.19 150)">Dev</div>
+            <div class="rname">Роль · 03</div>
+            <h4>Разработчик</h4>
+            <p>Берёт тикет, <strong>сам пишет код</strong>, открывает PR.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="tile-label">Мини-UI</span>
+        <div class="ui-mock">
+          <div class="row featured">
+            <span class="av" style="background:oklch(0.62 0.19 150)">Д</span>
+            <div class="body">
+              <div class="who">Дима · Разработчик</div>
+              <div class="ttl">Merge PR #142 · Add billing webhook</div>
+            </div>
+            <span class="sla urgent">⚡ 3h 24m</span>
+            <button class="cta">Апрув</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#707880">А</span>
+            <div class="body">
+              <div class="who">Анна · Бизнес-аналитик</div>
+              <div class="ttl">4 user stories · Onboarding</div>
+            </div>
+            <span class="sla muted">1d 6h</span>
+            <button class="cta" style="background:#fff;color:#111418;border:1px solid #e4e7eb">Открыть</button>
+          </div>
+          <div class="row">
+            <span class="av" style="background:#707880">И</span>
+            <div class="body">
+              <div class="who">Иван · Тех-лид</div>
+              <div class="ttl">Архитектура · Redis vs in-mem</div>
+            </div>
+            <span class="sla muted">12h</span>
+            <button class="cta" style="background:#fff;color:#111418;border:1px solid #e4e7eb">Обсудить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="boards-hero" style="margin-top:24px;">
+  <h2>Полноценные UI · покажу для 2 вариантов</h2>
+  <p>Пока сделал для B (Linear-dense green) — финалист, если предпочитаешь плотность. Если выберешь D или E — нарисую полноценный экран им. Просто скажи.</p>
+</div>
+
+<div class="boards">
+
+  <!-- Full UI for B -->
+  <div class="board B full">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">B · полноценный Approval Center</div>
+        <h2>Linear-dense green в деле</h2>
+      </div>
+      <div class="verdict">
+        Edge-to-edge список, sidebar + topbar, реальная плотность. Холодная нейтральная гамма + зелёный из деки.
+      </div>
+    </div>
+    <div style="background:#fafbfa;">
+      <div class="full-demo" style="grid-template-columns: 220px 1fr;">
+
+        <!-- Sidebar -->
+        <div style="background:#f1f4f2;border-right:1px solid #e4e8e5;padding:10px 8px 14px;display:flex;flex-direction:column;gap:1px;">
+          <!-- Workspace -->
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;cursor:pointer;">
+            <div style="width:20px;height:20px;border-radius:4px;background:#0a0f0c;color:#fafbfa;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:700;font-size:10px;">A</div>
+            <div style="flex:1;font-weight:500;letter-spacing:-0.005em;color:#0a0f0c;font-size:12.5px;">Acme</div>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6a7370" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <div style="height:10px;"></div>
+
+          <!-- Quick links -->
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2z"/></svg>
+            <span>Дашборд</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;background:oklch(0.94 0.04 150 / .5);color:#0a0f0c;font-weight:500;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(0.62 0.19 150)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span>Approvals</span>
+            <span style="margin-left:auto;font-family:'Geist Mono',monospace;font-size:10.5px;font-weight:500;color:oklch(0.32 0.12 150);">4</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <span>Чаты</span>
+            <span style="margin-left:auto;font-family:'Geist Mono',monospace;font-size:10.5px;color:#9aa39e;">2</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <!-- Workflow section -->
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9aa39e;padding:6px 8px 4px;">Работа</div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>Доски</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Цели</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Проекты</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <!-- Team section -->
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9aa39e;padding:6px 8px 4px;display:flex;align-items:center;">
+            <span>AI-команда</span>
+            <span style="margin-left:auto;color:#bcc4be;">4</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a322d;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#6a7370;color:#fafbfa;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">А</span>
+            <span style="flex:1;">Анна</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9aa39e;">BA</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a322d;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:oklch(0.62 0.19 150);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">Д</span>
+            <span style="flex:1;font-weight:500;color:#0a0f0c;">Дима</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9aa39e;">Dev</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a322d;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#6a7370;color:#fafbfa;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">К</span>
+            <span style="flex:1;">Катя</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9aa39e;">QA</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a322d;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:#bcc4be;flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#6a7370;color:#fafbfa;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">И</span>
+            <span style="flex:1;color:#9aa39e;">Иван</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#bcc4be;">TL</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <!-- System -->
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9aa39e;padding:6px 8px 4px;">Система</div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3m6 4V3M6 7h12v6a6 6 0 0 1-12 0V7zm6 12v3"/></svg>
+            <span>Интеграции</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a322d;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+            <span>Настройки</span>
+          </div>
+
+          <!-- Push hire button to bottom -->
+          <div style="flex:1;"></div>
+
+          <button style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;background:#0a0f0c;color:#fafbfa;border:0;border-radius:5px;font:500 12.5px Inter;letter-spacing:-0.005em;cursor:pointer;margin-top:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Нанять сотрудника</span>
+          </button>
+        </div>
+
+        <!-- Main -->
+        <div style="display:flex;flex-direction:column;overflow:hidden;">
+          <div style="height:40px;border-bottom:1px solid #e4e8e5;display:flex;align-items:center;padding:0 16px;gap:8px;">
+            <span style="font-size:12.5px;color:#6a7370;">Acme</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+            <span style="font-size:13px;font-weight:500;color:#0a0f0c;letter-spacing:-0.005em;">Approvals</span>
+            <div style="flex:1;"></div>
+            <div style="display:flex;align-items:center;gap:6px;padding:0 8px;height:24px;border:1px solid #e4e8e5;border-radius:5px;background:#fff;font-size:12px;color:#9aa39e;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span>Поиск</span>
+              <span style="font-family:'Geist Mono';font-size:10px;padding:0 3px;border:1px solid #e4e8e5;border-radius:3px;background:#fafbfa;color:#6a7370;">⌘K</span>
+            </div>
+            <div style="width:24px;height:24px;border-radius:999px;background:linear-gradient(135deg,oklch(0.62 0.19 150),oklch(0.55 0.16 200));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;font-family:'Inter Tight';">О</div>
+          </div>
+
+          <div style="padding:18px 20px 10px;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:2px;">
+              <h1 style="font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;color:#0a0f0c;">Approvals</h1>
+              <span style="font-family:'Geist Mono';font-size:11px;color:#9aa39e;">4 ожидают · 142 за квартал</span>
+            </div>
+          </div>
+
+          <div style="padding:0 20px 10px;display:flex;gap:5px;align-items:center;">
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:#fff;border:1px solid #e4e8e5;border-radius:5px;color:#2a322d;display:inline-flex;align-items:center;gap:5px;">
+              <span style="width:5px;height:5px;border-radius:999px;background:oklch(0.62 0.19 150);"></span>
+              Pending
+              <span style="color:#9aa39e;font-family:'Geist Mono';font-size:10.5px;">4</span>
+            </button>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:transparent;border:1px solid transparent;border-radius:5px;color:#9aa39e;">Approved</button>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:transparent;border:1px solid transparent;border-radius:5px;color:#9aa39e;">Rejected</button>
+            <div style="flex:1;"></div>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:#fff;border:1px solid #e4e8e5;border-radius:5px;color:#2a322d;display:inline-flex;align-items:center;gap:5px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+              Filter
+            </button>
+          </div>
+
+          <div style="padding:5px 20px;background:#f1f4f2;border-top:1px solid #e4e8e5;border-bottom:1px solid #e4e8e5;display:flex;align-items:center;gap:7px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <span style="font-family:'Inter Tight';font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#0a0f0c;">⚡ Сегодня</span>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">4</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;background:oklch(0.94 0.04 150 / .35);border-bottom:1px solid #eef2ef;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">12m</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:oklch(0.62 0.19 150);color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">Д</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">HM-142</span>
+              <span style="color:#0a0f0c;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Merge PR #142 · Add billing webhook handler</span>
+              <span style="display:inline-flex;align-items:center;gap:3px;font-family:'Geist Mono';font-size:10px;color:oklch(0.32 0.12 150);background:oklch(0.94 0.04 150);padding:1px 5px;border-radius:3px;font-weight:600;">CI ✓</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:oklch(0.32 0.12 150);font-weight:600;">⚡ 3h 24m</span>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">+156/-24</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef2ef;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">1h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#6a7370;color:#fafbfa;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">А</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">HM-141</span>
+              <span style="color:#0a0f0c;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Draft 4 user stories · Onboarding redesign</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">1d 6h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef2ef;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">2h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#6a7370;color:#fafbfa;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">И</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">HM-138</span>
+              <span style="color:#0a0f0c;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Архитектура · Redis vs in-memory cache</span>
+              <span style="display:inline-flex;align-items:center;gap:3px;font-family:'Geist Mono';font-size:10px;color:#6a7370;background:#eef2ef;padding:1px 5px;border-radius:3px;">2 варианта</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">12h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef2ef;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">3h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#0a0f0c;color:#fafbfa;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">К</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">HM-137</span>
+              <span style="color:#0a0f0c;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Баг или фича? · Logout сбрасывает корзину</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9aa39e;">8h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9aa39e" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="boards-hero" style="margin-top:24px;">
+  <h2>B2 · Frost + green · полноценный экран</h2>
+  <p>Та же структура, что у B, но в графитно-морозной гамме без зелёного в нейтралях.</p>
+</div>
+
+<div class="boards">
+  <div class="board full" style="
+    --bg: #fbfcfd;
+    --ink: #111418;
+    --ink-2: #2a2e35;
+    --mute: #707880;
+    --line: #e4e7eb;
+    --surface: #ffffff;
+    --inset: #f0f2f5;
+    --accent: oklch(0.62 0.19 150);
+    --accent-soft: oklch(0.94 0.04 150);
+    --accent-ink: oklch(0.32 0.12 150);">
+    <div class="board-hd">
+      <div class="meta">
+        <div class="mono">B2 · полноценный Approval Center</div>
+        <h2>Frost + green в деле</h2>
+      </div>
+      <div class="verdict">
+        Самый «чистый» холод. Те же радиусы и плотность, но без оттенков зелёного в нейтралях — только в акценте.
+      </div>
+    </div>
+    <div style="background:#fbfcfd;">
+      <div class="full-demo" style="grid-template-columns: 220px 1fr;">
+
+        <!-- Sidebar -->
+        <div style="background:#f0f2f5;border-right:1px solid #e4e7eb;padding:10px 8px 14px;display:flex;flex-direction:column;gap:1px;">
+          <div style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;cursor:pointer;">
+            <div style="width:20px;height:20px;border-radius:4px;background:#111418;color:#fbfcfd;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:700;font-size:10px;">A</div>
+            <div style="flex:1;font-weight:500;letter-spacing:-0.005em;color:#111418;font-size:12.5px;">Acme</div>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#707880" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <div style="height:10px;"></div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2z"/></svg>
+            <span>Дашборд</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;background:oklch(0.94 0.04 150 / .5);color:#111418;font-weight:500;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="oklch(0.62 0.19 150)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span>Approvals</span>
+            <span style="margin-left:auto;font-family:'Geist Mono',monospace;font-size:10.5px;font-weight:500;color:oklch(0.32 0.12 150);">4</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <span>Чаты</span>
+            <span style="margin-left:auto;font-family:'Geist Mono',monospace;font-size:10.5px;color:#9ba1a8;">2</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9ba1a8;padding:6px 8px 4px;">Работа</div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <span>Доски</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Цели</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Проекты</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9ba1a8;padding:6px 8px 4px;display:flex;align-items:center;">
+            <span>AI-команда</span>
+            <span style="margin-left:auto;color:#c4c9ce;">4</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a2e35;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#707880;color:#fbfcfd;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">А</span>
+            <span style="flex:1;">Анна</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9ba1a8;">BA</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a2e35;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:oklch(0.62 0.19 150);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">Д</span>
+            <span style="flex:1;font-weight:500;color:#111418;">Дима</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9ba1a8;">Dev</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a2e35;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:oklch(0.62 0.19 150);flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#707880;color:#fbfcfd;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">К</span>
+            <span style="flex:1;">Катя</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#9ba1a8;">QA</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:3px 8px;border-radius:4px;font-size:12px;color:#2a2e35;cursor:pointer;">
+            <span style="width:6px;height:6px;border-radius:999px;background:#c4c9ce;flex-shrink:0;"></span>
+            <span style="width:14px;height:14px;border-radius:3px;background:#707880;color:#fbfcfd;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';font-weight:600;font-size:8px;">И</span>
+            <span style="flex:1;color:#9ba1a8;">Иван</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:9.5px;color:#c4c9ce;">TL</span>
+          </div>
+
+          <div style="height:8px;"></div>
+
+          <div style="font-family:'Geist Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:#9ba1a8;padding:6px 8px 4px;">Система</div>
+
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3m6 4V3M6 7h12v6a6 6 0 0 1-12 0V7zm6 12v3"/></svg>
+            <span>Интеграции</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;color:#2a2e35;font-size:12.5px;cursor:pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+            <span>Настройки</span>
+          </div>
+
+          <div style="flex:1;"></div>
+
+          <button style="display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;background:#111418;color:#fbfcfd;border:0;border-radius:5px;font:500 12.5px Inter;letter-spacing:-0.005em;cursor:pointer;margin-top:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Нанять сотрудника</span>
+          </button>
+        </div>
+
+        <!-- Main -->
+        <div style="display:flex;flex-direction:column;overflow:hidden;">
+          <div style="height:40px;border-bottom:1px solid #e4e7eb;display:flex;align-items:center;padding:0 16px;gap:8px;">
+            <span style="font-size:12.5px;color:#707880;">Acme</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+            <span style="font-size:13px;font-weight:500;color:#111418;letter-spacing:-0.005em;">Approvals</span>
+            <div style="flex:1;"></div>
+            <div style="display:flex;align-items:center;gap:6px;padding:0 8px;height:24px;border:1px solid #e4e7eb;border-radius:5px;background:#fff;font-size:12px;color:#9ba1a8;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span>Поиск</span>
+              <span style="font-family:'Geist Mono';font-size:10px;padding:0 3px;border:1px solid #e4e7eb;border-radius:3px;background:#fbfcfd;color:#707880;">⌘K</span>
+            </div>
+            <div style="width:24px;height:24px;border-radius:999px;background:linear-gradient(135deg,oklch(0.62 0.19 150),oklch(0.55 0.16 200));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;font-family:'Inter Tight';">О</div>
+          </div>
+
+          <div style="padding:18px 20px 10px;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:2px;">
+              <h1 style="font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.025em;line-height:1.1;margin:0;color:#111418;">Approvals</h1>
+              <span style="font-family:'Geist Mono';font-size:11px;color:#9ba1a8;">4 ожидают · 142 за квартал</span>
+            </div>
+          </div>
+
+          <div style="padding:0 20px 10px;display:flex;gap:5px;align-items:center;">
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:#fff;border:1px solid #e4e7eb;border-radius:5px;color:#2a2e35;display:inline-flex;align-items:center;gap:5px;">
+              <span style="width:5px;height:5px;border-radius:999px;background:oklch(0.62 0.19 150);"></span>
+              Pending
+              <span style="color:#9ba1a8;font-family:'Geist Mono';font-size:10.5px;">4</span>
+            </button>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:transparent;border:1px solid transparent;border-radius:5px;color:#9ba1a8;">Approved</button>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:transparent;border:1px solid transparent;border-radius:5px;color:#9ba1a8;">Rejected</button>
+            <div style="flex:1;"></div>
+            <button style="height:24px;padding:0 8px;font:500 11.5px Inter;background:#fff;border:1px solid #e4e7eb;border-radius:5px;color:#2a2e35;display:inline-flex;align-items:center;gap:5px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+              Filter
+            </button>
+          </div>
+
+          <div style="padding:5px 20px;background:#f0f2f5;border-top:1px solid #e4e7eb;border-bottom:1px solid #e4e7eb;display:flex;align-items:center;gap:7px;">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <span style="font-family:'Inter Tight';font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#111418;">⚡ Сегодня</span>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">4</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;background:oklch(0.94 0.04 150 / .35);border-bottom:1px solid #eef0f3;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">12m</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:oklch(0.62 0.19 150);color:#fff;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">Д</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">HM-142</span>
+              <span style="color:#111418;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Merge PR #142 · Add billing webhook handler</span>
+              <span style="display:inline-flex;align-items:center;gap:3px;font-family:'Geist Mono';font-size:10px;color:oklch(0.32 0.12 150);background:oklch(0.94 0.04 150);padding:1px 5px;border-radius:3px;font-weight:600;">CI ✓</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:oklch(0.32 0.12 150);font-weight:600;">⚡ 3h 24m</span>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">+156/-24</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef0f3;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">1h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#707880;color:#fbfcfd;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">А</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">HM-141</span>
+              <span style="color:#111418;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Draft 4 user stories · Onboarding redesign</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">1d 6h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef0f3;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">2h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#707880;color:#fbfcfd;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">И</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">HM-138</span>
+              <span style="color:#111418;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Архитектура · Redis vs in-memory cache</span>
+              <span style="display:inline-flex;align-items:center;gap:3px;font-family:'Geist Mono';font-size:10px;color:#707880;background:#f0f2f5;padding:1px 5px;border-radius:3px;">2 варианта</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">12h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+
+          <div style="display:grid;grid-template-columns:24px 16px 1fr 90px 64px 24px;align-items:center;gap:8px;padding:7px 20px;border-bottom:1px solid #eef0f3;font-size:12.5px;">
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">3h</span>
+            <div style="width:16px;height:16px;border-radius:4px;background:#111418;color:#fbfcfd;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;font-family:'Inter Tight';">К</div>
+            <div style="display:flex;align-items:center;gap:8px;min-width:0;">
+              <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">HM-137</span>
+              <span style="color:#111418;font-weight:500;letter-spacing:-0.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Баг или фича? · Logout сбрасывает корзину</span>
+            </div>
+            <span style="font-family:'Geist Mono';font-size:10.5px;color:#9ba1a8;">8h</span>
+            <span></span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9ba1a8" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
