@@ -1,0 +1,31 @@
+<!-- @dsCard group="Data" height=620 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ResultList — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 316px)); gap: 16px 24px; align-items: start; }
+  .pv-narrow { max-width: 343px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var pr = { kind: 'pr', name: 'PR #21 · Роли участников проекта', meta: h(H.Pill, null, 'открыт'), href: '#' };
+  var f = function (n, p, a, d) { return { kind: 'file', name: n, path: p, stat: { additions: a, deletions: d }, href: '#' }; };
+  var result = [pr, f('MembersTable.tsx', 'apps/web/src/members/MembersTable.tsx', 142, 38), { kind: 'file', name: 'PIL-15-roles.md', path: 'docs/specs/PIL-15-roles.md', meta: 'Аналитик · ред. 2', href: '#' }, { kind: 'report', name: 'Отчёт QA', meta: '8 из 9', href: '#' }];
+  var prFiles = [f('MembersTable.tsx', 'apps/web/src/members/MembersTable.tsx', 142, 38), f('MemberMenu.tsx', 'apps/web/src/members/MemberMenu.tsx', 64, 19), f('roles.test.ts', 'apps/web/src/members/roles.test.ts', 118, 0)];
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      h(H.ResultList, { title: 'Результат', rows: result, collapsible: true }),
+      h(H.ResultList, { title: 'Результат', rows: result, collapsible: true, defaultOpen: false }),
+      h(H.ResultList, { title: 'Изменённые файлы', rows: prFiles, more: 11, moreHref: '#' }),
+      h(H.ResultList, { title: 'Что получилось', rows: [], emptyText: 'Сессия завершилась без изменений: ошибка не воспроизводится на main.' }),
+      h('div', { className: 'pv-narrow' }, h(H.ResultList, { title: 'Что получилось · 375 px', rows: prFiles.slice(0, 2).concat([f('viewer-actions-permissions-matrix.test.tsx', 'apps/web/src/members/viewer-actions-permissions-matrix.test.tsx', 58, 0)]) })))
+  );
+</script>
+</body>
+</html>

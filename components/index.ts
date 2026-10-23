@@ -49,6 +49,9 @@ export type { CardProps } from "./Card";
 export { Field } from "./Field";
 export type { FieldProps } from "./Field";
 
+export { Textarea } from "./Textarea";
+export type { TextareaProps } from "./Textarea";
+
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
 
@@ -114,6 +117,12 @@ export type { PillProps, PillTone } from "./Pill";
 
 export { Table } from "./Table";
 export type { TableProps, TableColumn, TableRow } from "./Table";
+
+export { ResultRow } from "./ResultRow";
+export type { ResultRowProps } from "./ResultRow";
+
+export { ResultList } from "./ResultList";
+export type { ResultListProps } from "./ResultList";
 
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
