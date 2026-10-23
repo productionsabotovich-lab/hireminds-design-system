@@ -1,0 +1,52 @@
+<!-- @dsCard group="Data" height=640 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ResultRow — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 10px; }
+  .pv-box { max-width: 560px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* состояния в статичном превью — те же значения, что у :hover и :focus-visible */
+  .pv-hover a { background: var(--inset); }
+  .pv-focus a { box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 2.5px var(--accent-soft); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var files = [
+    ['MembersTable.tsx', 'apps/web/src/members/MembersTable.tsx', 142, 38],
+    ['viewer-actions.test.tsx', 'apps/web/src/members/viewer-actions.test.tsx', 58, 0],
+    ['PIL-15-roles.md', 'docs/specs/PIL-15-roles.md', 12, 4],
+    ['tokens.json', 'tokens/tokens.json', 3, 1],
+    ['ci.yaml', '.github/workflows/ci.yaml', 6, 2],
+    ['Button.module.css', 'components/Button/Button.module.css', 4, 4]
+  ];
+  function file(f, extra) { return h(H.ResultRow, Object.assign({ key: f[0], kind: 'file', name: f[0], path: f[1], stat: { additions: f[2], deletions: f[3] }, href: '#' }, extra || {})); }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('span', { className: 'pv-cap' }, 'pr · file · report'),
+      h('div', { className: 'pv-box' },
+        h(H.ResultRow, { kind: 'pr', name: 'PR #21 · Роли участников проекта', meta: h(H.Pill, null, 'открыт'), href: '#' }),
+        h(H.ResultRow, { kind: 'pr', name: 'PR #18 · Вход по ссылке из письма', merged: true, meta: h(H.Pill, { tone: 'accent' }, 'влит'), href: '#' }),
+        files.map(function (f) { return file(f); }),
+        h(H.ResultRow, { kind: 'file', name: 'PIL-15-roles.md', path: 'docs/specs/PIL-15-roles.md', meta: 'Аналитик · ред. 2', href: '#' }),
+        h(H.ResultRow, { kind: 'report', name: 'Отчёт QA', meta: '7 из 9', href: '#' })),
+      h('span', { className: 'pv-cap' }, 'Наведение · фокус · без ссылки'),
+      h('div', { className: 'pv-box' },
+        h('div', { className: 'pv-hover' }, file(files[0])),
+        h('div', { className: 'pv-focus' }, file(files[1])),
+        h(H.ResultRow, { kind: 'report', name: 'Отчёт QA', meta: '9 из 9' })),
+      h('span', { className: 'pv-cap' }, '375 px'),
+      h('div', { className: 'pv-box pv-narrow' },
+        h(H.ResultRow, { kind: 'file', name: 'viewer-actions-permissions-matrix.test.tsx', path: 'apps/web/src/members/viewer-actions-permissions-matrix.test.tsx', stat: { additions: 58, deletions: 0 }, href: '#' }),
+        h(H.ResultRow, { kind: 'pr', name: 'PR #21 · Роли участников проекта', meta: h(H.Pill, null, 'открыт'), href: '#' })))
+  );
+</script>
+</body>
+</html>

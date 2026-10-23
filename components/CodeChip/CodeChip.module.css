@@ -1,4 +1,4 @@
-/* Код-чип по основам: font-mono на inset, радиус r-xs. Размер — от строки, где стоит чип (Body, Caption, строки списков). */
+/* Код-чип по основам: font-mono на inset, радиус r-xs. Кегль: md 12px — из макета (code в тексте), sm 10.5px — шкала меток. */
 .chip {
   display: inline;
   padding: 1px var(--space-1);
@@ -6,20 +6,27 @@
   background: var(--inset);
   color: var(--ink-2);
   font-family: var(--font-mono);
-  font-size: 0.92em;
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
-  overflow-wrap: anywhere;
   word-break: break-all;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
 
+.md {
+  font-size: 12px;
+}
+
+.sm {
+  font-size: 10.5px;
+}
+
+/* подчёркивание ink-3: line-3 на inset — 2.8:1, ниже 3:1 */
 .link {
   color: var(--ink-2);
   text-decoration: underline;
-  text-decoration-color: var(--line-3);
+  text-decoration-color: var(--ink-3);
   text-underline-offset: 2px;
   border-radius: var(--r-xs);
 }
