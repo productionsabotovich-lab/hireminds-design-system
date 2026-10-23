@@ -37,6 +37,7 @@
 | | [KeyInput](key-input.md), [SaveBar](save-bar.md) | Заявка |
 | Данные | [UserAvatar](user-avatar.md) | Компонент UserAvatar |
 | | [ResultRow](../../components/ResultRow/README.md), [ResultList](../../components/ResultList/README.md) — строки артефактов pr, file, report | Компоненты ResultRow, ResultList |
+| | [ListRow](../../components/ListRow/README.md) — строка списка в боковой колонке | Компонент ListRow |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |
 | Обратная связь | [Plate](plate.md), [EmptyState](empty-state.md) | Компоненты Plate, EmptyState |
 | | [Banner](banner.md) | Заявка |

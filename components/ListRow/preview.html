@@ -1,0 +1,51 @@
+<!-- @dsCard group="Data" height=980 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ListRow — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 320px)); gap: 20px 24px; align-items: start; }
+  .pv-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .pv-wide { grid-column: 1 / -1; max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* рамка списка по рецепту README: line, r-lg, surface, без внутренних отступов */
+  .pv-list { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
+  /* состояния в статичном превью — те же значения, что у :hover и :focus-visible */
+  .pv-hover a { background: var(--inset); }
+  .pv-hover a > span:nth-last-child(2) { color: var(--ink); transform: translateX(2px); }
+  .pv-focus a { box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 2.5px var(--accent-soft); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var anton = h(H.UserAvatar, { name: 'Антон Саботович', size: 'xs', shape: 'circle' });
+  var role = function (n) { return h(H.UserAvatar, { name: n, size: 'xs' }); };
+  var row = function (p, k) { return h(H.ListRow, Object.assign({ key: k }, p)); };
+  var list = function (title, rows) { return [h(H.SectionHeader, { key: 'h', level: 3, count: rows.length }, title), h('div', { key: 'l', className: 'pv-list' }, rows)]; };
+  var dWait = { href: '#', lead: anton, title: 'Лимит возвратов', code: 'D-44', trailing: h(H.Pill, { tone: 'warn', dot: true }, 'Ждёт решения'), sub: 'Антон Саботович · ждёт 1 д 2 ч' };
+  var dDone = { href: '#', lead: anton, title: 'Объём согласован', code: 'D-21', trailing: h(H.Pill, { tone: 'accent' }, 'Утверждено'), sub: 'Антон Саботович · кнопка в треде · 22 окт' };
+  var dStop = { href: '#', lead: anton, title: 'Приёмка', code: 'D-30', trailing: h(H.Pill, null, 'Остановлено'), sub: 'Антон Саботович · страница решения · 19 окт' };
+  var sRun = { href: '#', lead: role('Developer'), title: 'Developer', code: 'S-118', trailing: h(H.Pill, { dot: true, pulse: true }, 'идёт'), sub: 'Code · после возврата · 24 мин' };
+  var sDone = { href: '#', lead: role('Reviewer'), title: 'Reviewer', code: 'S-119', trailing: h(H.Pill, null, 'завершена'), sub: 'Review · 18 мин' };
+  var sErr = { href: '#', lead: role('QA'), title: 'QA', code: 'S-121', trailing: h(H.Pill, { tone: 'danger', dot: true }, 'ошибка'), sub: 'остановлен · лимит подписки' };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      h('div', { className: 'pv-col' }, list('Решения', [row(dWait, 1), row(dDone, 2), row(dStop, 3)])),
+      h('div', { className: 'pv-col' }, list('Сессии ролей', [row(sRun, 1), row(sDone, 2), row(sErr, 3)])),
+      h('div', { className: 'pv-col' }, h('span', { className: 'pv-cap' }, 'Наведение · фокус · без ссылки'),
+        h('div', { className: 'pv-list' },
+          h('div', { className: 'pv-hover' }, row(dWait, 1)),
+          h('div', { className: 'pv-focus' }, row(sRun, 2)),
+          row(Object.assign({}, dDone, { href: undefined, sub: 'решение видно, перехода нет' }), 3))),
+      h('div', { className: 'pv-col' }, h(H.SectionHeader, { level: 3, count: 0 }, 'Решения'),
+        h(H.EmptyState, { variant: 'mini' }, 'Решений пока нет')),
+      h('div', { className: 'pv-col pv-wide' }, h('span', { className: 'pv-cap' }, '375 px'),
+        h('div', { className: 'pv-list' }, row(dWait, 1), row(dDone, 2), row(sErr, 3))))
+  );
+</script>
+</body>
+</html>
