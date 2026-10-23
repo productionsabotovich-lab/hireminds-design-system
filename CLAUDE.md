@@ -25,15 +25,17 @@
 ## Заявки из Linear
 
 Заявки на доработку приходят задачами в Linear: команда **HIR** (Hireminds), метка **`design-system`**.
-Их заводят Антон и сессия платформы `hireminds-platform`
+Их заводят сессия платформы `hireminds-platform` и владелец
 (репо `productionsabotovich-lab/hireminds-platform`, webapp подключает эту систему зависимостью).
 Правки токенов и бренда из Claude Design переносит скилл `/pull-design-edits`. Порядок подробно — [docs/workflow.md](docs/workflow.md).
 
 - **Где смотреть:** в начале сессии и по просьбе — задачи HIR с меткой `design-system` в статусах `Backlog` и `Todo`.
 - **Взял в работу:** статус `In Progress`, комментарий «взял» и короткий план (какие файлы, какие компоненты).
 - **Непонятно, что делать** или нет критерия «готово» — вопрос комментарием, статус не меняй, не угадывай.
-- **Сделал:** `npm run build && npm run typecheck && npm run check`, покажи Антону превью/скриншоты и переведи в `In Review`.
-- **Антон одобрил:** коммит, push в `main`, затем `Done` с комментарием: ссылка на коммит
+- **Сделал:** `npm run build && npm run typecheck && npm run check`, ветка и PR в `main` со скриншотами изменённых
+  компонентов, задача — `In Review` со ссылкой на PR. Ревью и влитие PR — сессия платформы `hireminds-platform`;
+  одобрения владельца на отдельный компонент или PR не нужно.
+- **PR влит:** `Done` с комментарием: ссылка на коммит
   `https://github.com/productionsabotovich-lab/hireminds-design-system/commit/<sha>`, что поменялось
   (компоненты, пропсы, токены) и что обновить в платформе.
 - **Не про дизайн-систему** — комментарий, статус не трогай. Дубль — `Duplicate` со ссылкой на оригинал.
@@ -54,8 +56,8 @@ npm run build && npm run typecheck && npm run check
   (`npm run build && npm run check && npm run pack:artifact`, затем файлы `out/artifact/project/` — в артефакт
   https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx той же ссылкой; индекс `project/design-system.json` читается
   и обновляется последним). Артефакт приватный; это дизайн-система, на которой работает Claude Design.
-- **GitHub** (push, PR) — только по задаче, одобренной Антоном: одобрение задачи из Linear (см. «Заявки из Linear»)
-  и есть «да» для её коммита и push.
+- **GitHub:** ветка и PR — по задаче HIR с меткой `design-system`; в `main` напрямую не пишешь. PR проверяет и вливает
+  сессия платформы `hireminds-platform`.
 - **Правки из Claude Design** переносятся в репозиторий PR-ом через `/pull-design-edits`, с указанием источника.
 - **Макеты экранов** не верстай: их рисует агент-дизайнер платформы в Claude Design. Компоненты по утверждённому
   макету — `/from-design`; правила компонента — `/component`.

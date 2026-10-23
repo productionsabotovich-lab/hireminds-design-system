@@ -77,6 +77,6 @@ import { Button, Card, Field } from "@hireminds/design-system/components";
 
 Витрина — дизайн-система Hireminds в Claude Design. После каждого влития в `main` агент пересобирает систему
 (`npm run build && npm run check && npm run pack:artifact`) и публикует витрину той же ссылкой (скилл
-`publish-library`); публикация в GitHub — по задаче, одобренной владельцем. Конвейер целиком —
+`publish-library`); PR — по задаче HIR, проверяет и вливает агент платформы. Конвейер целиком —
 [docs/pipeline.md](docs/pipeline.md). Команда `/design-sync` синхронизирует со старым сайтом claude.ai/design
 и в конвейере не используется.
