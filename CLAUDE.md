@@ -1,7 +1,9 @@
 # hireminds-design-system — инструкции для Claude
 
 Это источник правды визуального языка Hireminds. Продукт собирает экраны только отсюда.
-Перед работой прочитай [README.md](README.md) и [docs/brand.md](docs/brand.md).
+Перед работой прочитай: [README.md](README.md), [docs/brand.md](docs/brand.md),
+[docs/moodboard/README.md](docs/moodboard/README.md), [docs/pipeline.md](docs/pipeline.md),
+[docs/workflow.md](docs/workflow.md).
 
 ## Правила
 
@@ -23,8 +25,9 @@
 ## Заявки из Linear
 
 Заявки на доработку приходят задачами в Linear: команда **HIR** (Hireminds), метка **`design-system`**.
-Их заводят Антон, Claude в чате/Claude Design и сессия платформы `hireminds-pdlc-fd`
+Их заводят Антон и сессия платформы `hireminds-platform`
 (репо `productionsabotovich-lab/hireminds-platform`, webapp подключает эту систему зависимостью).
+Правки токенов и бренда из Claude Design переносит скилл `/pull-design-edits`. Порядок подробно — [docs/workflow.md](docs/workflow.md).
 
 - **Где смотреть:** в начале сессии и по просьбе — задачи HIR с меткой `design-system` в статусах `Backlog` и `Todo`.
 - **Взял в работу:** статус `In Progress`, комментарий «взял» и короткий план (какие файлы, какие компоненты).
@@ -34,7 +37,8 @@
   `https://github.com/productionsabotovich-lab/hireminds-design-system/commit/<sha>`, что поменялось
   (компоненты, пропсы, токены) и что обновить в платформе.
 - **Не про дизайн-систему** — комментарий, статус не трогай. Дубль — `Duplicate` со ссылкой на оригинал.
-- После `Done`, если сессия `hireminds-pdlc-fd` запущена, коротко напиши ей (SendMessage), что вышло и какой коммит.
+- После `Done` опубликуй витрину (`/publish-library`) и, если сессия `hireminds-platform` запущена, коротко напиши ей
+  (SendMessage), что вышло и какой коммит.
 
 ## Проверка перед тем как сказать «готово»
 
@@ -46,11 +50,16 @@ npm run build && npm run typecheck && npm run check
 
 ## Публикация
 
-Ничего не публикуй (GitHub, витрина-артефакт, Claude Design) без явного «да» от человека;
-одобрение задачи из Linear Антоном (см. «Заявки из Linear») и есть такое «да» для её коммита и push.
-Витрина: `npm run pack:artifact`, затем публикация файлов `out/artifact/project/` в артефакт
-https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx — индекс `project/design-system.json` читается и
-обновляется последним. Claude Design — через `/design-sync`, который запускает человек.
+- **Витрина** публикуется после каждого влития в `main` автоматически, без отдельного «да»: скилл `/publish-library`
+  (`npm run build && npm run check && npm run pack:artifact`, затем файлы `out/artifact/project/` — в артефакт
+  https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx той же ссылкой; индекс `project/design-system.json` читается
+  и обновляется последним). Артефакт приватный; это дизайн-система, на которой работает Claude Design.
+- **GitHub** (push, PR) — только по задаче, одобренной Антоном: одобрение задачи из Linear (см. «Заявки из Linear»)
+  и есть «да» для её коммита и push.
+- **Правки из Claude Design** переносятся в репозиторий PR-ом через `/pull-design-edits`, с указанием источника.
+- **Макеты экранов** не верстай: их рисует агент-дизайнер платформы в Claude Design. Компоненты по утверждённому
+  макету — `/from-design`; правила компонента — `/component`.
+- `/design-sync` синхронизирует со старым сайтом claude.ai/design (закрывается 14.12.2026) и в конвейере не используется.
 
 ## Безопасность
 
