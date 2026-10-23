@@ -1,5 +1,6 @@
 /* Те же токены, что у Input: подпись, рамка line-3 (3:1), фокус accent с кольцом accent-soft.
-   Зазор подписи и поля 5px и паддинги 8/12px — как у Input (точные значения из макета). */
+   Зазор подписи и поля 5px и паддинги 8/12px — как у Input (точные значения из макета).
+   Высоту задаёт только rows: минимальной высоты нет, иначе rows ниже 3 не работают. */
 .wrap {
   display: flex;
   flex-direction: column;
@@ -21,7 +22,6 @@
 
 .field {
   width: 100%;
-  min-height: 76px;
   padding: var(--space-2) 12px;
   border-radius: var(--r-md);
   border: 1px solid var(--line-3);
@@ -87,7 +87,7 @@
 .count {
   flex-shrink: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--mute);
   font-variant-numeric: tabular-nums;
 }
