@@ -1,21 +1,25 @@
+/* Строки заполняют рамку списка от края до края и разделены line, как в макете «Карточка задачи». */
 .row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas: "lead title trailing" "lead sub sub";
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-areas: "lead title trailing chev" "lead sub sub sub";
   align-items: start;
   column-gap: var(--space-3);
-  row-gap: 2px;
+  row-gap: 2px; /* из макета: зазор названия и второй строки, вне шкалы */
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--r-sm);
   color: var(--ink);
   text-decoration: none;
   font-family: var(--font-ui);
 }
 
-/* без lead колонка аватара схлопывается */
-.row:not(:has(.lead)) {
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: "title trailing" "sub sub";
+.row + .row {
+  border-top: 1px solid var(--line);
+}
+
+/* без lead колонка аватара не занимает места */
+.noLead {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "title trailing chev" "sub sub sub";
 }
 
 .link {
@@ -35,15 +39,11 @@
 .lead {
   grid-area: lead;
   display: inline-flex;
-  padding-top: 1px;
+  padding-top: 1px; /* из макета: аватар xs по оптической линии названия */
 }
 
 .titleLine {
   grid-area: title;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-1) var(--space-2);
   min-width: 0;
 }
 
@@ -51,6 +51,16 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--ink);
+}
+
+.code {
+  margin-left: var(--space-2);
+  white-space: nowrap;
+}
+
+/* идентификатор не переносится по символам */
+.code code {
+  word-break: normal;
 }
 
 .sub {
@@ -65,4 +75,25 @@
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
+}
+
+.chev {
+  grid-area: chev;
+  align-self: center;
+  display: inline-flex;
+  color: var(--dim);
+  transition: color 120ms, transform 120ms;
+}
+
+.link:hover .chev,
+.link:focus-visible .chev {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .chev {
+    transition: none;
+  }
 }
