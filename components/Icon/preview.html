@@ -1,0 +1,39 @@
+<!-- @dsCard group="Icons" height=300 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Icon — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 14px; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-file { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var names = ['pull-request','pull-request-merged','file','report','priority','type','epic','repo','branch','runner','calendar','check','inbox','layers','doc','log','file-ts','file-md','file-json','file-yaml','file-css','file-test'];
+  var files = ['MembersTable.tsx','PIL-15-roles.md','viewer-actions.test.tsx','tokens.json','ci.yaml','Button.module.css'];
+  function row(size) {
+    return h('div', { className: 'pv-row', style: { color: 'var(--mute)' } },
+      names.map(function (n) { return h(H.Icon, { key: n, name: n, size: size, title: n }); }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('span', { className: 'pv-cap' }, '16 px'), row(16),
+      h('span', { className: 'pv-cap' }, '14 px'), row(14),
+      h('span', { className: 'pv-cap' }, 'Типы файлов'),
+      h('div', { className: 'pv-row', style: { color: 'var(--mute)' } },
+        files.map(function (f) { return h('span', { key: f, className: 'pv-file' }, h(H.Icon, { name: H.iconForFile(f), size: 16 }), f); })),
+      h('span', { className: 'pv-cap' }, 'В тексте mute и ink'),
+      h('div', { className: 'pv-row' },
+        h('span', { className: 'pv-file', style: { color: 'var(--mute)' } }, h(H.Icon, { name: 'branch', size: 14 }), 'hm/PIL-15-project-roles'),
+        h('span', { className: 'pv-file', style: { color: 'var(--ink)' } }, h(H.Icon, { name: 'pull-request', size: 14 }), 'PR #21 · Роли участников проекта')))
+  );
+</script>
+</body>
+</html>
