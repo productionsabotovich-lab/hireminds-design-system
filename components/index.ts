@@ -88,6 +88,9 @@ export type { ExternalLinkProps } from "./ExternalLink";
 export { H3 } from "./H3";
 export type { H3Props } from "./H3";
 
+export { Icon, iconForFile } from "./Icon";
+export type { IconProps, IconName } from "./Icon";
+
 export { IconArrow } from "./IconArrow";
 export type { IconArrowProps } from "./IconArrow";
 
