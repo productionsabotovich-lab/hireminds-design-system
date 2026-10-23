@@ -21,6 +21,13 @@ components/<Comp>/
   preview.html          ← живое превью для витрины (1-я строка — маркер @dsCard)
 components/index.ts     ← все экспорты библиотеки
 docs/brand.md           ← брендбук: голос, цвет, типографика, отступы, состояния, иконки
+docs/foundations.md     ← основы: правила цвета, типографики, отступов, радиусов и теней
+docs/patterns/          ← паттерны применения и компоненты, которые их реализуют
+docs/moodboard/         ← мудборд «B2 · Frost Graphite» — эталон настроения
+docs/designer-guide.md  ← руководство дизайнера для макетов в Claude Design
+docs/pipeline.md        ← конвейер: Claude Design работает с дизайном, Claude Code пишет код
+docs/workflow.md        ← работа агента с заявками HIR design-system
+.claude/skills/         ← скиллы агента: component, from-design, publish-library, pull-design-edits
 scripts/                ← сборка токенов, бандла, типов, проверка рендера, упаковка витрины
 ```
 
@@ -63,10 +70,13 @@ import { Button, Card, Field } from "@hireminds/design-system/components";
 
 | Что | Где правится | Как доходит до остальных |
 |---|---|---|
-| Токены и брендбук | Витрина в Claude Design (правка токенов, комментарии) или этот репозиторий | `tokens.json` в репозитории — итоговая версия; `npm run build:tokens` |
-| Компоненты | Claude Code в этом репозитории | `npm run build && npm run check`, затем публикация в витрину |
-| Экраны | Claude Code в репозитории продукта | обновляют зависимость `@hireminds/design-system` |
+| Токены и брендбук | этот репозиторий: `tokens/tokens.json`, `docs/brand.md`; правки из Claude Design переносятся PR-ом (`/pull-design-edits`) | после влития в `main` — сборка и публикация витрины |
+| Компоненты | Claude Code в этом репозитории по задачам HIR с меткой `design-system` | проверки, влитие в `main`, публикация витрины |
+| Макеты экранов | Claude Design на системе Hireminds: агент-дизайнер платформы по брифу | утверждение владельцем, задачи на недостающие компоненты |
+| Экраны продукта | Claude Code в репозитории платформы | обновление зависимости `@hireminds/design-system` |
 
-Публикация в Claude Design: `/design-sync` (скилл запускает человек) синхронизирует `components/`
-с проектом дизайн-системы по одному компоненту, с подтверждением плана. Витрина-артефакт обновляется
-через `npm run pack:artifact` и публикацию Claude.
+Витрина — дизайн-система Hireminds в Claude Design. После каждого влития в `main` агент пересобирает систему
+(`npm run build && npm run check && npm run pack:artifact`) и публикует витрину той же ссылкой (скилл
+`publish-library`); PR — по задаче HIR, проверяет и вливает агент платформы. Конвейер целиком —
+[docs/pipeline.md](docs/pipeline.md). Команда `/design-sync` синхронизирует со старым сайтом claude.ai/design
+и в конвейере не используется.
