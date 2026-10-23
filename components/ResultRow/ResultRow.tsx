@@ -35,16 +35,20 @@ export function ResultRow({ kind, name, path, stat, meta, merged, href, newTab =
       </span>
       <span className={[s.name, kind === "file" ? s.mono : ""].filter(Boolean).join(" ")}>{name}</span>
       {stat ? (
-        <span className={s.stat} aria-label={`добавлено ${stat.additions}, удалено ${stat.deletions}`}>
-          <span className={s.add}>+{stat.additions}</span>
-          <span className={s.del}>−{stat.deletions}</span>
+        <span className={s.stat}>
+          <span className={s.add} aria-hidden="true">+{stat.additions}</span>
+          <span className={s.del} aria-hidden="true">−{stat.deletions}</span>
+          <span className={s.srOnly}>
+            добавлено {stat.additions}, удалено {stat.deletions}
+          </span>
         </span>
       ) : meta !== undefined ? (
         <span className={s.meta}>{meta}</span>
       ) : null}
     </>
   );
-  const title = path ?? name;
+  // подсказка — только полный путь файла; у pr и report она повторяла бы видимый текст
+  const title = path;
 
   if (!href) {
     return (

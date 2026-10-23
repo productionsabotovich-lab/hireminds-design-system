@@ -57,13 +57,15 @@ export function ResultList({
 
   return (
     <section className={s.root}>
-      {collapsible ? (
-        <button type="button" className={[s.head, s.toggle].join(" ")} aria-expanded={open} aria-controls={bodyId} onClick={() => setOpen((v) => !v)}>
-          {head}
-        </button>
-      ) : (
-        <div className={s.head}>{head}</div>
-      )}
+      <h3 className={s.heading}>
+        {collapsible ? (
+          <button type="button" className={[s.head, s.toggle].join(" ")} aria-expanded={open} aria-controls={bodyId} onClick={() => setOpen((v) => !v)}>
+            {head}
+          </button>
+        ) : (
+          <span className={s.head}>{head}</span>
+        )}
+      </h3>
       {shown && (
         <div id={bodyId} className={s.body}>
           {rows.length === 0 ? (

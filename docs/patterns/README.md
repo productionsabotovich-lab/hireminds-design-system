@@ -35,6 +35,7 @@
 | | [PasswordStrengthMeter](password-strength.md) | Компонент PasswordStrengthMeter |
 | | [KeyInput](key-input.md), [SaveBar](save-bar.md) | Заявка |
 | Данные | [UserAvatar](user-avatar.md) | Компонент UserAvatar |
+| | [ResultRow](../../components/ResultRow/README.md), [ResultList](../../components/ResultList/README.md) — строки артефактов pr, file, report | Компоненты ResultRow, ResultList |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |
 | Обратная связь | [Plate](plate.md), [EmptyState](empty-state.md) | Компоненты Plate, EmptyState |
 | | [Banner](banner.md) | Заявка |

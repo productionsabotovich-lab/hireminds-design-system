@@ -1,4 +1,4 @@
-/* Код-чип по основам: font-mono на inset, радиус r-xs. Кегль — значения шкалы моно-меток: 12px (md), 10.5px (sm). */
+/* Код-чип по основам: font-mono на inset, радиус r-xs. Кегль: md 12px — из макета (code в тексте), sm 10.5px — шкала меток. */
 .chip {
   display: inline;
   padding: 1px var(--space-1);
@@ -9,7 +9,6 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
-  overflow-wrap: anywhere;
   word-break: break-all;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
