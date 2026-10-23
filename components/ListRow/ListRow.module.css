@@ -1,0 +1,68 @@
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "lead title trailing" "lead sub sub";
+  align-items: start;
+  column-gap: var(--space-3);
+  row-gap: 2px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-sm);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-ui);
+}
+
+/* без lead колонка аватара схлопывается */
+.row:not(:has(.lead)) {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "title trailing" "sub sub";
+}
+
+.link {
+  cursor: pointer;
+  transition: background-color 120ms;
+}
+
+.link:hover {
+  background: var(--inset);
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 2.5px var(--accent-soft);
+}
+
+.lead {
+  grid-area: lead;
+  display: inline-flex;
+  padding-top: 1px;
+}
+
+.titleLine {
+  grid-area: title;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.sub {
+  grid-area: sub;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+.trailing {
+  grid-area: trailing;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}

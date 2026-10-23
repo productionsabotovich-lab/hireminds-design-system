@@ -124,6 +124,9 @@ export type { ResultRowProps } from "./ResultRow";
 export { ResultList } from "./ResultList";
 export type { ResultListProps } from "./ResultList";
 
+export { ListRow } from "./ListRow";
+export type { ListRowProps } from "./ListRow";
+
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
 
