@@ -1,0 +1,34 @@
+<!-- @dsCard group="Forms" height=620 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Textarea — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 300px)); gap: 18px 24px; }
+  /* показ фокуса в статичном превью — те же значения, что у :focus */
+  .pv-focus textarea { border-color: var(--accent); box-shadow: 0 0 0 2.5px var(--accent-soft); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      h(H.Textarea, { id: 't-empty', label: 'Комментарий', placeholder: 'Что нужно учесть роли' }),
+      h('div', { className: 'pv-focus' }, h(H.Textarea, { id: 't-focus', label: 'Комментарий · фокус', placeholder: 'Что нужно учесть роли' })),
+      h(H.Textarea, { id: 't-filled', label: 'Комментарий', value: 'Проверьте сценарий, где viewer открывает меню участника: пункт «Сменить роль» должен быть скрыт.' }),
+      h(H.Textarea, { id: 't-error', label: 'Причина возврата', required: true, value: '', error: 'Укажите причину' }),
+      h(H.Textarea, { id: 't-count', label: 'Причина остановки', required: true, maxLength: 500, value: 'После третьего возврата падает тот же сценарий; нужен другой подход к обновлению списка.', help: 'Запуск завершится; причина попадёт в журнал задачи.' }),
+      h(H.Textarea, { id: 't-disabled', label: 'Комментарий', disabled: true, value: 'Решение уже принято, поле закрыто.' }),
+      h(H.Textarea, { id: 't-required', label: 'Причина возврата', required: true, placeholder: 'Что исправить роли', help: 'Задача вернётся в Code; причина попадёт в журнал задачи.' }),
+      h('div', null,
+        h(H.Textarea, { id: 't-rows1', label: 'rows 1', rows: 1, placeholder: 'Одна строка' }),
+        h('div', { style: { height: 12 } }),
+        h(H.Textarea, { id: 't-rows2', label: 'rows 2', rows: 2, placeholder: 'Две строки' })))
+  );
+</script>
+</body>
+</html>
