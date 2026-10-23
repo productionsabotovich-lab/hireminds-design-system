@@ -7,6 +7,9 @@ export type { BodyProps } from "./Body";
 export { Caption } from "./Caption";
 export type { CaptionProps } from "./Caption";
 
+export { CodeChip } from "./CodeChip";
+export type { CodeChipProps } from "./CodeChip";
+
 export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
 

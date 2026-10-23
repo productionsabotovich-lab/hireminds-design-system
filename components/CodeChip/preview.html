@@ -1,0 +1,43 @@
+<!-- @dsCard group="Data" height=300 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CodeChip — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 14px; }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* показ состояний ссылки в статичном превью */
+  .pv-hover a { text-decoration-color: var(--ink); }
+  .pv-hover a code { color: var(--ink); }
+  .pv-focus a { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .pv-narrow { width: 180px; padding: 8px; border: 1px dashed var(--line-2); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var gh = 'https://github.com/productionsabotovich-lab/hireminds-pilot-app';
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('span', { className: 'pv-cap' }, 'Покой'),
+      h('div', { className: 'pv-row' },
+        h(H.CodeChip, null, 'a41f9c2'), h(H.CodeChip, null, 'hm runner connect'), h(H.CodeChip, null, 'D-44')),
+      h('span', { className: 'pv-cap' }, 'Ссылка: покой · наведение · фокус'),
+      h('div', { className: 'pv-row' },
+        h(H.CodeChip, { href: '#', title: 'Сессия агента S-118' }, 'S-118'),
+        h('span', { className: 'pv-hover' }, h(H.CodeChip, { href: '#' }, 'S-118')),
+        h('span', { className: 'pv-focus' }, h(H.CodeChip, { href: '#' }, 'S-118')),
+        h(H.CodeChip, { href: gh + '/tree/hm/PIL-15-project-roles', newTab: true }, 'hm/PIL-15-project-roles')),
+      h('span', { className: 'pv-cap' }, 'Длинный путь в узкой колонке'),
+      h('div', { className: 'pv-narrow' }, h(H.CodeChip, { title: 'apps/web/src/members/viewer-actions.test.tsx' }, 'apps/web/src/members/viewer-actions.test.tsx')),
+      h('span', { className: 'pv-cap' }, 'В строке Body и в Caption'),
+      h(H.Body, { tone: 'ink' }, 'Developer обновил ', h(H.CodeChip, { href: '#' }, 'PR #21'), ' коммитом ', h(H.CodeChip, null, 'a41f9c2'), ' в ветке ', h(H.CodeChip, null, 'hm/PIL-15-project-roles'), '.'),
+      h(H.Caption, null, 'сессия ', h(H.CodeChip, { href: '#' }, 'S-118'), ' · круг 3 из 3'))
+  );
+</script>
+</body>
+</html>

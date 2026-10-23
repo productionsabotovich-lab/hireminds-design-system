@@ -24,6 +24,8 @@
 | | [BackLink](back-link.md), [ExternalLink](external-link.md), [NavLink](nav-link.md) | Компоненты BackLink, ExternalLink, NavLink |
 | | [Switcher](switcher.md) | Компонент Switcher |
 | Декор | [Divider](divider.md), [Dot](dot.md), [IconArrow](icon-arrow.md) | Компоненты Divider, Dot, IconArrow |
+| | [Icon](../../components/Icon/README.md) — объекты продукта и типы файлов | Компонент Icon |
+| Код в тексте | [CodeChip](../../components/CodeChip/README.md) — коммит, ветка, путь, команда, идентификатор | Компонент CodeChip |
 | Бейджи и выбор | [Pill](pill.md) | Компонент Pill |
 | | [Chip](chip.md) | Заявка |
 | Навигация | [Crumb](crumb.md), [Topbar](topbar.md) | Компоненты Crumb, Topbar (и TopbarStatus) |
