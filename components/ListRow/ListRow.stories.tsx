@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof ListRow>;
 
 export const DecisionWaiting: Story = {
-  args: { href: "#", lead: <UserAvatar name="Антон Саботович" size="xs" shape="circle" />, title: "Лимит кругов", code: "D-44", trailing: <Pill tone="warn" dot>ждёт</Pill>, sub: "Антон Саботович · ждёт 1 д 2 ч" },
+  args: { href: "#", lead: <UserAvatar name="Антон Саботович" size="xs" shape="circle" />, title: "Лимит возвратов", code: "D-44", trailing: <Pill tone="warn" dot>Ждёт решения</Pill>, sub: "Антон Саботович · ждёт 1 д 2 ч" },
 };
 export const SessionRunning: Story = {
   args: { href: "#", lead: <UserAvatar name="Developer" size="xs" />, title: "Developer", code: "S-118", trailing: <Pill tone="dim" dot pulse>идёт</Pill>, sub: "Code · после возврата · 24 мин" },
