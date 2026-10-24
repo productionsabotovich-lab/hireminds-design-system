@@ -122,7 +122,7 @@ export function ActivityFeed({
 
   const action = session
     ? updatedAt != null && <UpdatedAt updatedAt={updatedAt} loading={loading} />
-    : !loading && <Switcher tabs={VIEWS} activeId={active} onSelect={select} />;
+    : !loading && <Switcher tabs={VIEWS} activeId={active} onSelect={select} label="Вид журнала" />;
 
   return (
     <section className={s.feed} aria-label={heading}>

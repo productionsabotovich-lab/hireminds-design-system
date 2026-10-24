@@ -9,10 +9,15 @@
 .cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-@media (max-width: 720px) {
+/* колонки — по ширине самого списка (обёртка .box — контейнер), а не экрана */
+.box {
+  container-type: inline-size;
+}
+
+@container (max-width: 720px) {
   .cols3, .cols4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 420px) {
+@container (max-width: 420px) {
   .cols2, .cols3, .cols4 { grid-template-columns: 1fr; }
 }
 

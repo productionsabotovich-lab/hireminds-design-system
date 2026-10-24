@@ -33,7 +33,7 @@
 }
 
 .toggle:focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent); /* кольцо фокуса системы: accent, 3.3:1 к bg и surface */
   outline-offset: 2px;
 }
 
