@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=4200 -->
+<!-- @dsCard group="Data" height=4500 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -25,7 +25,7 @@
   var pill = function (tone, t) { return h(H.Pill, { tone: tone }, t); };
 
   var HISTORY = [
-    { kind: 'session', time: at(-2, '10:00'), actor: ME, children: 'завёл задачу в Linear', detail: 'Назначена на Аналитика · маршрут feature' },
+    { kind: 'system', time: at(-2, '10:00'), actor: ME, children: 'завёл задачу в Linear', detail: 'Назначена на Аналитика · маршрут feature' },
     { kind: 'phase', time: at(-2, '10:02'), children: 'Spec', detail: 'Задача назначена на Аналитика' },
     { kind: 'session', time: at(-2, '10:03'), actor: 'Analyst', children: ['начал работу · ', chip('S-115')] },
     { kind: 'message', time: at(-2, '11:18'), actor: 'Analyst', children: ['завершил работу · 1 ч 15 мин · ', chip('S-115')], quote: 'Спецификация готова: три роли, матрица прав и 9 сценариев приёмки.', files: ['docs/specs/PIL-15-roles.md'] },
@@ -34,7 +34,7 @@
     { kind: 'phase', time: at(-1, '04:48'), children: 'Spec → Code', detail: 'Объём согласован' },
     { kind: 'session', time: at(-1, '04:49'), actor: 'Developer', children: ['начал работу · ', chip('S-118')] },
     { kind: 'pr', time: at(-1, '06:14'), actor: 'Developer', children: ['открыл ', pr(), ' «PIL-15: Роли участников проекта»'], detail: ['14 файлов · коммит ', chip('a4b23ec')] },
-    { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds:', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
+    { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
     { kind: 'phase', time: at(-1, '07:30'), children: 'Code → QA', detail: 'Ревью пройдено' },
     { kind: 'message', time: at(-1, '08:40'), actor: 'QA', quote: 'Проверил 9 сценариев из спецификации, 8 прошли. У viewer в меню участника осталась кнопка «Удалить участника».', files: ['docs/qa/PIL-15-report.md'] },
     { kind: 'return', time: at(-1, '08:42'), actor: 'QA', children: 'вернул задачу в Code', detail: 'Причина: viewer видит «Удалить участника» и получает 403' },
@@ -65,9 +65,10 @@
       box('task · вся активность', feed({ events: HISTORY })),
       box('task · сообщения — те же события', feed({ events: HISTORY, view: 'messages' })),
       box('task · после «Разрешить ещё возврат» журнал продолжается', feed({ events: MORE.slice(14) })),
+      box('task · сообщения: событий нет среди сообщений', feed({ events: HISTORY.slice(6, 9), view: 'messages' })),
       box('task · пусто: задача только создана', feed({ events: [], emptyText: 'Задачу назначили на Аналитика. Начало фазы Spec и сессия Аналитика появятся здесь в течение минуты.' })),
       box('task · загрузка', feed({ events: [], loading: true })),
-      box('session · живая лента «Шаги»', feed({ variant: 'session', events: STEPS, updatedAt: at(0, '09:36') })),
+      box('session · живая лента «Шаги»', feed({ variant: 'session', events: STEPS, updatedAt: Date.now() - 60000 })),
       box('session · завершённая', feed({ variant: 'session', events: DONE })),
       h('div', { className: 'pv-pair' },
         box('375 px · вся активность', feed({ events: HISTORY.slice(12) }), true),

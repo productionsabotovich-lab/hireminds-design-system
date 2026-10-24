@@ -1,5 +1,6 @@
 /* Журнал по макету «Карточка задачи» (.af): заголовок с Switcher, дни через space-5, внутри дня — записи ActivityEvent */
 .feed {
+  container-type: inline-size; /* узкая раскладка записей — по ширине ленты, а не экрана */
   display: flex;
   flex-direction: column;
   gap: var(--space-3);

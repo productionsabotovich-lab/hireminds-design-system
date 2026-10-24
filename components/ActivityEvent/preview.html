@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=2000 -->
+<!-- @dsCard group="Data" height=2400 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -11,6 +11,8 @@
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
   .pv-list { list-style: none; margin: 0; padding: 0; max-width: 640px; }
   .pv-narrow { max-width: 343px; }
+  /* блоки как в ленте: ширина записи — по контейнеру, как в ActivityFeed */
+  .pv-list { container-type: inline-size; }
 </style>
 </head>
 <body>
@@ -43,7 +45,7 @@
         { kind: 'message', time: at(-1, '08:40'), actor: 'QA', quote: 'Проверил 9 сценариев из спецификации, 8 прошли. У viewer в меню участника осталась кнопка «Удалить участника».', files: ['docs/qa/PIL-15-report.md'] }]),
       box('PR: открыт и влит; замечание платформы', [
         { kind: 'pr', time: at(-1, '06:14'), actor: 'Developer', children: ['открыл ', pr(), ' «PIL-15: Роли участников проекта»'], detail: ['14 файлов · коммит ', chip('a4b23ec')] },
-        { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds:', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
+        { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
         { kind: 'pr', time: at(0, '09:30'), actor: ME, children: ['влил ', pr(), ' в main'], detail: ['Коммит ', chip('c24c3a5')] }]),
       box('Возврат и решения: открыто, итог в каждом канале, устарело, напоминание', [
         { kind: 'return', time: at(-1, '08:42'), actor: 'QA', children: 'вернул задачу в Code', detail: 'Причина: viewer видит «Удалить участника» и получает 403' },
@@ -54,6 +56,13 @@
         { kind: 'decision', time: at(-1, '09:07'), tone: 'accent', actor: ME, children: ['разрешил ещё один возврат по ', chip('D-44')], detail: 'Команда /approve в треде Linear' },
         { kind: 'decision', time: at(-1, '09:10'), tone: 'dim', children: ['Решение ', chip('D-42'), ' «Приёмка» устарело: PR обновлён'], pill: h(H.Pill, { tone: 'dim' }, 'Устарело'), detail: ['Действующее решение — ', chip('D-44')] },
         { kind: 'reminder', time: at(0, '09:00'), actor: 'Hireminds', children: ['напомнил о решении ', chip('D-44'), ' «Лимит возвратов»'], detail: 'Ждёт 1 д 2 ч · напоминание в треде Linear' }]),
+      box('Служебные записи и замечание исправлено', [
+        { kind: 'system', time: at(-2, '10:00'), actor: ME, children: 'завёл задачу в Linear', detail: 'Назначена на Аналитика · маршрут feature' },
+        { kind: 'note', tone: 'accent', time: at(-1, '06:40'), actor: 'Developer', children: ['добавил ссылку на PIL-15 в описание ', pr()] },
+        { kind: 'system', tone: 'warn', time: at(-1, '09:14'), children: 'Лимит возвратов исчерпан: 2 из 2', detail: ['Нужно решение ', chip('D-44')] },
+        { kind: 'system', tone: 'dim', time: at(-1, '09:32'), children: 'Запуск остановлен', detail: 'PR #21 остаётся открытым' },
+        { kind: 'error', time: at(-1, '07:28'), actor: 'Linear', children: 'отклонил переход Code → Review', detail: 'Ошибка: статус Review закрыт правилом команды' },
+        { kind: 'system', tone: 'accent', time: at(-1, '07:30'), actor: 'Linear', children: 'принял переход Code → Review со второй попытки' }]),
       box('Ошибка', [
         { kind: 'error', time: at(0, '09:12'), actor: 'Developer', children: ['остановлен · ', chip('S-121')], detail: 'Лимит подписки Anthropic исчерпан — сессия продолжится после 12:00' }]),
       box('Шаги сессии (только ActivityFeed variant="session")', [

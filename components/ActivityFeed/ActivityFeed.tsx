@@ -27,7 +27,7 @@ export interface ActivityFeedProps {
   now?: Date | undefined;
   /** Spinner на месте журнала */
   loading?: boolean | undefined;
-  /** Текст EmptyState, пока событий нет */
+  /** Текст EmptyState, пока событий нет: что появится и когда */
   emptyText?: ReactNode;
   /** Заголовок секции; по умолчанию «Что происходило с задачей» / «Шаги» */
   title?: string | undefined;
@@ -63,7 +63,7 @@ export function ActivityFeed({
   onViewChange,
   now,
   loading = false,
-  emptyText = "Событий пока нет.",
+  emptyText = "Здесь появятся переходы фаз, сессии ролей и решения.",
   title,
   updatedAt,
 }: ActivityFeedProps) {
@@ -89,6 +89,9 @@ export function ActivityFeed({
         <Body size="small">Загружаем журнал…</Body>
       </div>
     );
+  } else if (!visible.length && events.length && !session && active === "messages") {
+    // события есть, но сообщений среди них нет
+    body = <EmptyState title="Сообщений пока нет">Переходы фаз и сессии — в «Вся активность».</EmptyState>;
   } else if (!visible.length) {
     body = <EmptyState title="Событий пока нет">{emptyText}</EmptyState>;
   } else if (session) {
@@ -124,7 +127,13 @@ export function ActivityFeed({
   return (
     <section className={s.feed} aria-label={heading}>
       <SectionHeader action={action || undefined}>{heading}</SectionHeader>
-      {body}
+      {session || loading ? (
+        body
+      ) : (
+        <div role="tabpanel" aria-label={VIEWS.find((v) => v.id === active)?.label}>
+          {body}
+        </div>
+      )}
     </section>
   );
 }

@@ -5,7 +5,8 @@ import { Pill } from "../Pill";
 import { UserAvatar } from "../UserAvatar";
 import s from "./ActivityEvent.module.css";
 
-/** Контрольные точки журнала задачи и шаги сессии (шаги — только в ActivityFeed variant="session") */
+/** Контрольные точки журнала задачи и шаги сессии (шаги — только в ActivityFeed variant="session").
+ *  system — служебная запись без автора-участника: задача заведена, лимит возвратов исчерпан, запуск остановлен */
 export type ActivityEventKind =
   | "phase"
   | "session"
@@ -16,6 +17,7 @@ export type ActivityEventKind =
   | "note"
   | "error"
   | "reminder"
+  | "system"
   | "files"
   | "check"
   | "push"
@@ -62,6 +64,7 @@ export const ACTIVITY_TONE: Record<ActivityEventKind, ActivityTone> = {
   note: "warn",
   error: "danger",
   reminder: "warn",
+  system: "ink",
   files: "ink",
   check: "ink",
   push: "ink",
@@ -73,7 +76,10 @@ const hhmm = (d: Date) => d.toLocaleTimeString("ru-RU", { hour: "2-digit", minut
 
 export function ActivityEvent({ kind, tone, actor, time, children, detail, quote, files, pill }: ActivityEventProps) {
   const at = toDate(time);
-  const stamp = (
+  // некорректное время не роняет журнал: запись выводится без времени
+  const stamp = Number.isNaN(at.getTime()) ? (
+    <span className={s.time} />
+  ) : (
     <time className={s.time} dateTime={at.toISOString()}>
       {hhmm(at)}
     </time>

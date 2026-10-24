@@ -15,11 +15,16 @@
 ### Добавлено
 - `ActivityEvent` — запись журнала: маркер `Dot` по тону вида или аватар роли (`message`), «кто — что» (`actor`,
   `children`), `detail` одной строкой, `quote`, `files` (`CodeChip`), `pill`, время. `kind="phase"` — глава с `Pill`
-  `ink`. Виды: `phase`, `session`, `message`, `pr`, `decision`, `return`, `note`, `error`, `reminder`; шаги `files`,
+  `ink`. Виды: `phase`, `session`, `message`, `pr`, `decision`, `return`, `note`, `error`, `reminder`, `system`; шаги `files`,
   `check`, `push`, `ask`. Экспортирует `ACTIVITY_TONE` — тон по умолчанию для вида.
+  README — таблица «событие журнала → вид и тон → в „Сообщениях“».
 - `ActivityFeed` — `variant: task | session`, `events`, `view: messages | all` (+ `onViewChange`), `now`, `loading`,
   `emptyText`, `title`, `updatedAt`. `task`: дни «Сегодня» / «Вчера» / дата, `Switcher`, без шагов; `session`: без
   дней, все виды, `UpdatedAt`.
+
+### Исправлено
+- `CodeChip`: `overflow-wrap: anywhere` вместо `word-break: break-all` — короткий идентификатор («S-118») переносится
+  целиком, по символам рвётся только значение длиннее строки.
 
 ### Что обновить в платформе
 - Тег `#v0.4.0`.

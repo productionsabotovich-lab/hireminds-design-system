@@ -122,8 +122,16 @@
   background: var(--line-2);
 }
 
-/* узкая колонка: причина главы переносится, линии нет */
-@media (max-width: 600px) {
+/* узкая колонка (контейнер ActivityFeed до 600px): причина главы переносится, линии нет;
+   вторая строка — до двух строк: на телефоне title не открыть */
+@container (max-width: 600px) {
+  .detail {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
   .phase {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
