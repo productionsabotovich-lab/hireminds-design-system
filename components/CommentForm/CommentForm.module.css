@@ -22,6 +22,7 @@
   margin: 0;
   padding: var(--space-1);
   min-width: 180px; /* из макета */
+  max-width: calc(100% - var(--space-6));
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
@@ -39,6 +40,21 @@
   line-height: 1.5;
   color: var(--ink);
   cursor: pointer;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* подпись «роль» / «специалист»: mute на surface — 6.1:1, на bg-2 — 5.6:1 */
+.caption {
+  flex: none;
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
 }
 
 /* активный пункт — фон bg-2: ink на bg-2 — 17:1 */

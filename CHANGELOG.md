@@ -13,14 +13,17 @@
 Форма комментария к задаче по макету «Карточка задачи» (HIR-48). Новых токенов нет.
 
 ### Добавлено
-- `CommentForm` — `id`, `value`, `onChange`, `placeholder`, `mentions`, `onSubmit(text)`, `loading`, `label`, `hint`:
-  `Textarea` с подсказкой ролей на «@» (фильтр по началу имени, выбор подставляет «@Роль »), подпись и кнопка `ink`
-  «Отправить». Клавиатура: ↓ / ↑, Enter или Tab, Esc; Ctrl/⌘+Enter — отправить. Поле — `combobox`, список — `listbox`.
+- `CommentForm` — `id`, `value`, `onChange`, `placeholder`, `mentions`, `onSubmit(text)`, `loading`, `error`, `label`, `hint`:
+  `Textarea` с подсказкой упоминаний на «@» в позиции курсора, подпись и кнопка `ink` «Отправить».
+  Упоминания — `CommentMention { name, kind: "role" | "person", caption?, image? }`: роли из workflow и специалисты,
+  с аватаром и подписью «роль» / «специалист»; фильтр по началу слова имени или подписи. Без `mentions` — обычное поле.
+  Клавиатура: ↓ / ↑, Enter или Tab, Esc; Ctrl/⌘+Enter — отправить; во время ввода через IME клавиши не перехватываются.
+  Поле — `combobox`, список — `listbox`. `onSubmit` может вернуть `Promise`: текст очищается после успеха, при ошибке остаётся.
 - `Textarea`: необязательные `onKeyDown` и `combobox: { listId, expanded, activeId? }`; без них поле — как раньше.
 
 ### Что обновить в платформе
 - Тег `#v0.6.0`.
-- Карточка задачи под журналом — `<CommentForm mentions={роли проекта} loading={…} onSubmit={(text) => …} />`.
+- Карточка задачи под журналом — `<CommentForm mentions={роли workflow и специалисты проекта} loading={…} error={…} onSubmit={(text) => …} />`.
 
 ## 0.5.0 — 2026-10-24
 

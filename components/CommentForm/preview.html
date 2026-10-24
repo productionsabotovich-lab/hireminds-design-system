@@ -1,4 +1,4 @@
-<!-- @dsCard group="Forms" height=1250 -->
+<!-- @dsCard group="Forms" height=1520 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -8,9 +8,8 @@
   body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
   .pv-col { display: flex; flex-direction: column; gap: 24px; max-width: 640px; }
   .pv-box { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-  /* над открытой подсказкой — место: список ролей встаёт над полем */
-  /* открытая подсказка встаёт над полем — подпись состояния под формой */
-  .pv-open { padding-top: 120px; }
+  /* открытая подсказка встаёт над полем — место над формой, подпись состояния под формой */
+  .pv-open { padding-top: 176px; }
   .pv-open1 { padding-top: 36px; }
   .pv-narrow { max-width: 343px; }
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
@@ -20,18 +19,22 @@
 <div id="root"></div>
 <script>
   var H = window.Hireminds, h = React.createElement;
-  var ROLES = ['Analyst', 'Developer', 'Reviewer', 'QA'];
+  var MENTIONS = [
+    { name: 'Developer', kind: 'role' }, { name: 'Reviewer', kind: 'role' }, { name: 'QA', kind: 'role' }, { name: 'Аналитик', kind: 'role' },
+    { name: 'Анна Петрова', kind: 'person' }, { name: 'Дмитрий Орлов', kind: 'person' }];
   var box = function (cap, p, cls) {
-    var form = h(H.CommentForm, Object.assign({ mentions: ROLES, onSubmit: function () {} }, p));
+    var form = h(H.CommentForm, Object.assign({ mentions: MENTIONS, onSubmit: function () {} }, p));
     var label = h('span', { className: 'pv-cap' }, cap);
     return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, cls && cls.indexOf('pv-open') === 0 ? [h('span', { key: 'f' }, form), h('span', { key: 'c' }, label)] : [h('span', { key: 'c' }, label), h('span', { key: 'f' }, form)]);
   };
   ReactDOM.createRoot(document.getElementById('root')).render(
     h('div', { className: 'pv-col' },
       box('Пусто', { id: 'cm-empty' }),
-      box('Набрано «@»: все роли', { id: 'cm-all', value: '@' }, 'pv-open'),
+      box('Набрано «@»: роли и специалисты', { id: 'cm-all', value: '@' }, 'pv-open'),
       box('Набрано «@Dev»: одна роль', { id: 'cm-dev', value: 'Проверьте, пожалуйста, права owner на себе: @Dev' }, 'pv-open1'),
       box('Отправка', { id: 'cm-send', value: 'Проверьте, пожалуйста, права owner на себе: @Developer', loading: true }),
+      box('Ошибка отправки: текст остаётся', { id: 'cm-error', value: '@Анна Петрова посмотрите, пожалуйста, ответ Reviewer', error: 'Не отправлено: нет связи с трекером. Повторите.' }),
+      box('Без упоминаний (mentions пусто)', { id: 'cm-plain', mentions: [] }),
       box('375 px: кнопка на всю ширину', { id: 'cm-narrow', value: 'Нужен тест на viewer' }, 'pv-narrow'))
   );
 </script>
