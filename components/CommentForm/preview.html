@@ -23,7 +23,7 @@
     { name: 'Developer', kind: 'role' }, { name: 'Reviewer', kind: 'role' }, { name: 'QA', kind: 'role' }, { name: 'Аналитик', kind: 'role' },
     { name: 'Анна Петрова', kind: 'person' }, { name: 'Дмитрий Орлов', kind: 'person' }];
   var box = function (cap, p, cls) {
-    var form = h(H.CommentForm, Object.assign({ mentions: MENTIONS, onSubmit: function () {} }, p));
+    var form = h(H.CommentForm, Object.assign({ mentions: MENTIONS, onSubmit: function () {}, hint: 'Комментарий попадает в журнал и в тред Linear' }, p));
     var label = h('span', { className: 'pv-cap' }, cap);
     return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, cls && cls.indexOf('pv-open') === 0 ? [h('span', { key: 'f' }, form), h('span', { key: 'c' }, label)] : [h('span', { key: 'c' }, label), h('span', { key: 'f' }, form)]);
   };

@@ -21,6 +21,8 @@ export interface TextareaProps {
   maxLength?: number | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
+  /** Только чтение: текст виден и выделяется, фокус остаётся — например, во время отправки */
+  readOnly?: boolean | undefined;
   /** Клавиши в поле: выбор из подсказки (CommentForm) */
   onKeyDown?: ((e: KeyboardEvent<HTMLTextAreaElement>) => void) | undefined;
   /** Поле с подсказкой-списком: role="combobox", aria-controls, aria-expanded, aria-activedescendant */
@@ -43,6 +45,7 @@ export function Textarea({
   maxLength,
   required = false,
   disabled = false,
+  readOnly = false,
   onKeyDown,
   combobox,
 }: TextareaProps) {
@@ -70,6 +73,7 @@ export function Textarea({
         maxLength={maxLength}
         required={required}
         disabled={disabled}
+        readOnly={readOnly}
         aria-required={required || undefined}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy || undefined}

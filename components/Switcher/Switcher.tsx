@@ -18,7 +18,12 @@ export interface SwitcherProps {
   className?: string | undefined;
   /** Подпись группы для диктора: «Вид журнала» */
   label?: string | undefined;
+  /** id панели с содержимым вкладок: вкладки получают aria-controls и id вида `${panelId}-tab-${tab.id}` */
+  panelId?: string | undefined;
 }
+
+/** id вкладки для aria-labelledby панели: <div role="tabpanel" id={panelId} aria-labelledby={switcherTabId(panelId, activeId)}> */
+export const switcherTabId = (panelId: string, tabId: string) => `${panelId}-tab-${tabId}`;
 
 /**
  * Switcher — compact tab-row, used on signin/create-account screen.
@@ -27,7 +32,7 @@ export interface SwitcherProps {
  *
  * Styling: CSS Modules (Switcher.module.css). Design tokens from globals.css.
  */
-export function Switcher({ tabs, activeId, onSelect, className, label }: SwitcherProps) {
+export function Switcher({ tabs, activeId, onSelect, className, label, panelId }: SwitcherProps) {
   // клавиатура по шаблону WAI-ARIA tabs: в порядке Tab — только активная вкладка, стрелки и Home/End — по вкладкам
   // если activeId не совпал ни с одной вкладкой, в порядок Tab встаёт первая — иначе группа недоступна с клавиатуры
   const focusId = tabs.some((t) => t.id === activeId) ? activeId : tabs[0]?.id;
@@ -59,6 +64,8 @@ export function Switcher({ tabs, activeId, onSelect, className, label }: Switche
         <button
           key={tab.id}
           role="tab"
+          id={panelId ? switcherTabId(panelId, tab.id) : undefined}
+          aria-controls={panelId}
           aria-selected={tab.id === activeId}
           tabIndex={tab.id === focusId ? 0 : -1}
           type="button"

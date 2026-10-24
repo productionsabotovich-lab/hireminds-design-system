@@ -62,7 +62,7 @@ export function CommentForm({
   loading = false,
   error,
   label = "Комментарий",
-  hint = "Комментарий попадает в журнал и в тред Linear",
+  hint = "Комментарий попадает в журнал задачи",
 }: CommentFormProps) {
   const [inner, setInner] = useState("");
   const [active, setActive] = useState(0);
@@ -178,7 +178,7 @@ export function CommentForm({
           onChange={(next) => change(next, domCaret())}
           placeholder={placeholder ?? (withMentions ? "Напишите комментарий; @ — упомянуть роль или специалиста" : "Напишите комментарий")}
           error={error}
-          disabled={loading}
+          readOnly={loading}
           onKeyDown={onKeyDown}
           combobox={withMentions ? { listId, expanded: open, activeId: open ? optionId(current) : undefined } : undefined}
         />

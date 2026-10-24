@@ -73,7 +73,7 @@ export type { KickerProps } from "./Kicker";
 export { Plate } from "./Plate";
 export type { PlateProps, PlateVariant } from "./Plate";
 
-export { Switcher } from "./Switcher";
+export { Switcher, switcherTabId } from "./Switcher";
 export type { SwitcherProps, SwitcherTab } from "./Switcher";
 
 export { PasswordStrengthMeter } from "./PasswordStrengthMeter";
