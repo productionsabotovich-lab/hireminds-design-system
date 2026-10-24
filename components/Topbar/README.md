@@ -32,11 +32,14 @@ import { Topbar, Brand, TopbarStatus } from "../index";
 Шапка webapp: в правом слоте — ссылки `TopbarLink` и аватар.
 
 ```tsx
+import { Topbar, Brand, TopbarLink, UserAvatar } from "../index";
+
 <Topbar
   left={<Brand />}
   right={
     <>
-      <TopbarLink label="Журнал" icon="log" badge={{ kind: "soon" }} />
+      <TopbarLink label="Моя команда" badge={{ kind: "soon" }} />
+      <TopbarLink label="Журнал" badge={{ kind: "soon" }} />
       <TopbarLink href="/decisions" label="Мои решения" shortLabel="Решения" icon="inbox" badge={{ kind: "count", value: 4 }} />
       <UserAvatar name="Антон Саботович" size="sm" shape="circle" />
     </>

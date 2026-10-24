@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=360 -->
+<!-- @dsCard group="Navigation" height=400 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -11,9 +11,14 @@
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
   .pv-narrow { max-width: 343px; }
   /* состояния в статичном превью — те же значения, что у :hover и :focus-visible */
-  .pv-hover a { background: var(--bg-2); color: var(--ink); }
-  .pv-focus a { outline: 2px solid var(--ink); outline-offset: 2px; }
-  /* «375 px»: короткая подпись, как при ширине до 560px */
+  .pv-hover a { border-color: var(--line-2); color: var(--ink); }
+  .pv-focus a { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* превью уже 720px: ссылки soon показаны, как в широкой шапке */
+  .pv-wide [aria-disabled] { display: inline-flex !important; }
+  .pv-wide a > span:nth-child(2) { display: inline !important; }
+  .pv-wide a > span:nth-child(3) { display: none !important; }
+  /* «375 px»: soon скрыты, короткая подпись — как на экране до 600px */
+  .pv-narrow [aria-disabled] { display: none; }
   .pv-narrow a > span:nth-child(2) { display: none; }
   .pv-narrow a > span:nth-child(3) { display: inline; }
 </style>
@@ -23,19 +28,19 @@
 <script>
   var H = window.Hireminds, h = React.createElement;
   var dec = function (v, extra) { return h(H.TopbarLink, Object.assign({ href: '#', label: 'Мои решения', shortLabel: 'Решения', icon: 'inbox', badge: { kind: 'count', value: v } }, extra || {})); };
-  var team = h(H.TopbarLink, { label: 'Моя команда', icon: 'layers', badge: { kind: 'soon' } });
-  var log = h(H.TopbarLink, { label: 'Журнал', icon: 'log', badge: { kind: 'soon' } });
+  var team = h(H.TopbarLink, { label: 'Моя команда', badge: { kind: 'soon' } });
+  var log = h(H.TopbarLink, { label: 'Журнал', badge: { kind: 'soon' } });
   var me = h(H.UserAvatar, { name: 'Антон Саботович', size: 'sm', shape: 'circle' });
   ReactDOM.createRoot(document.getElementById('root')).render(
     h('div', { className: 'pv-col' },
       h('span', { className: 'pv-cap' }, 'Шапка: soon · есть решения'),
-      h('div', { className: 'pv-row' }, team, log, dec(4), me),
+      h('div', { className: 'pv-row pv-wide' }, team, log, dec(4), me),
       h('span', { className: 'pv-cap' }, 'Нет решений · много · текущая страница'),
-      h('div', { className: 'pv-row' }, dec(0), dec(128), dec(4, { current: true })),
+      h('div', { className: 'pv-row pv-wide' }, dec(0), dec(128), dec(4, { current: true })),
       h('span', { className: 'pv-cap' }, 'Наведение · фокус'),
-      h('div', { className: 'pv-row' }, h('span', { className: 'pv-hover' }, dec(4)), h('span', { className: 'pv-focus' }, dec(4))),
-      h('span', { className: 'pv-cap' }, '375 px'),
-      h('div', { className: 'pv-row pv-narrow' }, dec(4), me))
+      h('div', { className: 'pv-row pv-wide' }, h('span', { className: 'pv-hover' }, dec(4)), h('span', { className: 'pv-focus' }, dec(4))),
+      h('span', { className: 'pv-cap' }, '375 px · «Моя команда» и «Журнал» скрыты'),
+      h('div', { className: 'pv-row pv-narrow' }, team, log, dec(4), me))
   );
 </script>
 </body>

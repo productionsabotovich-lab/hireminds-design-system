@@ -14,4 +14,4 @@ type Story = StoryObj<typeof TopbarLink>;
 export const Decisions: Story = { args: { href: "#", label: "Мои решения", shortLabel: "Решения", icon: "inbox", badge: { kind: "count", value: 4 } } };
 export const NoDecisions: Story = { args: { href: "#", label: "Мои решения", icon: "inbox", badge: { kind: "count", value: 0 } } };
 export const Current: Story = { args: { href: "#", label: "Мои решения", icon: "inbox", badge: { kind: "count", value: 4 }, current: true } };
-export const Soon: Story = { args: { label: "Моя команда", icon: "layers", badge: { kind: "soon" } } };
+export const Soon: Story = { args: { label: "Моя команда", badge: { kind: "soon" } } };

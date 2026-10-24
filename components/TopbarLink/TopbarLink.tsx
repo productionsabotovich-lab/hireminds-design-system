@@ -1,24 +1,34 @@
 import { Icon, type IconName } from "../Icon";
 import s from "./TopbarLink.module.css";
 
-/** Ссылка правого слота Topbar: иконка, подпись, бейдж-счётчик или пометка «итерация 3» */
-export interface TopbarLinkProps {
-  /** Адрес; у ссылки с бейджем soon не нужен — она неактивна */
-  href?: string | undefined;
+interface TopbarLinkBase {
   /** Подпись: «Мои решения», «Моя команда», «Журнал» */
   label: string;
-  /** Подпись на узком экране (до 560px): «Решения» */
+  /** Подпись на узком экране (до 600px): «Решения» */
   shortLabel?: string | undefined;
-  /** Иконка из набора Icon */
+  /** Иконка из набора Icon; в макете — только у «Мои решения» */
   icon?: IconName | undefined;
-  /** count — число (заливка ink при > 0, inset при 0, «99+»); soon — пометка «итерация 3», ссылка неактивна */
-  badge?: { kind: "count"; value: number } | { kind: "soon"; value?: string | undefined } | undefined;
   /** Текущая страница: aria-current и заливка inset */
   current?: boolean | undefined;
 }
 
+/** Ссылка правого слота Topbar: иконка, подпись, бейдж-счётчик или пометка «итерация 3» */
+export type TopbarLinkProps = TopbarLinkBase &
+  (
+    | {
+        /** Адрес — обязателен у активной ссылки */
+        href: string;
+        /** count — число (заливка ink при > 0, inset при 0, «99+») */
+        badge?: { kind: "count"; value: number } | undefined;
+      }
+    | {
+        href?: undefined;
+        /** soon — пометка «итерация 3», ссылка неактивна и скрыта на экране до 720px */
+        badge: { kind: "soon"; value?: string | undefined };
+      }
+  );
+
 export function TopbarLink({ href, label, shortLabel, icon, badge, current = false }: TopbarLinkProps) {
-  const soon = badge?.kind === "soon";
   const text = (
     <>
       {icon && (
@@ -31,9 +41,9 @@ export function TopbarLink({ href, label, shortLabel, icon, badge, current = fal
     </>
   );
 
-  if (soon) {
+  if (badge?.kind === "soon") {
     return (
-      <span className={[s.link, s.soon].join(" ")} aria-disabled="true">
+      <span className={[s.link, s.soon].join(" ")} role="link" aria-disabled="true">
         {text}
         <span className={s.soonBadge}>{badge.value ?? "итерация 3"}</span>
       </span>
