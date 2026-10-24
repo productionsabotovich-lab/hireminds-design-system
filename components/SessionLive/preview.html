@@ -1,0 +1,48 @@
+<!-- @dsCard group="Feedback" height=1180 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>SessionLive — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px 24px; align-items: start; }
+  .pv-box { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .pv-wide { grid-column: 1 / -1; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* состояния в статичном превью — те же значения, что у :hover и :focus-visible */
+  .pv-hover a { border-color: var(--line-2); background: var(--bg); }
+  .pv-focus a { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* «375 px»: раскладка узкой колонки — как при ширине экрана до 600px */
+  .pv-narrow a { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "head go" "meta go" "plan plan" "op op"; padding: var(--space-3); }
+  .pv-narrow a > span:first-child { display: none; }
+  .pv-now { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var ago = function (min) { return Date.now() - min * 60000; };
+  var base = { role: 'Developer', sessionId: 'S-118', href: '#', resumed: 'transcript', since: ago(23) };
+  var L = function (o) { return h(H.SessionLive, Object.assign({}, base, o)); };
+  var box = function (cap, el, cls) { return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      box('running · план 3 из 6', L({ plan: { done: 3, total: 6 }, operation: 'скрывает действия по роли в таблице, меню и карточке участника' })),
+      box('starting · плана ещё нет', L({ status: 'starting', resumed: null, since: ago(0), operation: 'читает причину возврата и отчёт QA' })),
+      box('возобновлена без транскрипта', L({ resumed: 'no-transcript', since: ago(2), plan: { done: 1, total: 6 }, operation: 'читает пакет контекста из журнала задачи' })),
+      box('план выполнен', L({ since: ago(46), plan: { done: 6, total: 6 }, operation: 'готовит отчёт для PR' })),
+      box('answering · вопрос после шага', L({ status: 'answering', since: ago(29), plan: { done: 4, total: 6 }, operation: 'отвечает Антону Саботовичу: почему у viewer в меню был виден пункт «Сменить роль»' })),
+      box('retrying · повтор после технической ошибки', L({ status: 'retrying', since: ago(31), plan: { done: 3, total: 6 }, operation: 'новая песочница, попытка 2 из 2: запускает тесты' })),
+      box('loading · обновляется', L({ loading: true, plan: { done: 3, total: 6 }, operation: 'скрывает действия по роли в таблице, меню и карточке участника' })),
+      box('наведение', L({ since: ago(65), plan: { done: 4, total: 6 }, operation: 'пишет тесты для viewer' }), 'pv-hover'),
+      box('фокус с клавиатуры', L({ plan: { done: 4, total: 6 }, operation: 'пишет тесты для viewer' }), 'pv-focus'),
+      box('375 px · аватар скрыт', L({ plan: { done: 5, total: 6 }, operation: 'запускает проверки проекта: lint, typecheck, тесты' }), 'pv-narrow'),
+      box('variant now · заглушка до макета HIR-32', h('div', { className: 'pv-now' },
+        h(H.SessionLive, Object.assign({}, base, { variant: 'now', since: ago(4), plan: { done: 3, total: 6, current: 'Тесты для viewer' }, operation: 'запускает тесты участников', detail: 'npm test -- members' }))), 'pv-wide'))
+  );
+</script>
+</body>
+</html>
