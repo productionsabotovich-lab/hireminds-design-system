@@ -13,7 +13,7 @@ export interface DescriptionItem {
   mono?: boolean | undefined;
   /** row: icon before the label */
   icon?: IconName | undefined;
-  /** row: full text of a value cut with an ellipsis */
+  /** row: full text of a value cut with an ellipsis; a string value is its own title */
   title?: string | undefined;
 }
 
@@ -39,7 +39,7 @@ export function DescriptionList({ items, layout = "stack", columns = 4 }: Descri
               )}
               {it.label}
             </dt>
-            <dd className={[s.rowValue, it.mono ? s.rowMono : ""].filter(Boolean).join(" ")} title={it.title}>
+            <dd className={[s.rowValue, it.mono ? s.rowMono : ""].filter(Boolean).join(" ")} title={it.title ?? (typeof it.value === "string" ? it.value : undefined)}>
               {it.value}
             </dd>
           </div>

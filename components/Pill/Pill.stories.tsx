@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof Pill>;
 
 export const Default: Story = {
-  args: { tone: 'accent', dot: true, pulse: true, children: 'Выполняется' },
+  args: { tone: 'accent', dot: true, pulse: true, children: 'В работе' },
 };
 
 export const RunStates: Story = {

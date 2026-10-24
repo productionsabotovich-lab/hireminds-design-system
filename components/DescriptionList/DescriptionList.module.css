@@ -55,6 +55,7 @@
   grid-template-columns: 128px minmax(0, 1fr); /* из макета: колонка подписи 128px */
   gap: var(--space-3);
   align-items: center;
+  box-sizing: border-box; /* 36px вместе с паддингом и рамкой — не зависит от base.css */
   min-height: 36px; /* из макета: высота строки */
   padding: var(--space-1) var(--space-4);
   border-top: 1px solid var(--line);
