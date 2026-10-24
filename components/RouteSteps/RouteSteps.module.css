@@ -1,12 +1,20 @@
 /* Маршрут по макету «Карточка задачи» (.rh): равная сетка по числу шагов, линия line между точками */
+
+/* шагов больше, чем помещается, — строка прокручивается по горизонтали, а не сжимает подписи */
+.scroll {
+  position: relative; /* offsetParent шагов: по нему компонент прокручивает к текущему */
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
 .list {
-  --route-bg: var(--bg); /* фон под точкой: на surface задай --route-bg: var(--surface) */
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  min-width: 0;
+  /* равные колонки; колонка не уже самого длинного слова подписи */
+  grid-template-columns: repeat(var(--n), minmax(min-content, 1fr));
 }
 
 .step {
@@ -15,30 +23,43 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  min-width: 0;
+  box-sizing: border-box;
+  min-width: 48px; /* шесть шагов помещаются в боковую колонку 320px из макета без прокрутки */
+  padding-inline: var(--space-1); /* соседние подписи не слипаются */
 }
 
-/* линия от центра шага к центру следующего; точка лежит поверх */
-.step:not(:last-child)::after {
+/* линия — две половины у каждого шага: от края колонки до места точки и от места точки до края.
+   Под точку не заходит (подложка не нужна на любом фоне) и сходится при колонках разной ширины. */
+.step::before,
+.step::after {
   content: "";
   position: absolute;
   top: 8px; /* из макета: центр точки 16px */
-  left: 50%;
-  width: 100%;
   height: 1px;
   background: var(--line);
 }
 
+.step::before {
+  left: 0;
+  right: calc(50% + 8px);
+}
+
+.step::after {
+  left: calc(50% + 8px);
+  right: 0;
+}
+
+.step:first-child::before,
+.step:last-child::after {
+  display: none;
+}
+
 .mark {
-  position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 16px; /* из макета: место точки */
   height: 16px;
-  background: var(--route-bg);
-  border-radius: 999px;
 }
 
 /* будущий шаг — пустая точка с контуром line-3 (3:1 к bg и surface) */
@@ -51,18 +72,30 @@
   border-radius: 999px;
 }
 
+/* подпись — до двух строк по словам, дальше многоточие; полный текст в title */
 .label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   max-width: 100%;
+  overflow: hidden;
   font-family: var(--font-ui);
   font-size: 11.5px; /* стиль caption-ui */
   line-height: 1.4;
   color: var(--mute);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: center;
 }
 
 .current .label {
   color: var(--ink);
   font-weight: 600;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

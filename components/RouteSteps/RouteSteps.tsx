@@ -1,10 +1,11 @@
-import type { CSSProperties } from "react";
+"use client";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { Dot } from "../Dot";
 import s from "./RouteSteps.module.css";
 
 /** Маршрут задачи в одну строку: точки на линии и подписи шагов по центру */
 export interface RouteStepsProps {
-  /** Короткие подписи шагов маршрута проекта: «Объём», «Code», «CI», «Ревью», «QA», «Приёмка» */
+  /** Подписи шагов маршрута из workflow проекта, по порядку: «Объём», «Code», «CI», «Ревью», «QA», «Приёмка» */
   steps: string[];
   /** Индекс текущего шага */
   current?: number | undefined;
@@ -15,22 +16,39 @@ export interface RouteStepsProps {
 }
 
 export function RouteSteps({ steps, current = 0, done = false, live = true }: RouteStepsProps) {
+  const scroller = useRef<HTMLDivElement>(null);
+
+  // шагов больше, чем помещается, — строка прокручивается; текущий шаг держим в видимой части
+  useEffect(() => {
+    const box = scroller.current;
+    const step = box?.querySelector<HTMLElement>('[aria-current="step"]');
+    if (!box || !step || box.scrollWidth <= box.clientWidth) return;
+    box.scrollLeft = step.offsetLeft - (box.clientWidth - step.offsetWidth) / 2;
+  }, [steps.length, current, done]);
+
   return (
-    <ol className={s.list} style={{ "--n": steps.length } as CSSProperties}>
-      {steps.map((label, i) => {
-        const state = done || i < current ? "done" : i === current ? "current" : "future";
-        return (
-          <li key={label} className={[s.step, s[state]].join(" ")} aria-current={state === "current" ? "step" : undefined}>
-            <span className={s.mark} aria-hidden="true">
-              {state === "done" && <Dot variant="status" tone="accent" size="sm" />}
-              {state === "current" && <Dot variant="status" tone="ink" size="md" pulse={live} />}
-            </span>
-            <span className={s.label} title={label}>
-              {label}
-            </span>
-          </li>
-        );
-      })}
-    </ol>
+    <div ref={scroller} className={s.scroll}>
+      <ol className={s.list} style={{ "--n": steps.length } as CSSProperties}>
+        {steps.map((label, i) => {
+          const state = done || i < current ? "done" : i === current ? "current" : "future";
+          return (
+            <li key={i} className={[s.step, s[state]].join(" ")} aria-current={state === "current" ? "step" : undefined}>
+              <span className={s.mark} aria-hidden="true">
+                {state === "done" && <Dot variant="status" tone="accent" size="sm" />}
+                {state === "current" && <Dot variant="status" tone="ink" size="md" pulse={live} />}
+              </span>
+              <span className={s.label} title={label}>
+                {label}
+              </span>
+              {state !== "future" && (
+                <span className={s.srOnly}>
+                  {state === "done" ? ", пройден" : live ? ", текущий, в работе" : ", текущий, ожидает"}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
