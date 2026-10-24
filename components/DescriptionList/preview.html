@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=210 -->
+<!-- @dsCard group="Data" height=820 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -6,22 +6,44 @@
 <title>DescriptionList — preview</title>
 <style>
   body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 10px; }
+  .pv-grid { margin-top: 12px; }
+  .pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 343px)); gap: 20px 24px; align-items: start; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* боковая колонка «О задаче»: Card-поверхность без внутренних отступов, ширина колонки макета */
+  .pv-side { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script>
   var H = window.Hireminds, h = React.createElement;
+  var BRANCH = 'feature/pil-15-roles-and-access-matrix';
+  var about = [
+    {label:'Приоритет',icon:'priority',value:h(H.Pill,{tone:'warn'},'Высокий')},
+    {label:'Тип',icon:'type',value:'feature'},
+    {label:'Эпик',icon:'epic',value:h(H.ExternalLink,{href:'#',variant:'inline'},'Роли и доступ')},
+    {label:'Репозиторий',icon:'repo',value:'hireminds-pilot-app',mono:true,title:'productionsabotovich-lab/hireminds-pilot-app'},
+    {label:'Ветка',icon:'branch',value:BRANCH,mono:true,title:BRANCH},
+    {label:'Раннер',icon:'runner',value:'Claude Code · Sonnet 5.5'},
+    {label:'Заведена',icon:'calendar',value:'22 окт, 18:04'}];
   ReactDOM.createRoot(document.getElementById('root')).render(
-    h(H.DescriptionList,{items:[
-      {label:'Состояние',value:h(H.Pill,{tone:'danger',dot:true},'Блокер')},
-      {label:'Фаза',value:'Review'},
-      {label:'Роль',value:'Reviewer'},
-      {label:'Круг',value:'2',mono:true},
-      {label:'В фазе',value:'38 мин',mono:true},
-      {label:'Задача',value:'HIR-28 Роли проекта'},
-      {label:'Начат',value:'16.10 09:12',mono:true},
-      {label:'Ответственный',value:'—'}]})
+    h('div',{className:'pv-col'},
+      h('span',{className:'pv-cap'},'stack — сводка в шапке записи'),
+      h(H.DescriptionList,{items:[
+        {label:'Состояние',value:h(H.Pill,{tone:'warn',dot:true},'Ждёт решения')},
+        {label:'Фаза',value:'Review'},
+        {label:'Роль',value:'Reviewer'},
+        {label:'Возвраты',value:'2',mono:true},
+        {label:'В фазе',value:'38 мин',mono:true},
+        {label:'Задача',value:'PIL-15 Роли и доступ'},
+        {label:'Начата',value:'16.10 09:12',mono:true},
+        {label:'Ответственный',value:'—'}]}),
+      h('div',{className:'pv-grid'},
+        h('div',{className:'pv-col'},h('span',{className:'pv-cap'},'row — «О задаче», рабочий стол'),
+          h('div',{className:'pv-side',style:{maxWidth:343}},h(H.DescriptionList,{layout:'row',items:about}))),
+        h('div',{className:'pv-col'},h('span',{className:'pv-cap'},'row — 375 px, ветка обрезана'),
+          h('div',{className:'pv-side',style:{maxWidth:280}},h(H.DescriptionList,{layout:'row',items:about.slice(2,6)})))))
   );
 </script>
 </body>

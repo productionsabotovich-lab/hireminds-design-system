@@ -44,3 +44,55 @@
   font-family: var(--font-mono);
   font-size: 12.5px;
 }
+
+/* row — «О задаче»: подпись и значение в одной строке, строки одной высоты (по макету «DescriptionList · строки») */
+.rows {
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr); /* из макета: колонка подписи 128px */
+  gap: var(--space-3);
+  align-items: center;
+  min-height: 36px; /* из макета: высота строки */
+  padding: var(--space-1) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.row:first-child {
+  border-top: 0;
+}
+
+.rowLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* значение — одна строка: длинное обрезается многоточием, полный текст — в title */
+.rowValue {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-ui);
+  font-size: 12px; /* стиль body-small */
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowMono {
+  font-family: var(--font-mono);
+}

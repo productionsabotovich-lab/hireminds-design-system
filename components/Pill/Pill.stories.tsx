@@ -6,7 +6,7 @@ const meta: Meta<typeof Pill> = {
   component: Pill,
   tags: ['autodocs'],
   argTypes: {
-    tone: { control: 'select', options: ['accent', 'warn', 'danger', 'dim'] },
+    tone: { control: 'select', options: ['accent', 'warn', 'danger', 'dim', 'ink'] },
     size: { control: 'select', options: ['sm', 'md'] },
   },
 };
@@ -21,11 +21,11 @@ export const Default: Story = {
 export const RunStates: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-      <Pill tone="accent" dot pulse>Выполняется</Pill>
-      <Pill tone="warn" dot>Ожидает решения</Pill>
-      <Pill tone="danger" dot>Блокер</Pill>
-      <Pill tone="dim">Завершён</Pill>
-      <Pill tone="dim">Отменён</Pill>
+      <Pill tone="accent" dot pulse>В работе</Pill>
+      <Pill tone="warn" dot>Ждёт решения</Pill>
+      <Pill tone="danger" dot>Ошибка</Pill>
+      <Pill tone="dim">Остановлено</Pill>
+      <Pill tone="ink">Review</Pill>
     </div>
   ),
 };
