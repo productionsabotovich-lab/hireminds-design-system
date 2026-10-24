@@ -3,7 +3,7 @@
 Источник правды для визуального языка Hireminds: токены, базовые стили и UI-компоненты.
 Продукт собирает экраны только отсюда. Брендбук — [docs/brand.md](docs/brand.md).
 
-Витрина (превью и брендбук): https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx
+Витрина (превью, токены, брендбук и документы одной страницей): https://claude.ai/artifact/JprvN1cDAN8BiMJ7wVBZKm
 
 ## Структура
 
@@ -38,7 +38,7 @@ npm install
 npm run build        # tokens.css + dist/bundle.js|css + dist/index.d.ts
 npm run typecheck    # TypeScript по всем компонентам
 npm run check        # рендер всех preview.html в headless Chromium → out/shots/
-npm run pack:artifact  # раскладка для витрины → out/artifact/project/
+npm run pack:page    # витрина одной страницей → out/vitrina.html
 ```
 
 ## Подключение в приложение (Next.js)
@@ -75,8 +75,8 @@ import { Button, Card, Field } from "@hireminds/design-system/components";
 | Макеты экранов | Claude Design на системе Hireminds: агент-дизайнер платформы по брифу | утверждение владельцем, задачи на недостающие компоненты |
 | Экраны продукта | Claude Code в репозитории платформы | обновление зависимости `@hireminds/design-system` |
 
-Витрина — дизайн-система Hireminds в Claude Design. После каждого влития в `main` агент пересобирает систему
-(`npm run build && npm run check && npm run pack:artifact`) и публикует витрину той же ссылкой (скилл
+Витрина — одна страница с превью всех компонентов, токенами и документами. После каждого влития в `main` агент
+пересобирает систему (`npm run build && npm run check && npm run pack:page`) и публикует витрину той же ссылкой (скилл
 `publish-library`); PR — по задаче HIR, проверяет и вливает агент платформы. Конвейер целиком —
 [docs/pipeline.md](docs/pipeline.md). Команда `/design-sync` синхронизирует со старым сайтом claude.ai/design
 и в конвейере не используется.

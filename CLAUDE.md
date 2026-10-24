@@ -53,9 +53,9 @@ npm run build && npm run typecheck && npm run check
 ## Публикация
 
 - **Витрина** публикуется после каждого влития в `main` автоматически, без отдельного «да»: скилл `/publish-library`
-  (`npm run build && npm run check && npm run pack:artifact`, затем файлы `out/artifact/project/` — в артефакт
-  https://claude.ai/artifact/5aJZ9yo2cVBZHKEsJE6pmx той же ссылкой; индекс `project/design-system.json` читается
-  и обновляется последним). Артефакт приватный; это дизайн-система, на которой работает Claude Design.
+  (`npm run build && npm run check && npm run pack:page`, затем `out/vitrina.html` инструментом Artifact в
+  https://claude.ai/artifact/JprvN1cDAN8BiMJ7wVBZKm той же ссылкой). Артефакт приватный. Прежняя витрина типа Design System
+  (5aJZ9yo2cVBZHKEsJE6pmx) не обновляется; `pack:artifact` оставлен, но не используется.
 - **GitHub:** ветка и PR — по задаче HIR с меткой `design-system`; в `main` напрямую не пишешь. PR проверяет и вливает
   сессия платформы `hireminds-platform`.
 - **Правки из Claude Design** переносятся в репозиторий PR-ом через `/pull-design-edits`, с указанием источника.
