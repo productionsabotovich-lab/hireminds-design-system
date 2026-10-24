@@ -1,7 +1,11 @@
 {
   "name": "@hireminds/design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/productionsabotovich-lab/hireminds-design-system.git"
+  },
   "description": "Hireminds design system «B2 · Frost Graphite»: tokens, base styles and UI components.",
   "exports": {
     "./components": "./components/index.ts",
@@ -23,7 +27,8 @@
     "typecheck": "tsc -p tsconfig.json",
     "check": "node scripts/render-check.mjs",
     "pack:artifact": "node scripts/pack-artifact.mjs",
-    "pack:page": "node scripts/pack-page.mjs"
+    "pack:page": "node scripts/pack-page.mjs",
+    "check:version": "node scripts/check-version.mjs"
   },
   "peerDependencies": {
     "react": ">=18",

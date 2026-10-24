@@ -43,9 +43,12 @@ npm run pack:page    # витрина одной страницей → out/vitr
 
 ## Подключение в приложение (Next.js)
 
+Пакет ставится с GitHub по тегу версии; список версий и что менялось — [CHANGELOG.md](CHANGELOG.md),
+релизы — https://github.com/productionsabotovich-lab/hireminds-design-system/releases. Обновление — смена тега.
+
 ```jsonc
 // package.json приложения
-"dependencies": { "@hireminds/design-system": "github:<owner>/hireminds-design-system" }
+"dependencies": { "@hireminds/design-system": "github:productionsabotovich-lab/hireminds-design-system#v0.2.0" }
 ```
 
 ```ts
