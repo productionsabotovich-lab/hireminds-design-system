@@ -1,0 +1,39 @@
+<!-- @dsCard group="Forms" height=1250 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>CommentForm — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 24px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  /* над открытой подсказкой — место: список ролей встаёт над полем */
+  /* открытая подсказка встаёт над полем — подпись состояния под формой */
+  .pv-open { padding-top: 120px; }
+  .pv-open1 { padding-top: 36px; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var ROLES = ['Analyst', 'Developer', 'Reviewer', 'QA'];
+  var box = function (cap, p, cls) {
+    var form = h(H.CommentForm, Object.assign({ mentions: ROLES, onSubmit: function () {} }, p));
+    var label = h('span', { className: 'pv-cap' }, cap);
+    return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, cls && cls.indexOf('pv-open') === 0 ? [h('span', { key: 'f' }, form), h('span', { key: 'c' }, label)] : [h('span', { key: 'c' }, label), h('span', { key: 'f' }, form)]);
+  };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('Пусто', { id: 'cm-empty' }),
+      box('Набрано «@»: все роли', { id: 'cm-all', value: '@' }, 'pv-open'),
+      box('Набрано «@Dev»: одна роль', { id: 'cm-dev', value: 'Проверьте, пожалуйста, права owner на себе: @Dev' }, 'pv-open1'),
+      box('Отправка', { id: 'cm-send', value: 'Проверьте, пожалуйста, права owner на себе: @Developer', loading: true }),
+      box('375 px: кнопка на всю ширину', { id: 'cm-narrow', value: 'Нужен тест на viewer' }, 'pv-narrow'))
+  );
+</script>
+</body>
+</html>

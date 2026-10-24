@@ -34,6 +34,7 @@
 | | [StepIndicator](step-indicator.md) | Компонент StepIndicator |
 | Ввод | [Field](form-field.md), [Input](input.md) | Компоненты Field, Input |
 | | [Textarea](../../components/Textarea/README.md) — многострочное поле | Компонент Textarea |
+| | [CommentForm](../../components/CommentForm/README.md) — комментарий к задаче с подсказкой ролей на «@» | Компонент CommentForm |
 | | [PasswordStrengthMeter](password-strength.md) | Компонент PasswordStrengthMeter |
 | | [KeyInput](key-input.md), [SaveBar](save-bar.md) | Заявка |
 | Данные | [UserAvatar](user-avatar.md) | Компонент UserAvatar |

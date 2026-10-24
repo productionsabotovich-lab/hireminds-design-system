@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import s from "./Textarea.module.css";
 
 /** Textarea — многострочное поле: подпись, поле, подсказка или ошибка, счётчик */
@@ -21,6 +21,10 @@ export interface TextareaProps {
   maxLength?: number | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
+  /** Клавиши в поле: выбор из подсказки (CommentForm) */
+  onKeyDown?: ((e: KeyboardEvent<HTMLTextAreaElement>) => void) | undefined;
+  /** Поле с подсказкой-списком: role="combobox", aria-controls, aria-expanded, aria-activedescendant */
+  combobox?: { listId: string; expanded: boolean; activeId?: string | undefined } | undefined;
 }
 
 /**
@@ -39,6 +43,8 @@ export function Textarea({
   maxLength,
   required = false,
   disabled = false,
+  onKeyDown,
+  combobox,
 }: TextareaProps) {
   const [inner, setInner] = useState("");
   const text = value ?? inner;
@@ -67,6 +73,12 @@ export function Textarea({
         aria-required={required || undefined}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy || undefined}
+        role={combobox ? "combobox" : undefined}
+        aria-autocomplete={combobox ? "list" : undefined}
+        aria-controls={combobox?.listId}
+        aria-expanded={combobox ? combobox.expanded : undefined}
+        aria-activedescendant={combobox?.expanded ? combobox.activeId : undefined}
+        onKeyDown={onKeyDown}
         className={[s.field, error ? s.fieldError : ""].filter(Boolean).join(" ")}
         onChange={(e) => {
           if (value === undefined) setInner(e.target.value);
