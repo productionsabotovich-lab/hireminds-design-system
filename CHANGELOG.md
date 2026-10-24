@@ -20,7 +20,7 @@
 - `UserAvatar` `color="accent"`: градиент `accent-deep` → `accent-deep-2` вместо `accent` → бирюзовый
   `oklch(0.55 0.18 200)`. Бирюзу запрещает брендбук; белые инициалы были 3.3–4.0:1, теперь 5.0–6.5:1 (AA).
   Аватар текущего пользователя стал темнее; `accent` в остальных местах не меняется.
-- `tokens.json`: `usage` у `space-9` — по коду: верхний паддинг страницы, `MainPanel`, auth-экраны; `StageHeader`
+- `tokens.json`: `usage` у `space-9` — по паттернам: верхний паддинг страницы, `MainPanel`, auth-экраны; `StageHeader`
   использует `space-5` (записано в его README). `tokens.css` не меняется: `usage` в него не выводится.
 - Паттерны `TopbarSteps` и `Timeline`: цифра текущего шага — `accent-ink` на `accent-soft` с рамкой `accent` (10:1)
   вместо белой на `accent` (3.3:1).
