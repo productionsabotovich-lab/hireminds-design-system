@@ -17,6 +17,7 @@ for (const f of ["dist/bundle.js", "dist/bundle.css", "tokens/tokens.css"]) {
 // ---------- версия ----------
 const git = (...args) => execFileSync("git", ["-c", `safe.directory=${root}`, "-C", root, ...args], { encoding: "utf8" }).trim();
 // незакоммиченные правки отслеживаемых файлов помечаются у коммита: такая сборка не совпадает с main
+const version = JSON.parse(read("package.json")).version;
 const commit = git("rev-parse", "--short", "HEAD") + (git("status", "--porcelain", "--untracked-files=no") ? " + правки" : "");
 const built = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + " МСК";
 
@@ -244,7 +245,7 @@ a { color: inherit; }
 </style>
 <header class="top">
   <span class="brand"><i>H</i>Hireminds</span><span class="top-sub">Дизайн-система · B2 · Frost Graphite</span>
-  <span class="ver"><span>коммит <b>${commit}</b></span><span>сборка <b>${built}</b></span><span>компонентов <b>${total}</b></span></span>
+  <span class="ver"><span>версия <b>${version}</b></span><span>коммит <b>${commit}</b></span><span>сборка <b>${built}</b></span><span>компонентов <b>${total}</b></span></span>
 </header>
 <div class="wrap">
 ${nav}
