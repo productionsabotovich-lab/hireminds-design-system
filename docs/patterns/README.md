@@ -49,6 +49,11 @@
 | Терминал | [TerminalBox](terminal.md), [TerminalForecast](terminal-forecast.md) | Компоненты TerminalBox, TerminalForecast |
 | Шаги флоу | [Timeline](timeline.md), [ProgressSteps](progress-steps.md) | Не создаётся |
 
+## Каталог новых компонентов 2b
+
+Имена, варианты и пропсы компонентов для экранов итерации 2 (карточка задачи, сессия агента, страница решения) —
+[каталог 2b](../catalog/components-2b.md): источник правды для их состава; правки — PR в этот файл.
+
 ## Компоненты без паттерна в базе
 
 Появились после базы; правила — в их README: [ConfirmDialog](../../components/ConfirmDialog/README.md),

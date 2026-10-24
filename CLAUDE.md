@@ -27,7 +27,7 @@
 Заявки на доработку приходят задачами в Linear: команда **HIR** (Hireminds), метка **`design-system`**.
 Их заводят сессия платформы `hireminds-platform` и владелец
 (репо `productionsabotovich-lab/hireminds-platform`, webapp подключает эту систему зависимостью).
-Правки токенов и бренда из Claude Design переносит скилл `/pull-design-edits`. Порядок подробно — [docs/workflow.md](docs/workflow.md).
+Правки токенов и бренда владельца (задачи HIR, комментарии к витрине) переносит скилл `/pull-design-edits`. Порядок подробно — [docs/workflow.md](docs/workflow.md).
 
 - **Где смотреть:** в начале сессии и по просьбе — задачи HIR с меткой `design-system` в статусах `Backlog` и `Todo`.
 - **Взял в работу:** статус `In Progress`, комментарий «взял» и короткий план (какие файлы, какие компоненты).
@@ -54,11 +54,12 @@ npm run build && npm run typecheck && npm run check
 
 - **Витрина** публикуется после каждого влития в `main` автоматически, без отдельного «да»: скилл `/publish-library`
   (`npm run build && npm run check && npm run pack:page`, затем `out/vitrina.html` инструментом Artifact в
-  https://claude.ai/artifact/JprvN1cDAN8BiMJ7wVBZKm той же ссылкой). Артефакт приватный. Прежняя витрина типа Design System
-  (5aJZ9yo2cVBZHKEsJE6pmx) не обновляется; `pack:artifact` оставлен, но не используется.
+  https://claude.ai/artifact/JprvN1cDAN8BiMJ7wVBZKm той же ссылкой). Артефакт приватный. Прежняя витрина типа
+  Design System не используется; `pack:artifact` оставлен, но не используется.
 - **GitHub:** ветка и PR — по задаче HIR с меткой `design-system`; в `main` напрямую не пишешь. PR проверяет и вливает
   сессия платформы `hireminds-platform`.
-- **Правки из Claude Design** переносятся в репозиторий PR-ом через `/pull-design-edits`, с указанием источника.
+- **Правки токенов и бренда** приходят задачами HIR или комментариями к витрине и переносятся PR-ом через
+  `/pull-design-edits`, с указанием источника. На витрине правки не делаются: источник правды — репозиторий.
 - **Макеты экранов** не верстай: их рисует агент-дизайнер платформы в Claude Design. Компоненты по утверждённому
   макету — `/from-design`; правила компонента — `/component`.
 - `/design-sync` синхронизирует со старым сайтом claude.ai/design (закрывается 14.12.2026) и в конвейере не используется.
