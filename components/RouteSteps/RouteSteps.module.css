@@ -1,0 +1,68 @@
+/* Маршрут по макету «Карточка задачи» (.rh): равная сетка по числу шагов, линия line между точками */
+.list {
+  --route-bg: var(--bg); /* фон под точкой: на surface задай --route-bg: var(--surface) */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  min-width: 0;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* линия от центра шага к центру следующего; точка лежит поверх */
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 8px; /* из макета: центр точки 16px */
+  left: 50%;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+.mark {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* из макета: место точки */
+  height: 16px;
+  background: var(--route-bg);
+  border-radius: 999px;
+}
+
+/* будущий шаг — пустая точка с контуром line-3 (3:1 к bg и surface) */
+.future .mark::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  box-sizing: border-box;
+  border: 1px solid var(--line-3);
+  border-radius: 999px;
+}
+
+.label {
+  max-width: 100%;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.current .label {
+  color: var(--ink);
+  font-weight: 600;
+}

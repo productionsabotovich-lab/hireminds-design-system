@@ -130,6 +130,9 @@ export type { ResultListProps } from "./ResultList";
 export { ListRow } from "./ListRow";
 export type { ListRowProps } from "./ListRow";
 
+export { RouteSteps } from "./RouteSteps";
+export type { RouteStepsProps } from "./RouteSteps";
+
 export { ActivityEvent, ACTIVITY_TONE } from "./ActivityEvent";
 export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile } from "./ActivityEvent";
 
