@@ -1,0 +1,39 @@
+<!-- @dsCard group="Navigation" height=900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>RouteSteps — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 560px; }
+  .pv-box { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-card { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var STEPS = ['Объём', 'Code', 'CI', 'Ревью', 'QA', 'Приёмка'];
+  var MANY = ['Идея', 'Анализ', 'Дизайн', 'Спека', 'Код', 'CI', 'Ревью', 'Безопасность', 'Стейджинг', 'Приёмка'];
+  var LONG = ['Сбор требований', 'Архитектурное ревью', 'Реализация', 'Проверка безопасности', 'Приёмка владельцем'];
+  var box = function (cap, p, cls) { return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, h('span', { className: 'pv-cap' }, cap), h(H.RouteSteps, Object.assign({ steps: STEPS }, p))); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('В работе: Code', { current: 1 }),
+      box('Ждёт решения «Лимит возвратов исчерпан»: QA, без пульса', { current: 4, live: false }),
+      box('Только создана', { current: 0 }),
+      box('Принята: все шаги пройдены', { done: true }),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'На surface: без настройки'),
+        h('div', { className: 'pv-card' }, h(H.RouteSteps, { steps: STEPS, current: 3 }))),
+      box('375 px', { current: 1 }, 'pv-narrow'),
+      box('Длинные названия: перенос по словам', { steps: LONG, current: 1 }),
+      box('375 px · длинные названия', { steps: LONG, current: 1 }, 'pv-narrow'),
+      box('375 px · десять шагов: прокрутка, текущий виден', { steps: MANY, current: 7 }, 'pv-narrow'))
+  );
+</script>
+</body>
+</html>
