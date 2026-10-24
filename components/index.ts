@@ -130,6 +130,12 @@ export type { ResultListProps } from "./ResultList";
 export { ListRow } from "./ListRow";
 export type { ListRowProps } from "./ListRow";
 
+export { ActivityEvent, ACTIVITY_TONE } from "./ActivityEvent";
+export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile } from "./ActivityEvent";
+
+export { ActivityFeed } from "./ActivityFeed";
+export type { ActivityFeedProps, ActivityFeedEvent, ActivityFeedView } from "./ActivityFeed";
+
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
 

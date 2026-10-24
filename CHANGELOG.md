@@ -8,6 +8,24 @@
 
 Раздел: `## X.Y.Z — ГГГГ-ММ-ДД`, внутри — «Добавлено», «Изменено», «Исправлено» и «Что обновить в платформе».
 
+## 0.4.0 — 2026-10-24
+
+Журнал задачи и лента «Шаги» сессии по макету «Карточка задачи» (HIR-41). Новых токенов нет.
+
+### Добавлено
+- `ActivityEvent` — запись журнала: маркер `Dot` по тону вида или аватар роли (`message`), «кто — что» (`actor`,
+  `children`), `detail` одной строкой, `quote`, `files` (`CodeChip`), `pill`, время. `kind="phase"` — глава с `Pill`
+  `ink`. Виды: `phase`, `session`, `message`, `pr`, `decision`, `return`, `note`, `error`, `reminder`; шаги `files`,
+  `check`, `push`, `ask`. Экспортирует `ACTIVITY_TONE` — тон по умолчанию для вида.
+- `ActivityFeed` — `variant: task | session`, `events`, `view: messages | all` (+ `onViewChange`), `now`, `loading`,
+  `emptyText`, `title`, `updatedAt`. `task`: дни «Сегодня» / «Вчера» / дата, `Switcher`, без шагов; `session`: без
+  дней, все виды, `UpdatedAt`.
+
+### Что обновить в платформе
+- Тег `#v0.4.0`.
+- Журнал карточки задачи — `<ActivityFeed events={…} now={…} />` вместо локальных `ActivityItem` и `LiveActivity`;
+  лента «Шаги» экрана сессии — `<ActivityFeed variant="session" updatedAt={…} />`.
+
 ## 0.3.0 — 2026-10-24
 
 Расширения существующих компонентов по макету «Карточка задачи» (HIR-49). Новых компонентов и токенов нет.
