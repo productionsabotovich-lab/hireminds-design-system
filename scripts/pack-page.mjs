@@ -17,7 +17,7 @@ for (const f of ["dist/bundle.js", "dist/bundle.css", "tokens/tokens.css"]) {
 // ---------- версия ----------
 const git = (...args) => execFileSync("git", ["-c", `safe.directory=${root}`, "-C", root, ...args], { encoding: "utf8" }).trim();
 const commit = git("rev-parse", "--short", "HEAD");
-const built = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" });
+const built = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + " МСК";
 
 // ---------- markdown → html (то, что есть в документах системы) ----------
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -29,7 +29,10 @@ function inline(text, from) {
   s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, href) => {
     if (!/^(https?:|mailto:|#)/.test(href)) {
       const [target, hash] = href.split("#");
-      href = github + encodeURI(path.posix.normalize(path.posix.join(path.posix.dirname(from), decodeURI(target)))) + (hash ? `#${hash}` : "");
+      const source = path.posix.normalize(path.posix.join(path.posix.dirname(from), decodeURI(target)));
+      // документ или README компонента, которые есть на странице, — якорь; остальное — файл на GitHub
+      if (anchorOf(source)) return `<a href="#${anchorOf(source)}">${label}</a>`;
+      href = github + encodeURI(source) + (hash ? `#${hash}` : "");
     }
     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
   });
@@ -124,13 +127,19 @@ const docs = [
   { id: "doc-patterns", title: "Паттерны", file: "docs/patterns/README.md" },
 ];
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const anchors = new Map([
+  ...docs.map((d) => [d.file, d.id]),
+  ...patterns.map((f) => [`docs/patterns/${f}`, `p-${slug(f)}`]),
+  ...comps.map((c) => [`components/${c.name}/README.md`, `c-${c.name}`]),
+]);
+function anchorOf(file) { return anchors.get(file); }
 
 // ---------- страница ----------
 const card = (c) => `
 <article class="card" id="c-${c.name}" data-name="${c.name.toLowerCase()}">
   <header class="card-head"><h3>${c.name}</h3><span class="card-group">${c.group || "Обложка"}</span></header>
   ${c.summary ? `<p class="card-sum">${inline(c.summary, `components/${c.name}/README.md`)}</p>` : ""}
-  <iframe class="pv" title="${c.name} — превью" data-preview="${c.name}" style="height:${c.height}px"></iframe>
+  <iframe class="pv" title="${c.name} — превью" data-preview="${c.name}"${c.group ? "" : " data-scale"} style="height:${c.height}px"></iframe>
   ${c.readme ? `<details class="readme"><summary>README</summary><div class="prose">${md(c.readme.replace(/^# .*\n/, ""), `components/${c.name}/README.md`)}</div></details>` : ""}
 </article>`;
 
@@ -139,13 +148,15 @@ const nav = `
   <label class="search"><span class="vh">Поиск компонента</span><input id="q" type="search" placeholder="Найти компонент" autocomplete="off"></label>
   <p class="nav-cap">Обзор</p>
   <a href="#cover">Обложка</a><a href="#tokens">Токены</a>
+  ${groups.map((g) => `<a class="nav-grp" href="#g-${slug(g.name)}">${g.name}</a>`).join("")}
   ${groups.map((g) => `<p class="nav-cap">${g.name} <span>${g.items.length}</span></p>${g.items.map((c) => `<a href="#c-${c.name}" data-name="${c.name.toLowerCase()}">${c.name}</a>`).join("")}`).join("")}
   <p class="nav-cap">Документы</p>
   ${docs.map((d) => `<a href="#${d.id}">${d.title}</a>`).join("")}
 </nav>`;
 
-const html = `<title>Hireminds — дизайн-система</title>
+const html = `<title>Hireminds</title>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap">
@@ -171,6 +182,7 @@ a { color: inherit; }
 .nav a { display: block; padding: 4px 8px; border-radius: var(--r-sm); font-size: 12.5px; color: var(--ink-2); text-decoration: none; }
 .nav a:hover { background: var(--inset); color: var(--ink); }
 .nav a:focus-visible, .search input:focus-visible, summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.nav-grp { display: none !important; }
 .nav-cap { margin: 14px 8px 4px; display: flex; justify-content: space-between; font: 500 10px/1.3 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
 .search input { width: 100%; box-sizing: border-box; height: 32px; padding: 0 10px; border: 1px solid var(--line-3); border-radius: var(--r-md); background: var(--surface); font: 13px var(--font-ui); color: var(--ink); }
 .main { min-width: 0; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 72px 24px; display: flex; flex-direction: column; gap: 40px; }
@@ -220,6 +232,10 @@ a { color: inherit; }
   .wrap { grid-template-columns: minmax(0, 1fr); }
   .nav { position: static; max-height: none; padding: 12px 16px 0; flex-direction: row; flex-wrap: wrap; gap: 4px; }
   .nav .nav-cap, .nav a[data-name] { display: none; }
+  .nav .nav-grp { display: block !important; }
+  .top { position: static; padding-block: 10px; gap: 4px 12px; }
+  .top-sub { display: none; }
+  .ver { gap: 2px 10px; font-size: 10.5px; }
   .search { flex-basis: 100%; }
   .main { padding: 16px max(16px, env(safe-area-inset-right, 0px)) 56px max(16px, env(safe-area-inset-left, 0px)); }
   .ver { margin-left: 0; }
@@ -257,14 +273,40 @@ ${nav}
 window.__DS_CSS = document.getElementById("ds-css").textContent;
 var PREVIEWS = ${JSON.stringify(previews).replace(/</g, "\\u003c")};
 // высота из @dsCard — стартовая; после отрисовки фрейм подстраивается под содержимое
-function fit(f) { try { var d = f.contentDocument; if (d && d.body) { var h = d.documentElement.scrollHeight; if (h > 40) f.style.height = h + "px"; } } catch (e) {} }
+// высота — по содержимому body в обе стороны; у превью с fixed-оверлеем (ConfirmDialog) не меньше высоты из @dsCard;
+// обложка шириной 960 масштабируется под ширину карточки
+function fit(f) {
+  try {
+    var d = f.contentDocument; if (!d || !d.body) return;
+    if (f.hasAttribute("data-scale")) {
+      var art = d.body.firstElementChild;
+      if (!f._w && art) { f._w = art.offsetWidth; f._h = art.offsetHeight; }
+      if (f._w) { var k = Math.min(1, f.clientWidth / f._w); d.body.style.zoom = k; f.style.height = Math.ceil(f._h * k) + "px"; }
+      return;
+    }
+    var h = Math.ceil(d.body.getBoundingClientRect().height);
+    if (f._fixed) h = Math.max(h, f._min);
+    if (h > 40) f.style.height = h + "px";
+  } catch (e) {}
+}
 document.querySelectorAll("iframe[data-preview]").forEach(function (f) {
+  f._min = parseInt(f.style.height, 10);
   f.addEventListener("load", function () {
+    var d = f.contentDocument;
+    f._fixed = Array.prototype.some.call(d.body.querySelectorAll("*"), function (el) { return d.defaultView.getComputedStyle(el).position === "fixed"; });
     fit(f);
+    f.contentWindow.addEventListener("resize", function () { fit(f); });
     try { new f.contentWindow.ResizeObserver(function () { fit(f); }).observe(f.contentDocument.body); } catch (e) {}
   });
   f.srcdoc = PREVIEWS[f.getAttribute("data-preview")];
 });
+// переход по якорю открывает свёрнутый раздел документа или README
+function reveal() {
+  var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (el && el.tagName === "DETAILS") el.open = true;
+  if (el) el.scrollIntoView();
+}
+window.addEventListener("hashchange", reveal);
 // поиск по имени: прячет карточки, пункты навигации и пустые группы
 var q = document.getElementById("q");
 q.addEventListener("input", function () {
