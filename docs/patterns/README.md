@@ -29,6 +29,7 @@
 | Бейджи и выбор | [Pill](pill.md) | Компонент Pill |
 | | [Chip](chip.md) | Заявка |
 | Навигация | [Crumb](crumb.md), [Topbar](topbar.md) | Компоненты Crumb, Topbar (и TopbarStatus) |
+| | [TopbarLink](../../components/TopbarLink/README.md) — ссылка шапки со счётчиком решений | Компонент TopbarLink |
 | | [TopbarSteps](topbar-steps.md) | Заявка |
 | | [StepIndicator](step-indicator.md) | Компонент StepIndicator |
 | Ввод | [Field](form-field.md), [Input](input.md) | Компоненты Field, Input |
