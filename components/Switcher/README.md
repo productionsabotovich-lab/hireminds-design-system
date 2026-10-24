@@ -15,6 +15,7 @@
 | onSelect | `(id: string) => void` | обязательный | Выбор вкладки. |
 | className | `string` | — | Дополнительный класс на трек. |
 | label | `string` | — | Подпись группы для диктора (`aria-label` у `tablist`): «Вид журнала». |
+| panelId | `string` | — | id панели с содержимым: вкладки получают `aria-controls={panelId}` и id `switcherTabId(panelId, tab.id)`. |
 
 ## Правила
 - Трек: фон `inset`, радиус `r-md` (6px), паддинг 3px, gap 4px.
@@ -24,13 +25,20 @@
 - Switcher только меняет состояние, отправку формы делает кнопка.
 - Клавиатура (шаблон WAI-ARIA tabs): в порядке Tab — только активная вкладка; ← и → — соседняя вкладка по кругу, Home и End — первая и последняя; выбор срабатывает сразу; клавиши с Alt, Ctrl, Cmd и Shift не перехватываются. Фокус — кольцо `accent` 2px внутри вкладки: на `surface` оно даёт 3.3:1, на треке `inset` дало бы 2.95:1.
 
+## Вкладки или переключатель режима
+- **Вкладки** (`Switcher`): под ним — панель, содержимое которой меняется («Сообщения / Вся активность» в журнале). Панель — `role="tabpanel"`, `id={panelId}`, `aria-labelledby={switcherTabId(panelId, activeId)}`; Switcher получает тот же `panelId`.
+- **Переключатель режима без панели** (вход или регистрация на одной форме, единицы измерения): это выбор значения, а не вкладки. Такой случай — `role="radiogroup"` с `role="radio"` или кнопки с `aria-pressed`; `Switcher` для него не используется, пока в системе нет отдельного варианта — нужна заявка.
+
 ## Пример
 ```tsx
-import { Switcher } from "../index";
+import { Switcher, switcherTabId } from "../index";
 
 <Switcher
   tabs={[{ id: "signin", label: "Войти" }, { id: "register", label: "Создать аккаунт" }]}
   activeId={tab}
   onSelect={setTab}
+  label="Вход в Hireminds"
+  panelId="auth-panel"
 />
+<div role="tabpanel" id="auth-panel" aria-labelledby={switcherTabId("auth-panel", tab)}>…</div>
 ```

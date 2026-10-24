@@ -1,11 +1,11 @@
-import { useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { ActivityEvent, type ActivityEventKind, type ActivityEventProps } from "../ActivityEvent";
 import { Body } from "../Body";
 import { Caption } from "../Caption";
 import { EmptyState } from "../EmptyState";
 import { SectionHeader } from "../SectionHeader";
 import { Spinner } from "../Spinner";
-import { Switcher } from "../Switcher";
+import { Switcher, switcherTabId } from "../Switcher";
 import { UpdatedAt } from "../UpdatedAt";
 import s from "./ActivityFeed.module.css";
 
@@ -68,6 +68,7 @@ export function ActivityFeed({
   updatedAt,
 }: ActivityFeedProps) {
   const [ownView, setOwnView] = useState<ActivityFeedView>(view ?? "all");
+  const panelId = `${useId()}feed`;
   const active = onViewChange ? (view ?? "all") : ownView;
   const select = (id: string) => (onViewChange ? onViewChange(id as ActivityFeedView) : setOwnView(id as ActivityFeedView));
   const session = variant === "session";
@@ -122,7 +123,7 @@ export function ActivityFeed({
 
   const action = session
     ? updatedAt != null && <UpdatedAt updatedAt={updatedAt} loading={loading} />
-    : !loading && <Switcher tabs={VIEWS} activeId={active} onSelect={select} label="Вид журнала" />;
+    : !loading && <Switcher tabs={VIEWS} activeId={active} onSelect={select} label="Вид журнала" panelId={panelId} />;
 
   return (
     <section className={s.feed} aria-label={heading}>
@@ -130,7 +131,7 @@ export function ActivityFeed({
       {session || loading ? (
         body
       ) : (
-        <div role="tabpanel" aria-label={VIEWS.find((v) => v.id === active)?.label}>
+        <div role="tabpanel" id={panelId} aria-labelledby={switcherTabId(panelId, active)}>
           {body}
         </div>
       )}

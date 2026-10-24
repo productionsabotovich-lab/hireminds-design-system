@@ -20,6 +20,7 @@
 | rows | `number` | `3` | Высота в строках. |
 | maxLength | `number` | — | Предел символов; включает счётчик «n / max». |
 | required | `boolean` | `false` | Пометка «· обязательно» в подписи и `aria-required`. |
+| readOnly | `boolean` | `false` | Только чтение: текст виден, фокус остаётся (отправка в `CommentForm`); вид поля не меняется. |
 | onKeyDown | `(e) => void` | — | Клавиши в поле: выбор из подсказки (`CommentForm`). |
 | combobox | `{ listId, expanded, activeId? }` | — | Поле с подсказкой-списком: `role="combobox"`, `aria-controls`, `aria-expanded`, `aria-activedescendant`. |
 | disabled | `boolean` | `false` | Недоступное поле: фон `bg-2`, текст `mute`. |
