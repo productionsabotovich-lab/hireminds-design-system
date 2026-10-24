@@ -61,6 +61,9 @@ export type { BrandProps } from "./Brand";
 export { Topbar } from "./Topbar";
 export type { TopbarProps } from "./Topbar";
 
+export { TopbarLink } from "./TopbarLink";
+export type { TopbarLinkProps } from "./TopbarLink";
+
 export { Kicker } from "./Kicker";
 export type { KickerProps } from "./Kicker";
 

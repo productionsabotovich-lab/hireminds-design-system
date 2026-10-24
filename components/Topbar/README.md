@@ -28,3 +28,18 @@ import { Topbar, Brand, TopbarStatus } from "../index";
 
 <Topbar variant="auth" left={<Brand />} right={<TopbarStatus label="reset · token verified" />} />
 ```
+
+Шапка webapp: в правом слоте — ссылки `TopbarLink` и аватар.
+
+```tsx
+<Topbar
+  left={<Brand />}
+  right={
+    <>
+      <TopbarLink label="Журнал" icon="log" badge={{ kind: "soon" }} />
+      <TopbarLink href="/decisions" label="Мои решения" shortLabel="Решения" icon="inbox" badge={{ kind: "count", value: 4 }} />
+      <UserAvatar name="Антон Саботович" size="sm" shape="circle" />
+    </>
+  }
+/>
+```
