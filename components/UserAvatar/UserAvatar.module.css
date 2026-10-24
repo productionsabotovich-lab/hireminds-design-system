@@ -18,7 +18,7 @@
 
 /* Gradient accent — current user */
 .accent {
-  background: linear-gradient(135deg, var(--accent), oklch(0.55 0.18 200));
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* без бирюзы: брендбук запрещает */
 }
 
 /* Sizes */
