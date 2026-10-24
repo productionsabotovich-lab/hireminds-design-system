@@ -52,6 +52,9 @@ export type { FieldProps } from "./Field";
 export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
 
+export { CommentForm } from "./CommentForm";
+export type { CommentFormProps, CommentMention } from "./CommentForm";
+
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";
 

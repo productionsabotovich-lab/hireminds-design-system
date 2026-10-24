@@ -1,0 +1,78 @@
+/* Форма комментария по макету «Карточка задачи» (.cm): линия сверху, поле, подсказка ролей над полем, подвал */
+.form {
+  container-type: inline-size; /* узкая раскладка подвала — по ширине формы */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.field {
+  position: relative;
+}
+
+/* подсказка ролей — над полем, чтобы не закрывать подвал и кнопку */
+.pop {
+  position: absolute;
+  left: var(--space-3);
+  bottom: calc(100% + var(--space-1));
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-1);
+  min-width: 180px; /* из макета */
+  max-width: calc(100% - var(--space-6));
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-2);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 12px; /* стиль body-small */
+  line-height: 1.5;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* подпись «роль» / «специалист»: mute на surface — 6.1:1, на bg-2 — 5.6:1 */
+.caption {
+  flex: none;
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+/* активный пункт — фон bg-2: ink на bg-2 — 17:1 */
+.active {
+  background: var(--bg-2);
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+/* узкая форма (до 420px — телефон): кнопка на всю ширину */
+@container (max-width: 420px) {
+  .send {
+    width: 100%;
+  }
+}
