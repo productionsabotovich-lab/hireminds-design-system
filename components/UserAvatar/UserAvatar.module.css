@@ -18,7 +18,8 @@
 
 /* Gradient accent — current user */
 .accent {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2)); /* без бирюзы: брендбук запрещает */
+  /* без бирюзы (брендбук); стопы темнее accent, чтобы белые инициалы проходили AA: 5.0:1 → 6.5:1 */
+  background: linear-gradient(135deg, var(--accent-deep), var(--accent-deep-2));
 }
 
 /* Sizes */

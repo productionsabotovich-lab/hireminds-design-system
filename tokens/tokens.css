@@ -18,6 +18,8 @@
   --accent-2: oklch(0.56 0.18 150);
   --accent-soft: oklch(0.94 0.04 150);
   --accent-ink: oklch(0.32 0.12 150);
+  --accent-deep: oklch(0.52 0.17 150);
+  --accent-deep-2: oklch(0.46 0.15 150);
   --warn: oklch(0.72 0.14 65);
   --warn-2: oklch(0.65 0.13 65);
   --warn-soft: oklch(0.96 0.04 65);
