@@ -16,7 +16,8 @@ for (const f of ["dist/bundle.js", "dist/bundle.css", "tokens/tokens.css"]) {
 
 // ---------- версия ----------
 const git = (...args) => execFileSync("git", ["-c", `safe.directory=${root}`, "-C", root, ...args], { encoding: "utf8" }).trim();
-const commit = git("rev-parse", "--short", "HEAD");
+// незакоммиченные правки отслеживаемых файлов помечаются у коммита: такая сборка не совпадает с main
+const commit = git("rev-parse", "--short", "HEAD") + (git("status", "--porcelain", "--untracked-files=no") ? " + правки" : "");
 const built = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }) + " МСК";
 
 // ---------- markdown → html (то, что есть в документах системы) ----------
@@ -285,6 +286,8 @@ function fit(f) {
       return;
     }
     var h = Math.ceil(d.body.getBoundingClientRect().height);
+    // fixed-оверлей ищется после отрисовки, при каждом пересчёте: его высота в body не входит
+    if (!f._fixed) f._fixed = Array.prototype.some.call(d.body.querySelectorAll("*"), function (el) { return d.defaultView.getComputedStyle(el).position === "fixed"; });
     if (f._fixed) h = Math.max(h, f._min);
     if (h > 40) f.style.height = h + "px";
   } catch (e) {}
@@ -292,25 +295,36 @@ function fit(f) {
 document.querySelectorAll("iframe[data-preview]").forEach(function (f) {
   f._min = parseInt(f.style.height, 10);
   f.addEventListener("load", function () {
-    var d = f.contentDocument;
-    f._fixed = Array.prototype.some.call(d.body.querySelectorAll("*"), function (el) { return d.defaultView.getComputedStyle(el).position === "fixed"; });
     fit(f);
     f.contentWindow.addEventListener("resize", function () { fit(f); });
     try { new f.contentWindow.ResizeObserver(function () { fit(f); }).observe(f.contentDocument.body); } catch (e) {}
+    // оверлей появляется после отрисовки и высоту body не меняет — пересчёт и по изменению DOM
+    try { new f.contentWindow.MutationObserver(function () { fit(f); }).observe(f.contentDocument.body, { childList: true, subtree: true }); } catch (e) {}
   });
   f.srcdoc = PREVIEWS[f.getAttribute("data-preview")];
 });
 // переход по якорю открывает свёрнутый раздел документа или README
-function reveal() {
+// (и README в карточке, если ссылка на компонент ведёт из текста документа)
+function reveal(readme) {
   var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-  if (el && el.tagName === "DETAILS") el.open = true;
-  if (el) el.scrollIntoView();
+  if (!el) return;
+  if (el.tagName === "DETAILS") el.open = true;
+  if (readme && el.classList.contains("card")) { var r = el.querySelector("details.readme"); if (r) r.open = true; }
+  el.scrollIntoView();
 }
-window.addEventListener("hashchange", reveal);
+window.addEventListener("hashchange", function () { reveal(false); });
+// клик по якорю — и повторный на тот же, когда hashchange не приходит
+document.addEventListener("click", function (e) {
+  var a = e.target.closest && e.target.closest('a[href^="#"]');
+  if (a) { var fromText = !!a.closest(".prose"); setTimeout(function () { reveal(fromText); }, 0); }
+});
+reveal(false);
 // поиск по имени: прячет карточки, пункты навигации и пустые группы
 var q = document.getElementById("q");
 q.addEventListener("input", function () {
   var v = q.value.trim().toLowerCase(), any = false;
+  document.getElementById("cover").hidden = !!v;
+  document.getElementById("tokens").hidden = !!v;
   document.querySelectorAll(".grp").forEach(function (g) {
     var shown = 0;
     g.querySelectorAll(".card").forEach(function (c) { var ok = !v || c.dataset.name.indexOf(v) !== -1; c.hidden = !ok; if (ok) shown++; });

@@ -15,7 +15,7 @@
 <script>
   var H = window.Hireminds, h = React.createElement, F = React.Fragment;
   ReactDOM.createRoot(document.getElementById('root')).render(
-    h('div',{className:'pv-col',style:{width:380,gap:8}},
+    h('div',{className:'pv-col',style:{maxWidth:380,gap:8}},
     h(H.Plate,{variant:'success'},'Email подтверждён. Теперь можно войти.'),
     h(H.Plate,{variant:'warning'},'Без ключа Anthropic агенты не смогут начать работу.'),
     h(H.Plate,{variant:'error'},'Ссылка устарела. Запросите новую.'),
