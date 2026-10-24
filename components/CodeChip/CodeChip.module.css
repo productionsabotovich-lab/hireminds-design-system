@@ -9,7 +9,7 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
-  word-break: break-all;
+  overflow-wrap: anywhere; /* перенос по символам — только у значения длиннее строки; короткий чип переносится целиком */
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }

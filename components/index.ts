@@ -136,6 +136,12 @@ export type { PlanProgressProps } from "./PlanProgress";
 export { SessionLive, formatElapsed } from "./SessionLive";
 export type { SessionLiveProps, SessionLiveStatus } from "./SessionLive";
 
+export { ActivityEvent, ACTIVITY_TONE } from "./ActivityEvent";
+export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile } from "./ActivityEvent";
+
+export { ActivityFeed } from "./ActivityFeed";
+export type { ActivityFeedProps, ActivityFeedEvent, ActivityFeedView } from "./ActivityFeed";
+
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
 

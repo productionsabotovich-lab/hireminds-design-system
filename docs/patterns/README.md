@@ -39,6 +39,7 @@
 | Данные | [UserAvatar](user-avatar.md) | Компонент UserAvatar |
 | | [ResultRow](../../components/ResultRow/README.md), [ResultList](../../components/ResultList/README.md) — строки артефактов pr, file, report | Компоненты ResultRow, ResultList |
 | | [ListRow](../../components/ListRow/README.md) — строка списка в боковой колонке | Компонент ListRow |
+| | [ActivityFeed](../../components/ActivityFeed/README.md), [ActivityEvent](../../components/ActivityEvent/README.md) — журнал задачи и лента «Шаги» сессии | Компоненты ActivityFeed, ActivityEvent |
 | Сессия агента | [SessionLive](../../components/SessionLive/README.md) — что агент делает сейчас; [PlanProgress](../../components/PlanProgress/README.md) — план сегментами | Компоненты SessionLive, PlanProgress |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |
 | Обратная связь | [Plate](plate.md), [EmptyState](empty-state.md) | Компоненты Plate, EmptyState |
