@@ -22,7 +22,8 @@
     "build": "npm run build:tokens && npm run build:bundle && npm run build:types",
     "typecheck": "tsc -p tsconfig.json",
     "check": "node scripts/render-check.mjs",
-    "pack:artifact": "node scripts/pack-artifact.mjs"
+    "pack:artifact": "node scripts/pack-artifact.mjs",
+    "pack:page": "node scripts/pack-page.mjs"
   },
   "peerDependencies": {
     "react": ">=18",
