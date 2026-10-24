@@ -1,0 +1,186 @@
+/* контейнер: узкая раскладка — по ширине места виджета, а не экрана */
+.box {
+  container-type: inline-size;
+  max-width: 560px; /* из макета; в закреплённой зоне экрана — на всю ширину колонки */
+}
+
+/* widget по макету «Карточка задачи» (.sl): аватар, заголовок со статусом, стрелка; мета, план, «Сейчас» */
+.widget {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "lead head go"
+    ". meta go"
+    ". plan ."
+    ". op .";
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms, background-color 120ms;
+}
+
+.widget:hover {
+  border-color: var(--line-2);
+  background: var(--bg);
+}
+
+.widget:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lead {
+  grid-area: lead;
+  display: flex;
+}
+
+.head {
+  grid-area: head;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 13.5px; /* стиль h3-inline */
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* статус: точка ink с пульсом и подпись; warn — только у повтора */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* из макета: точка и подпись Pill */
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+/* пульс точки в такт текущему сегменту PlanProgress */
+.status > span:first-child {
+  animation-duration: 1.6s;
+}
+
+.statusWarn {
+  color: var(--warn-ink);
+}
+
+.go {
+  grid-area: go;
+  display: flex;
+  color: var(--mute);
+  transition: transform 120ms, color 120ms;
+}
+
+.widget:hover .go {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+.meta {
+  grid-area: meta;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+/* без транскрипта — выделено: агент начал с чистого листа (task-to-pr AC-19) */
+.noTranscript {
+  color: var(--warn-ink);
+  font-weight: 500;
+}
+
+.plan {
+  grid-area: plan;
+  padding-top: var(--space-1);
+  min-width: 0;
+}
+
+.op {
+  grid-area: op;
+  font-family: var(--font-ui);
+  font-size: 12px; /* стиль body-small */
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.opKey {
+  color: var(--mute);
+}
+
+/* узкое место (виджет до 420px — телефон): аватар скрыт — роль названа в заголовке */
+@container (max-width: 420px) {
+  .widget {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "head go"
+      "meta go"
+      "plan plan"
+      "op op";
+    padding: var(--space-3);
+  }
+  .lead {
+    display: none;
+  }
+}
+
+/* now — строка «Сейчас» экрана сессии; состояния уточняются макетом HIR-32 */
+.now {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.nowHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nowTime {
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.nowOp {
+  font-family: var(--font-ui);
+  font-size: 13.5px; /* стиль body-base */
+  line-height: 1.48;
+  color: var(--ink);
+}
+
+.nowPlan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-self: stretch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .widget,
+  .go {
+    transition: none;
+  }
+  .status > span:first-child {
+    animation: none;
+  }
+}

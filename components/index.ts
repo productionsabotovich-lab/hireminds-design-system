@@ -130,6 +130,12 @@ export type { ResultListProps } from "./ResultList";
 export { ListRow } from "./ListRow";
 export type { ListRowProps } from "./ListRow";
 
+export { PlanProgress } from "./PlanProgress";
+export type { PlanProgressProps } from "./PlanProgress";
+
+export { SessionLive, formatElapsed } from "./SessionLive";
+export type { SessionLiveProps, SessionLiveStatus } from "./SessionLive";
+
 export { ActivityEvent, ACTIVITY_TONE } from "./ActivityEvent";
 export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile } from "./ActivityEvent";
 

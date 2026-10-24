@@ -1,0 +1,30 @@
+<!-- @dsCard group="Feedback" height=230 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PlanProgress — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px 24px; max-width: 660px; }
+  .pv-box { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var box = function (cap, p) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), h(H.PlanProgress, p)); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      box('0 из 6 · идёт', { done: 0, total: 6, live: true }),
+      box('3 из 6 · идёт', { done: 3, total: 6, live: true }),
+      box('3 из 6 · статичный', { done: 3, total: 6 }),
+      box('6 из 6 · план выполнен', { done: 6, total: 6, live: true }),
+      box('без плана', { done: null }),
+      box('подпись в заголовке SessionPlan', { done: 4, total: 6, live: true, label: 'План работы' }))
+  );
+</script>
+</body>
+</html>

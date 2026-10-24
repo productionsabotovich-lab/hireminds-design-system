@@ -8,6 +8,22 @@
 
 Раздел: `## X.Y.Z — ГГГГ-ММ-ДД`, внутри — «Добавлено», «Изменено», «Исправлено» и «Что обновить в платформе».
 
+## 0.5.0 — 2026-10-24
+
+Виджет идущей сессии и индикатор плана по макету «Карточка задачи» (HIR-42). Новых токенов нет.
+
+### Добавлено
+- `SessionLive` — `variant: widget | now`, `status: running | starting | answering | retrying`, `role`, `sessionId`,
+  `href`, `resumed: transcript | no-transcript | null`, `plan: { done, total, current? } | null`, `operation`, `detail`,
+  `since`, `loading`. widget — ссылка в «Сессию агента»: роль, статус (точка `ink` с пульсом, `warn` у повтора), план,
+  «Сейчас: …», время от `since`; до 600px без аватара. `now` — заглушка до макета HIR-32. Экспортирует `formatElapsed`.
+- `PlanProgress` — `done | null`, `total`, `live`, `label`: «План 3 из 6» и сегменты; текущий у идущей сессии
+  пульсирует 1,6 с.
+
+### Что обновить в платформе
+- Тег `#v0.5.0`.
+- Карточка задачи: над журналом — `<SessionLive href={…} since={…} plan={…} operation={…} />` вместо локальных
+  `SessionNow` / `LiveOperation` / `ProgressBar`; закреплённая зона — на экране (`position: sticky` под шапкой).
 ## 0.4.0 — 2026-10-24
 
 Журнал задачи и лента «Шаги» сессии по макету «Карточка задачи» (HIR-41). Новых токенов нет.
