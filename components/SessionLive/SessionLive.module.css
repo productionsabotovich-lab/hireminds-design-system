@@ -1,3 +1,9 @@
+/* контейнер: узкая раскладка — по ширине места виджета, а не экрана */
+.box {
+  container-type: inline-size;
+  max-width: 560px; /* из макета; в закреплённой зоне экрана — на всю ширину колонки */
+}
+
 /* widget по макету «Карточка задачи» (.sl): аватар, заголовок со статусом, стрелка; мета, план, «Сейчас» */
 .widget {
   display: grid;
@@ -9,7 +15,6 @@
     ". op .";
   gap: var(--space-1) var(--space-3);
   align-items: center;
-  max-width: 560px; /* из макета; в закреплённой зоне экрана — на всю ширину колонки */
   box-sizing: border-box;
   padding: var(--space-3) var(--space-4);
   background: var(--surface);
@@ -118,8 +123,8 @@
   color: var(--mute);
 }
 
-/* узкая колонка: аватар скрыт — роль названа в заголовке */
-@media (max-width: 600px) {
+/* узкое место (виджет до 420px — телефон): аватар скрыт — роль названа в заголовке */
+@container (max-width: 420px) {
   .widget {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:

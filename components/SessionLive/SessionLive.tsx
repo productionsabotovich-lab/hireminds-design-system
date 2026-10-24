@@ -102,6 +102,7 @@ export function SessionLive({
     `. Сейчас: ${typeof operation === "string" ? operation : ""}. Открыть «Сессию агента»`;
 
   return (
+    <div className={s.box}>
     <a className={s.widget} href={href} aria-label={aria}>
       <span className={s.lead}>
         <UserAvatar name={role} size="sm" shape="square" color="var(--ink-3)" />
@@ -126,5 +127,6 @@ export function SessionLive({
         {operation}
       </span>
     </a>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Feedback" height=1180 -->
+<!-- @dsCard group="Feedback" height=1840 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -6,7 +6,7 @@
 <title>SessionLive — preview</title>
 <style>
   body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
-  .pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px 24px; align-items: start; }
+  .pv-grid { display: grid; grid-template-columns: minmax(0, 560px); gap: 20px; align-items: start; }
   .pv-box { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
   .pv-wide { grid-column: 1 / -1; }
   .pv-narrow { max-width: 343px; }
@@ -14,9 +14,6 @@
   /* состояния в статичном превью — те же значения, что у :hover и :focus-visible */
   .pv-hover a { border-color: var(--line-2); background: var(--bg); }
   .pv-focus a { outline: 2px solid var(--accent); outline-offset: 2px; }
-  /* «375 px»: раскладка узкой колонки — как при ширине экрана до 600px */
-  .pv-narrow a { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "head go" "meta go" "plan plan" "op op"; padding: var(--space-3); }
-  .pv-narrow a > span:first-child { display: none; }
   .pv-now { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
 </style>
 </head>
