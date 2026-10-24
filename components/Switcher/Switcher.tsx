@@ -29,8 +29,12 @@ export interface SwitcherProps {
  */
 export function Switcher({ tabs, activeId, onSelect, className, label }: SwitcherProps) {
   // клавиатура по шаблону WAI-ARIA tabs: в порядке Tab — только активная вкладка, стрелки и Home/End — по вкладкам
+  // если activeId не совпал ни с одной вкладкой, в порядок Tab встаёт первая — иначе группа недоступна с клавиатуры
+  const focusId = tabs.some((t) => t.id === activeId) ? activeId : tabs[0]?.id;
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const i = tabs.findIndex((t) => t.id === activeId);
+    // с модификаторами — клавиши браузера и системы (Alt+← — «назад»), не перехватываем
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const i = tabs.findIndex((t) => t.id === focusId);
     const next =
       e.key === "ArrowRight" ? (i + 1) % tabs.length
       : e.key === "ArrowLeft" ? (i - 1 + tabs.length) % tabs.length
@@ -56,7 +60,7 @@ export function Switcher({ tabs, activeId, onSelect, className, label }: Switche
           key={tab.id}
           role="tab"
           aria-selected={tab.id === activeId}
-          tabIndex={tab.id === activeId ? 0 : -1}
+          tabIndex={tab.id === focusId ? 0 : -1}
           type="button"
           onClick={() => onSelect(tab.id)}
           className={[styles.tab, tab.id === activeId ? styles.tabActive : ""]

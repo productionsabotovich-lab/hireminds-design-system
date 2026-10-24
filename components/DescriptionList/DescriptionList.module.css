@@ -9,9 +9,12 @@
 .cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-/* колонки — по ширине самого списка (обёртка .box — контейнер), а не экрана */
+/* колонки — по ширине самого списка (обёртка .box — контейнер), а не экрана.
+   Контейнер не берёт ширину от содержимого, поэтому width: 100% — иначе в Stack align="start", Cluster и других
+   контекстах «по содержимому» список схлопывается в 0 */
 .box {
   container-type: inline-size;
+  width: 100%;
 }
 
 @container (max-width: 720px) {

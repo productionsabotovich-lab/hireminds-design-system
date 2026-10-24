@@ -21,9 +21,10 @@
   transition: background 0.1s, color 0.1s;
 }
 
+/* кольцо внутри вкладки, на surface (3.3:1): снаружи оно легло бы на трек inset, где accent даёт 2.95:1 */
 .tab:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline-offset: -2px;
 }
 
 .tabActive {
