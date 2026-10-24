@@ -73,6 +73,15 @@
   background: var(--dim);
 }
 
+/* ink — только название фазы в строке перехода журнала: заметнее мягких тонов (белый на ink 18:1) */
+.ink {
+  background: var(--ink);
+  color: #fff;
+}
+.ink .dot {
+  background: #fff;
+}
+
 .pulse {
   animation: pillPulse 2s ease-in-out infinite;
 }

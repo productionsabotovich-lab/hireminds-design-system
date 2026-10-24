@@ -1,16 +1,17 @@
 /**
  * Pattern: data/products/hireminds/design/system/patterns/pill.md
  *
- * Status badge: short text on a soft fill of its color family, optional halo dot.
+ * Status badge: short text on a soft fill of its color family, optional halo dot;
+ * tone ink — solid ink fill for the phase name in a journal transition.
  * Not interactive.
  */
 import type { ReactNode } from "react";
 import s from "./Pill.module.css";
 
-export type PillTone = "accent" | "warn" | "danger" | "dim";
+export type PillTone = "accent" | "warn" | "danger" | "dim" | "ink";
 
 export interface PillProps {
-  /** Color family: accent — идёт/успех, warn — ждёт человека, danger — блокер, dim — нейтральное/завершённое */
+  /** accent — успех, утверждено; warn — возврат, напоминание, просрочка; danger — ошибка, лимит; dim — устарело, остановлено; ink — название фазы */
   tone?: PillTone | undefined;
   /** sm — 20px, inline in tables; md — 24px, mono uppercase near headings */
   size?: "sm" | "md" | undefined;
