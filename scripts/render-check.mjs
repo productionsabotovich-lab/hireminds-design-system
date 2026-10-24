@@ -54,7 +54,13 @@ for (const c of comps) {
     const rootEl = stdout.match(/<div id="root">([\s\S]*?)<\/div>\s*<script/);
     if (err) { status = "error"; note = err[1]; }
     else if (c !== "Cover" && (!rootEl || rootEl[1].trim().length < 20)) { status = "blank"; }
-    await run(chromium, [...flags, `--screenshot=${path.join(root, "out/shots", `${c}.png`)}`, url]);
+    const shot = path.join(root, "out/shots", `${c}.png`);
+    const before = Date.now();
+    await run(chromium, [...flags, `--screenshot=${shot}`, url]);
+    // snap-Chromium со своим /tmp или без прав на запись молча не пишет файл — такой прогон не считается ok
+    if (status === "ok" && (!fs.existsSync(shot) || fs.statSync(shot).mtimeMs < before - 1000)) {
+      status = "error"; note = `screenshot not written: ${path.relative(root, shot)}`;
+    }
   } catch (e) { status = "error"; note = String(e.message).split("\n")[0]; }
   results.push({ component: c, status, note });
   console.log(`${status.padEnd(6)} ${c}${note ? "  " + note : ""}`);

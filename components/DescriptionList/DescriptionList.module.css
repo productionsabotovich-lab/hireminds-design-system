@@ -9,10 +9,18 @@
 .cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
-@media (max-width: 720px) {
+/* колонки — по ширине самого списка (обёртка .box — контейнер), а не экрана.
+   Контейнер не берёт ширину от содержимого, поэтому width: 100% — иначе в Stack align="start", Cluster и других
+   контекстах «по содержимому» список схлопывается в 0 */
+.box {
+  container-type: inline-size;
+  width: 100%;
+}
+
+@container (max-width: 720px) {
   .cols3, .cols4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 420px) {
+@container (max-width: 420px) {
   .cols2, .cols3, .cols4 { grid-template-columns: 1fr; }
 }
 

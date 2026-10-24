@@ -49,13 +49,15 @@ export function DescriptionList({ items, layout = "stack", columns = 4 }: Descri
   }
 
   return (
-    <dl className={[s.list, s[`cols${columns}`]].join(" ")}>
-      {items.map((it) => (
-        <div key={it.label} className={s.item}>
-          <dt className={s.label}>{it.label}</dt>
-          <dd className={[s.value, it.mono ? s.mono : ""].filter(Boolean).join(" ")}>{it.value}</dd>
-        </div>
-      ))}
-    </dl>
+    <div className={s.box}>
+      <dl className={[s.list, s[`cols${columns}`]].join(" ")}>
+        {items.map((it) => (
+          <div key={it.label} className={s.item}>
+            <dt className={s.label}>{it.label}</dt>
+            <dd className={[s.value, it.mono ? s.mono : ""].filter(Boolean).join(" ")}>{it.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   );
 }
