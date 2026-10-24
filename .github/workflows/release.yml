@@ -1,0 +1,36 @@
+name: release
+
+# Версия в package.json выросла в main — тег vX.Y.Z и GitHub Release с разделом из CHANGELOG.md.
+# Платформа ставит пакет по тегу: github:productionsabotovich-lab/hireminds-design-system#vX.Y.Z
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Тег и релиз, если версии ещё нет
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          tag="v$version"
+          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            echo "$tag уже есть — релиз не нужен"
+            exit 0
+          fi
+          node scripts/check-version.mjs --notes > notes.md
+          git tag "$tag" "$GITHUB_SHA"
+          git push origin "$tag"
+          gh release create "$tag" --title "$tag" --notes-file notes.md --verify-tag
