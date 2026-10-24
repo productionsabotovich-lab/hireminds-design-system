@@ -1,0 +1,79 @@
+<!-- @dsCard group="Data" height=4500 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ActivityFeed — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 28px; }
+  .pv-box { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 640px; }
+  .pv-narrow { max-width: 343px; }
+  .pv-pair { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 24px; align-items: start; max-width: 720px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var at = function (day, hm) { var p = hm.split(':'); return new Date(2026, 9, 24 + day, +p[0], +p[1]); };
+  var NOW = at(0, '09:37');
+  var ME = 'Антон Саботович';
+  var chip = function (t) { return h(H.CodeChip, { href: '#' }, t); };
+  var pr = function () { return h(H.ExternalLink, { href: '#', variant: 'inline' }, 'PR #21'); };
+  var pill = function (tone, t) { return h(H.Pill, { tone: tone }, t); };
+
+  var HISTORY = [
+    { kind: 'system', time: at(-2, '10:00'), actor: ME, children: 'завёл задачу в Linear', detail: 'Назначена на Аналитика · маршрут feature' },
+    { kind: 'phase', time: at(-2, '10:02'), children: 'Spec', detail: 'Задача назначена на Аналитика' },
+    { kind: 'session', time: at(-2, '10:03'), actor: 'Analyst', children: ['начал работу · ', chip('S-115')] },
+    { kind: 'message', time: at(-2, '11:18'), actor: 'Analyst', children: ['завершил работу · 1 ч 15 мин · ', chip('S-115')], quote: 'Спецификация готова: три роли, матрица прав и 9 сценариев приёмки.', files: ['docs/specs/PIL-15-roles.md'] },
+    { kind: 'decision', time: at(-2, '11:20'), actor: 'Hireminds', children: ['открыл решение ', chip('D-34'), ' «Объём согласован»'], detail: 'Ответственный ' + ME + ' · редакция 1' },
+    { kind: 'decision', time: at(-2, '12:05'), tone: 'accent', actor: ME, children: ['утвердил ', chip('D-34'), ' «Объём согласован»'], pill: pill('accent', 'Утверждено'), detail: 'Кнопка в треде Linear · редакция 1 · ждало 45 мин' },
+    { kind: 'phase', time: at(-1, '04:48'), children: 'Spec → Code', detail: 'Объём согласован' },
+    { kind: 'session', time: at(-1, '04:49'), actor: 'Developer', children: ['начал работу · ', chip('S-118')] },
+    { kind: 'pr', time: at(-1, '06:14'), actor: 'Developer', children: ['открыл ', pr(), ' «PIL-15: Роли участников проекта»'], detail: ['14 файлов · коммит ', chip('a4b23ec')] },
+    { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
+    { kind: 'phase', time: at(-1, '07:30'), children: 'Code → QA', detail: 'Ревью пройдено' },
+    { kind: 'message', time: at(-1, '08:40'), actor: 'QA', quote: 'Проверил 9 сценариев из спецификации, 8 прошли. У viewer в меню участника осталась кнопка «Удалить участника».', files: ['docs/qa/PIL-15-report.md'] },
+    { kind: 'return', time: at(-1, '08:42'), actor: 'QA', children: 'вернул задачу в Code', detail: 'Причина: viewer видит «Удалить участника» и получает 403' },
+    { kind: 'phase', time: at(-1, '09:14'), children: 'QA → Code', detail: 'Возврат 2 из 2' },
+    { kind: 'session', time: at(-1, '09:14'), actor: 'Developer', children: ['продолжил работу после возврата из QA · ', chip('S-118')] },
+    { kind: 'decision', time: at(-1, '09:15'), tone: 'warn', actor: 'Hireminds', children: ['открыл решение ', chip('D-44'), ' «Лимит возвратов»'], detail: 'Ответственный ' + ME + ' · возвратов 2 из 2' },
+    { kind: 'reminder', time: at(0, '09:00'), actor: 'Hireminds', children: ['напомнил о решении ', chip('D-44'), ' «Лимит возвратов»'], detail: 'Ждёт 23 ч 45 мин · напоминание в треде Linear' }];
+
+  var MORE = HISTORY.concat([
+    { kind: 'decision', time: at(0, '09:20'), tone: 'accent', actor: ME, children: ['разрешил ещё один возврат по ', chip('D-44')], detail: 'Страница решения · ждало 1 д 5 мин' },
+    { kind: 'phase', time: at(0, '09:21'), children: 'Code', detail: 'Возврат 3 из 3 разрешён' },
+    { kind: 'session', time: at(0, '09:21'), actor: 'Developer', children: ['продолжил работу после решения ', chip('D-44'), ' · ', chip('S-118')] }]);
+
+  var STEPS = [
+    { kind: 'session', time: at(0, '09:21'), actor: 'Developer', children: ['продолжил работу после решения ', chip('D-44')] },
+    { kind: 'files', time: at(0, '09:24'), actor: 'Developer', children: 'изменил 2 файла', files: ['apps/web/src/members/MemberMenu.tsx', 'apps/web/src/members/roles.test.ts'] },
+    { kind: 'check', time: at(0, '09:28'), actor: 'Developer', children: 'запустил typecheck', pill: pill('danger', '3 ошибки'), detail: 'MemberMenu.tsx: свойство canRemove не существует в типе Member' },
+    { kind: 'ask', time: at(0, '09:30'), actor: ME, children: 'спросил: «Почему viewer видит меню участника?»', detail: 'В очереди · ответ после текущего шага' },
+    { kind: 'check', time: at(0, '09:33'), actor: 'Developer', children: 'запустил тесты', pill: pill('accent', '42 из 42'), detail: 'npm test -- members' },
+    { kind: 'push', time: at(0, '09:35'), actor: 'Developer', children: ['отправил коммит ', chip('9f2c1e0'), ' в ветку ', chip('feature/pil-15-roles')] }];
+  var DONE = STEPS.concat([{ kind: 'message', time: at(0, '09:36'), actor: 'Developer', children: ['завершил работу · 15 мин · ', chip('S-118')], quote: 'Кнопка «Удалить участника» скрыта у viewer, добавлен тест на меню.' }]);
+
+  var box = function (cap, el, narrow) { return h('div', { className: 'pv-box' + (narrow ? ' pv-narrow' : '') }, h('span', { className: 'pv-cap' }, cap), el); };
+  var feed = function (p) { return h(H.ActivityFeed, Object.assign({ now: NOW }, p)); };
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('task · вся активность', feed({ events: HISTORY })),
+      box('task · сообщения — те же события', feed({ events: HISTORY, view: 'messages' })),
+      box('task · после «Разрешить ещё возврат» журнал продолжается', feed({ events: MORE.slice(14) })),
+      box('task · сообщения: событий нет среди сообщений', feed({ events: HISTORY.slice(6, 9), view: 'messages' })),
+      box('task · пусто: задача только создана', feed({ events: [], emptyText: 'Задачу назначили на Аналитика. Начало фазы Spec и сессия Аналитика появятся здесь в течение минуты.' })),
+      box('task · загрузка', feed({ events: [], loading: true })),
+      box('session · живая лента «Шаги»', feed({ variant: 'session', events: STEPS, updatedAt: Date.now() - 60000 })),
+      box('session · завершённая', feed({ variant: 'session', events: DONE })),
+      h('div', { className: 'pv-pair' },
+        box('375 px · вся активность', feed({ events: HISTORY.slice(12) }), true),
+        box('375 px · сообщения', feed({ events: HISTORY.slice(10), view: 'messages' }), true)))
+  );
+</script>
+</body>
+</html>

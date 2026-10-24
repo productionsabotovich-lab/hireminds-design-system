@@ -1,0 +1,81 @@
+<!-- @dsCard group="Data" height=2400 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ActivityEvent — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-list { list-style: none; margin: 0; padding: 0; max-width: 640px; }
+  .pv-narrow { max-width: 343px; }
+  /* блоки как в ленте: ширина записи — по контейнеру, как в ActivityFeed */
+  .pv-list { container-type: inline-size; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var at = function (day, hm) { var p = hm.split(':'); return new Date(2026, 9, 24 + day, +p[0], +p[1]); };
+  var ME = 'Антон Саботович';
+  var chip = function (t, href) { return h(H.CodeChip, { href: href || '#' }, t); };
+  var pr = function () { return h(H.ExternalLink, { href: '#', variant: 'inline' }, 'PR #21'); };
+  var ev = function (p, k) { return h(H.ActivityEvent, Object.assign({ key: k }, p)); };
+  var box = function (cap, items, narrow) {
+    return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap),
+      h('ol', { className: 'pv-list' + (narrow ? ' pv-narrow' : '') }, items.map(ev)));
+  };
+  var files = ['apps/web/src/members/MembersTable.tsx', 'apps/web/src/members/roles.test.ts'];
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('Переход фазы — глава журнала', [
+        { kind: 'phase', time: at(-2, '10:02'), children: 'Spec', detail: 'Задача назначена на Аналитика' },
+        { kind: 'phase', time: at(-1, '09:14'), children: 'QA → Code', detail: 'Возврат: viewer видит «Удалить участника» и получает ошибку 403' }]),
+      box('Сессии: начало, возобновление с транскриптом и без, остановлена', [
+        { kind: 'session', time: at(-1, '04:49'), actor: 'Developer', children: ['начал работу · ', chip('S-118')] },
+        { kind: 'session', time: at(-1, '09:14'), actor: 'Developer', children: ['продолжил работу после возврата из QA · ', chip('S-118')] },
+        { kind: 'session', time: at(-1, '09:20'), actor: 'Developer', children: ['продолжил работу после ответа на вопрос · ', chip('S-118')], detail: 'Без транскрипта прошлой работы' },
+        { kind: 'session', time: at(-1, '09:31'), tone: 'dim', actor: ME, children: ['остановил Developer · ', chip('S-118')], detail: 'Сессия сохранена · PR #21 остаётся открытым' }]),
+      box('Реплики ролей: итог работы и сообщение с файлами', [
+        { kind: 'message', time: at(-1, '06:12'), actor: 'Developer', children: ['завершил работу · 1 ч 23 мин · ', chip('S-118')], quote: 'Роли owner, admin и viewer разведены: viewer видит таблицу участников без действий, сервер отвечает 403 на изменение.', files: files.map(function (p) { return { path: p, href: '#' }; }) },
+        { kind: 'message', time: at(-1, '08:40'), actor: 'QA', quote: 'Проверил 9 сценариев из спецификации, 8 прошли. У viewer в меню участника осталась кнопка «Удалить участника».', files: ['docs/qa/PIL-15-report.md'] }]),
+      box('PR: открыт и влит; замечание платформы', [
+        { kind: 'pr', time: at(-1, '06:14'), actor: 'Developer', children: ['открыл ', pr(), ' «PIL-15: Роли участников проекта»'], detail: ['14 файлов · коммит ', chip('a4b23ec')] },
+        { kind: 'note', time: at(-1, '06:15'), actor: 'Hireminds', children: ['в описании ', pr(), ' нет ссылки на PIL-15'], detail: 'Developer должен поправить описание до ревью' },
+        { kind: 'pr', time: at(0, '09:30'), actor: ME, children: ['влил ', pr(), ' в main'], detail: ['Коммит ', chip('c24c3a5')] }]),
+      box('Возврат и решения: открыто, итог в каждом канале, устарело, напоминание', [
+        { kind: 'return', time: at(-1, '08:42'), actor: 'QA', children: 'вернул задачу в Code', detail: 'Причина: viewer видит «Удалить участника» и получает 403' },
+        { kind: 'decision', time: at(-2, '11:20'), actor: 'Hireminds', children: ['открыл решение ', chip('D-34'), ' «Объём согласован»'], detail: 'Ответственный ' + ME + ' · спецификация, редакция 1' },
+        { kind: 'decision', time: at(-2, '12:05'), tone: 'accent', actor: ME, children: ['утвердил ', chip('D-34'), ' «Объём согласован»'], pill: h(H.Pill, { tone: 'accent' }, 'Утверждено'), detail: 'Кнопка в треде Linear · редакция 1 · ждало 45 мин' },
+        { kind: 'decision', time: at(-1, '09:02'), tone: 'warn', actor: ME, children: ['вернул ', chip('D-40'), ' «Приёмка»'], pill: h(H.Pill, { tone: 'warn' }, 'Возвращено'), detail: 'Страница решения · причина: нет теста на viewer' },
+        { kind: 'decision', time: at(-1, '09:05'), tone: 'accent', actor: ME, children: ['утвердил ', chip('D-41'), ' «Ревью»'], pill: h(H.Pill, { tone: 'accent' }, 'Утверждено'), detail: 'Перенос карточки в Linear · ждало 12 мин' },
+        { kind: 'decision', time: at(-1, '09:07'), tone: 'accent', actor: ME, children: ['разрешил ещё один возврат по ', chip('D-44')], detail: 'Команда /approve в треде Linear' },
+        { kind: 'decision', time: at(-1, '09:10'), tone: 'dim', children: ['Решение ', chip('D-42'), ' «Приёмка» устарело: PR обновлён'], pill: h(H.Pill, { tone: 'dim' }, 'Устарело'), detail: ['Действующее решение — ', chip('D-44')] },
+        { kind: 'reminder', time: at(0, '09:00'), actor: 'Hireminds', children: ['напомнил о решении ', chip('D-44'), ' «Лимит возвратов»'], detail: 'Ждёт 1 д 2 ч · напоминание в треде Linear' }]),
+      box('Служебные записи и замечание исправлено', [
+        { kind: 'system', time: at(-2, '10:00'), actor: ME, children: 'завёл задачу в Linear', detail: 'Назначена на Аналитика · маршрут feature' },
+        { kind: 'note', tone: 'accent', time: at(-1, '06:40'), actor: 'Developer', children: ['добавил ссылку на PIL-15 в описание ', pr()] },
+        { kind: 'system', tone: 'warn', time: at(-1, '09:14'), children: 'Лимит возвратов исчерпан: 2 из 2', detail: ['Нужно решение ', chip('D-44')] },
+        { kind: 'system', tone: 'dim', time: at(-1, '09:32'), children: 'Запуск остановлен', detail: 'PR #21 остаётся открытым' },
+        { kind: 'error', time: at(-1, '07:28'), actor: 'Linear', children: 'отклонил переход Code → Review', detail: 'Ошибка: статус Review закрыт правилом команды' },
+        { kind: 'system', tone: 'accent', time: at(-1, '07:30'), actor: 'Linear', children: 'принял переход Code → Review со второй попытки' }]),
+      box('Ошибка', [
+        { kind: 'error', time: at(0, '09:12'), actor: 'Developer', children: ['остановлен · ', chip('S-121')], detail: 'Лимит подписки Anthropic исчерпан — сессия продолжится после 12:00' }]),
+      box('Шаги сессии (только ActivityFeed variant="session")', [
+        { kind: 'files', time: at(0, '09:20'), actor: 'Developer', children: 'изменил 2 файла', files: files },
+        { kind: 'check', time: at(0, '09:24'), actor: 'Developer', children: 'запустил тесты', pill: h(H.Pill, { tone: 'accent' }, '42 из 42'), detail: 'npm test -- members' },
+        { kind: 'check', time: at(0, '09:26'), actor: 'Developer', children: 'запустил typecheck', pill: h(H.Pill, { tone: 'danger' }, '3 ошибки'), detail: 'MembersTable.tsx: свойство role не существует в типе Member' },
+        { kind: 'push', time: at(0, '09:30'), actor: 'Developer', children: ['отправил коммит ', chip('9f2c1e0'), ' в ветку ', chip('feature/pil-15-roles')] },
+        { kind: 'ask', time: at(0, '09:33'), actor: ME, children: 'спросил: «Почему viewer видит меню участника?»', detail: 'В очереди · ответ после текущего шага' }]),
+      box('375 px', [
+        { kind: 'phase', time: at(-1, '09:14'), children: 'QA → Code', detail: 'Возврат: viewer видит «Удалить участника» и получает ошибку 403' },
+        { kind: 'decision', time: at(-2, '12:05'), tone: 'accent', actor: ME, children: ['утвердил ', chip('D-34'), ' «Объём согласован»'], pill: h(H.Pill, { tone: 'accent' }, 'Утверждено'), detail: 'Кнопка в треде Linear · редакция 1 · ждало 45 мин' },
+        { kind: 'message', time: at(-1, '08:40'), actor: 'QA', quote: 'Проверил 9 сценариев, 8 прошли. У viewer осталась кнопка «Удалить участника».' }], true))
+  );
+</script>
+</body>
+</html>
