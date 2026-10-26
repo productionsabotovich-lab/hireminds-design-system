@@ -10,6 +10,9 @@ export type { BackLinkProps } from "./BackLink";
 export { Body } from "./Body";
 export type { BodyProps } from "./Body";
 
+export { BranchRef } from "./BranchRef";
+export type { BranchRefProps } from "./BranchRef";
+
 export { Brand } from "./Brand";
 export type { BrandProps } from "./Brand";
 
@@ -51,6 +54,9 @@ export type { DotProps } from "./Dot";
 
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
+
+export { EntityRef } from "./EntityRef";
+export type { EntityRefProps, EntityKind } from "./EntityRef";
 
 export { ExternalLink } from "./ExternalLink";
 export type { ExternalLinkProps } from "./ExternalLink";

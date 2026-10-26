@@ -1,0 +1,49 @@
+<!-- @dsCard group="Data" height=560 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>EntityRef — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 16px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+  .pv-line { font-size: 12px; color: var(--ink-2); }
+  .pv-widget { width: 280px; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .pv-h1 { margin: 0; font: 600 24px/1.1 var(--font-display); letter-spacing: -0.022em; max-width: 520px; }
+  /* bare: иконка — в колонке leading строки; текст по той же линии, что и с иконкой */
+  .pv-list { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 4px 12px; align-items: start; max-width: 420px; font-size: 12.5px; }
+  .pv-lead { display: inline-flex; align-items: center; height: 1lh; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var E = function (p) { return h(H.EntityRef, p); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'inline · все типы'),
+        h('div', { className: 'pv-row' },
+          E({ kind: 'task', id: 'PIL-15', href: '#' }), E({ kind: 'session', id: 'S-118', href: '#' }), E({ kind: 'decision', id: 'D-44', href: '#' }),
+          E({ kind: 'pr', id: '#21', href: '#', newTab: true, hint: 'Открыть в GitHub' }), E({ kind: 'commit', id: 'a4b23ec', href: '#', newTab: true }),
+          E({ kind: 'ci', id: 'CI 1842', href: '#', newTab: true }), E({ kind: 'doc', id: 'PIL-15-roles.md' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'inline в строке ленты 12px'),
+        h('p', { className: 'pv-line', style: { margin: 0 } }, 'Developer продолжил работу после решения ', E({ kind: 'decision', id: 'D-44', href: '#' }), ' · ', E({ kind: 'session', id: 'S-118', href: '#' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'title · заголовок виджета 280px: название обрезано, полное — в подсказке'),
+        h('div', { className: 'pv-widget' }, E({ kind: 'task', id: 'PIL-15', title: 'Роли участников проекта: owner, admin и viewer', size: 'title', href: '#' })),
+        h('div', { className: 'pv-widget' }, E({ kind: 'session', id: 'S-118', title: 'Developer', size: 'title', href: '#' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'heading · рядом с заголовком страницы, название переносится'),
+        h('h1', { className: 'pv-h1' }, E({ kind: 'decision', id: 'D-46', title: 'Утверждение плана кампании запуска для первых команд', size: 'heading' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'bare · иконка в колонке leading, текст на той же линии'),
+        h('div', { className: 'pv-list' },
+          h('span', { className: 'pv-lead' }, h(H.Icon, { name: 'decision', size: 14 })), E({ kind: 'decision', id: 'D-44', title: 'Лимит возвратов', bare: true, href: '#' }),
+          h('span', { className: 'pv-lead' }, h(H.Icon, { name: 'session', size: 14 })), E({ kind: 'session', id: 'S-121', title: 'QA', bare: true, href: '#' }),
+          h('span', null), E({ kind: 'task', id: 'PIL-15', title: 'Роли и доступ', href: '#' })))
+    )
+  );
+</script>
+</body>
+</html>

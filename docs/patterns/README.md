@@ -23,6 +23,7 @@
 | Действия и ссылки | [Button](button.md) | Компонент Button |
 | | [BackLink](back-link.md), [ExternalLink](external-link.md), [NavLink](nav-link.md) | Компоненты BackLink, ExternalLink, NavLink |
 | | [Tooltip](../../components/Tooltip/README.md) — подсказка к значку по наведению и фокусу | Компонент Tooltip |
+| Ссылки на сущности | [EntityRef](../../components/EntityRef/README.md) — задача, сессия, решение, PR, коммит, CI, документ; [BranchRef](../../components/BranchRef/README.md) — ветка | Компоненты EntityRef, BranchRef |
 | | [Switcher](switcher.md) | Компонент Switcher |
 | Декор | [Divider](divider.md), [Dot](dot.md), [IconArrow](icon-arrow.md) | Компоненты Divider, Dot, IconArrow |
 | | [Icon](../../components/Icon/README.md) — объекты продукта и типы файлов | Компонент Icon |
@@ -63,7 +64,7 @@
 Появились после базы; правила — в их README: [ConfirmDialog](../../components/ConfirmDialog/README.md),
 [DescriptionList](../../components/DescriptionList/README.md), [SectionHeader](../../components/SectionHeader/README.md),
 [Select](../../components/Select/README.md), [Spinner](../../components/Spinner/README.md),
-[Table](../../components/Table/README.md), [TaskRef](../../components/TaskRef/README.md),
+[Table](../../components/Table/README.md), [TaskRef](../../components/TaskRef/README.md) (устарел → EntityRef),
 [TopbarStatus](../../components/TopbarStatus/README.md), [UpdatedAt](../../components/UpdatedAt/README.md).
 
 ## Как пополняется каталог

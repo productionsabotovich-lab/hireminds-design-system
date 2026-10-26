@@ -16,6 +16,7 @@ export interface TaskRefProps {
   variant?: "cell" | "heading" | undefined;
 }
 
+/** @deprecated Используй `EntityRef kind="task"`: `issueKey` → `id`, `variant` → `size`. Компонент останется до итерации 3. */
 export function TaskRef({ issueKey, title, href, newTab = false, variant = "cell" }: TaskRefProps) {
   const body = (
     <>

@@ -27,20 +27,29 @@ export interface TooltipProps {
   focusable?: boolean | undefined;
   /** false — у вложенного элемента уже есть имя с тем же текстом (aria-label): aria-describedby не добавлять */
   describe?: boolean | undefined;
+  /** Открывать, только если текст внутри обрезан многоточием: полное название в строке, длинная ветка */
+  whenTruncated?: boolean | undefined;
 }
 
 /** задержка закрытия: курсор успевает перейти с элемента на подсказку (WCAG 1.4.13) */
 const HIDE_DELAY = 120;
 
+/** есть ли внутри элемент, чей текст не поместился */
+const truncated = (root: HTMLElement) =>
+  [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))].some(
+    (el) => el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1,
+  );
+
 /** отступ подсказки от края экрана */
 const EDGE = 8;
 
-export function Tooltip({ text, children, focusable = true, describe = true }: TooltipProps) {
+export function Tooltip({ text, children, focusable = true, describe = true, whenTruncated = false }: TooltipProps) {
   const id = `${useId()}tip`;
   const [open, setOpen] = useState(false);
   const [shift, setShift] = useState({ x: 0, below: false });
   const bubble = useRef<HTMLSpanElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const root = useRef<HTMLSpanElement>(null);
 
   // у края экрана — сдвиг внутрь по горизонтали; у верхнего края — под элементом
   useLayoutEffect(() => {
@@ -66,8 +75,11 @@ export function Tooltip({ text, children, focusable = true, describe = true }: T
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
+  // без текста подсказки нет; whenTruncated — только если содержимое обрезано
   const show = () => {
     clearTimeout(timer.current);
+    if (!text) return;
+    if (whenTruncated && root.current && !truncated(root.current)) return;
     setOpen(true);
   };
   // курсор ушёл и с элемента, и с подсказки (она внутри обёртки) — закрыть с задержкой
@@ -87,6 +99,7 @@ export function Tooltip({ text, children, focusable = true, describe = true }: T
 
   return (
     <span
+      ref={root}
       className={s.root}
       tabIndex={focusable ? 0 : undefined}
       role={focusable ? "img" : undefined}

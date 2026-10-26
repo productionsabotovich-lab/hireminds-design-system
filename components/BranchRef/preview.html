@@ -1,0 +1,35 @@
+<!-- @dsCard group="Data" height=250 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>BranchRef — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 14px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-narrow { width: 260px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); display: flex; }
+  .pv-open { padding-top: 30px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var LONG = 'hm/PIL-15-project-roles-and-access-matrix-for-viewers';
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'Ветка со ссылкой'), h('div', null, h(H.BranchRef, { name: 'hm/PIL-15-project-roles', href: '#' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'Откуда → куда: строка PR'), h('div', null, h(H.BranchRef, { name: 'hm/PIL-15-project-roles', href: '#', base: 'main', baseHref: '#' }))),
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'Длинная ветка в узкой колонке 260px: многоточие, полное имя — в подсказке'),
+        h('div', { className: 'pv-narrow pv-open', 'data-open': 'hover' }, h(H.BranchRef, { name: LONG, href: '#', base: 'main' })))
+    )
+  );
+  setTimeout(function () {
+    var t = document.querySelector('[data-open="hover"] [role="tooltip"]');
+    if (t) t.parentElement.dispatchEvent(new MouseEvent('mouseover', { bubbles: true, relatedTarget: document.body }));
+  }, 300);
+</script>
+</body>
+</html>
