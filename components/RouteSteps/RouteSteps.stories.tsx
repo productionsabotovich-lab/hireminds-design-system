@@ -24,3 +24,8 @@ export const ManyStepsNarrow: Story = {
   args: { steps: ["Идея", "Анализ", "Дизайн", "Спека", "Код", "CI", "Ревью", "Безопасность", "Стейджинг", "Приёмка"], current: 7 },
   decorators: [(Story) => <div style={{ maxWidth: 343 }}><Story /></div>],
 };
+/** Тени у краёв при прокрутке: в начале маршрута — только справа */
+export const ScrollShadowStart: Story = {
+  args: { steps: ["Идея", "Анализ", "Дизайн", "Спека", "Код", "CI", "Ревью", "Безопасность", "Стейджинг", "Приёмка"], current: 0 },
+  decorators: [(Story) => <div style={{ maxWidth: 320 }}><Story /></div>],
+};

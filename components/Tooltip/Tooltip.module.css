@@ -1,0 +1,65 @@
+/* Подсказка по Tip набора 2b: пузырь ink над элементом, текст surface (18:1) */
+.root {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--r-xs);
+}
+
+.root:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.bubble {
+  position: absolute;
+  z-index: 30; /* над строками и закреплёнными зонами страницы */
+  left: 50%;
+  bottom: calc(100% + var(--space-1));
+  max-width: 280px; /* из макета: длинная подсказка переносится */
+  width: max-content;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  color: var(--surface);
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms;
+}
+
+.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* мостик через зазор space-1: курсор переходит с элемента на подсказку, не уходя с обёртки */
+.bubble::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: var(--space-1);
+}
+
+.below::before {
+  top: auto;
+  bottom: 100%;
+}
+
+/* у верхнего края экрана — под элементом */
+.below {
+  bottom: auto;
+  top: calc(100% + var(--space-1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bubble {
+    transition: none;
+  }
+}

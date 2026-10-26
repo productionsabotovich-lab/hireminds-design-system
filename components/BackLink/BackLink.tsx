@@ -1,20 +1,34 @@
 "use client";
 /** Pattern: data/products/hireminds/design/system/patterns/back-link.md */
 import type { ReactNode } from "react";
+import { IconArrow } from "../IconArrow";
+import { Tooltip } from "../Tooltip";
 import s from "./BackLink.module.css";
 
-export interface BackLinkProps {
+interface BackLinkBase {
   /** href for <a> */
   href?: string | undefined;
   /** or onClick for <button> (back action in flow) */
   onClick?: (() => void) | undefined;
-  /**
-   * 'subtle' → mute color, no border (default)
-   * 'button' → ink-2, padding, hover bg (onboarding actions)
-   */
-  variant?: "subtle" | "button" | undefined;
-  children: ReactNode;
 }
+
+export type BackLinkProps = BackLinkBase &
+  (
+    | {
+        /**
+         * 'subtle' → mute color, no border (default)
+         * 'button' → ink-2, padding, hover bg (onboarding actions)
+         */
+        variant?: "subtle" | "button" | undefined;
+        children: ReactNode;
+      }
+    | {
+        /** 'icon' → квадрат 28px со стрелкой «←»: подпись — в подсказке Tooltip и в aria-label (шапка экрана) */
+        variant: "icon";
+        /** Куда ведёт стрелка: «Назад к PIL-15» — текст подсказки и имя ссылки */
+        children: string;
+      }
+  );
 
 const ArrowLeft = () => (
   <svg
@@ -34,6 +48,26 @@ const ArrowLeft = () => (
 
 export function BackLink({ href, onClick, variant = "subtle", children }: BackLinkProps) {
   const cls = [s.base, s[variant]].join(" ");
+
+  // icon: текста на экране нет — подпись «Назад к PIL-15» читается в подсказке и диктором
+  if (variant === "icon") {
+    const label = children as string;
+    const arrow = <IconArrow direction="left" size={16} />;
+    return (
+      // имя ссылки — aria-label; подсказка повторяет его, поэтому aria-describedby не добавляется
+      <Tooltip text={label} focusable={false} describe={false}>
+        {href ? (
+          <a href={href} className={cls} aria-label={label}>
+            {arrow}
+          </a>
+        ) : (
+          <button type="button" onClick={onClick} className={cls} aria-label={label}>
+            {arrow}
+          </button>
+        )}
+      </Tooltip>
+    );
+  }
 
   if (href) {
     return (
