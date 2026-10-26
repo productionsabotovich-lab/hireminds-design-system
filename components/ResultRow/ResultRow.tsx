@@ -27,6 +27,7 @@ function iconOf(kind: ResultRowProps["kind"], name: string, path?: string, merge
   return iconForFile(path ?? name);
 }
 
+/** @deprecated Используй ListItem внутри List: таблица замены — в README. Остаётся до итерации 3. */
 export function ResultRow({ kind, name, path, stat, meta, merged, href, newTab = false }: ResultRowProps) {
   const body = (
     <>

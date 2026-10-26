@@ -1,6 +1,19 @@
 # ResultRow
 
-Одна строка артефакта задачи — PR, файл или отчёт: иконка вида или типа файла, название в одну строку и справа мета или счётчик изменений `+n −m`.
+Одна строка артефакта задачи — PR, файл или отчёт: иконка вида или типа файла, название в одну строку и справа мета или счётчик изменений `+n −m`. **Устарел — используй `ListItem` внутри `List`.**
+
+## Замена
+`ResultRow` остаётся для экранов webapp на 0.7–0.10 и будет удалён в итерации 3.
+
+| ResultRow | ListItem |
+|---|---|
+| `kind="pr"`, `name` | `entity: { kind: "pr", id: "#21" }`, `title` |
+| `kind="file"`, `path`, `name` | `leading={<Icon name={iconForFile(path)} />}`, `path`, `density="compact"` |
+| `kind="report"` | `leading={<Icon name="report" />}`, `title` |
+| `stat: { additions, deletions }` | `trailing` — «+n −m» (`accent-ink` / `danger-ink`, колонка 64px) |
+| `meta` | `trailing` или `state` |
+| `href`, `newTab` | `href`, `newTab` |
+
 
 ## Когда использовать
 - Список результатов работы: «Результат» в карточке задачи, файлы PR на странице решения, «Что получилось» на экране сессии. Строки собираются в `ResultList`.

@@ -29,6 +29,7 @@ function files(n: number) {
   return `${n} файлов`;
 }
 
+/** @deprecated Используй List: таблица замены — в README. Остаётся до итерации 3. */
 export function ResultList({
   title,
   rows,

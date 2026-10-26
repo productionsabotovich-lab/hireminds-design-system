@@ -24,7 +24,8 @@ export interface EntityRefProps {
   hint?: string | undefined;
 }
 
-const ICON: Record<EntityKind, IconName> = {
+/** Иконка по типу сущности: List переносит её в колонку leading строки */
+export const ENTITY_ICON: Record<EntityKind, IconName> = {
   task: "tracker",
   session: "session",
   decision: "decision",
@@ -51,7 +52,7 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
       {!bare && (
         // коробка высотой в одну строку: иконка по центру первой строки при любом кегле
         <span className={s.icon} aria-hidden="true">
-          <Icon name={ICON[kind]} size={iconSize} />
+          <Icon name={ENTITY_ICON[kind]} size={iconSize} />
         </span>
       )}
       <span className={s.text}>

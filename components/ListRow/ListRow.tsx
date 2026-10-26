@@ -20,6 +20,7 @@ export interface ListRowProps {
   sub?: ReactNode;
 }
 
+/** @deprecated Используй ListItem внутри List: таблица замены — в README. Остаётся до итерации 3. */
 export function ListRow({ href, newTab = false, lead, title, code, trailing, sub }: ListRowProps) {
   const hasLead = lead != null;
   const body = (

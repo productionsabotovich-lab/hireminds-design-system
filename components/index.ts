@@ -55,7 +55,7 @@ export type { DotProps } from "./Dot";
 export { EmptyState } from "./EmptyState";
 export type { EmptyStateProps } from "./EmptyState";
 
-export { EntityRef } from "./EntityRef";
+export { EntityRef, ENTITY_ICON } from "./EntityRef";
 export type { EntityRefProps, EntityKind } from "./EntityRef";
 
 export { ExternalLink } from "./ExternalLink";
@@ -96,6 +96,12 @@ export type { LeadProps } from "./Lead";
 
 export { LinkBar } from "./LinkBar";
 export type { LinkBarProps, LinkBarLink } from "./LinkBar";
+
+export { List } from "./List";
+export type { ListProps, ListSection } from "./List";
+
+export { ListItem } from "./ListItem";
+export type { ListItemProps, ListItemState, ListItemEntity, ListItemTone } from "./ListItem";
 
 export { ListRow } from "./ListRow";
 export type { ListRowProps } from "./ListRow";
