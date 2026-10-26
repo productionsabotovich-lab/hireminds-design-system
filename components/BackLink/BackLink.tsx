@@ -5,19 +5,30 @@ import { IconArrow } from "../IconArrow";
 import { Tooltip } from "../Tooltip";
 import s from "./BackLink.module.css";
 
-export interface BackLinkProps {
+interface BackLinkBase {
   /** href for <a> */
   href?: string | undefined;
   /** or onClick for <button> (back action in flow) */
   onClick?: (() => void) | undefined;
-  /**
-   * 'subtle' → mute color, no border (default)
-   * 'button' → ink-2, padding, hover bg (onboarding actions)
-   * 'icon'   → квадрат 28px со стрелкой «←»: подпись — в подсказке Tooltip и в aria-label (шапка экрана)
-   */
-  variant?: "subtle" | "button" | "icon" | undefined;
-  children: ReactNode;
 }
+
+export type BackLinkProps = BackLinkBase &
+  (
+    | {
+        /**
+         * 'subtle' → mute color, no border (default)
+         * 'button' → ink-2, padding, hover bg (onboarding actions)
+         */
+        variant?: "subtle" | "button" | undefined;
+        children: ReactNode;
+      }
+    | {
+        /** 'icon' → квадрат 28px со стрелкой «←»: подпись — в подсказке Tooltip и в aria-label (шапка экрана) */
+        variant: "icon";
+        /** Куда ведёт стрелка: «Назад к PIL-15» — текст подсказки и имя ссылки */
+        children: string;
+      }
+  );
 
 const ArrowLeft = () => (
   <svg
@@ -40,10 +51,11 @@ export function BackLink({ href, onClick, variant = "subtle", children }: BackLi
 
   // icon: текста на экране нет — подпись «Назад к PIL-15» читается в подсказке и диктором
   if (variant === "icon") {
-    const label = typeof children === "string" ? children : undefined;
+    const label = children as string;
     const arrow = <IconArrow direction="left" size={16} />;
     return (
-      <Tooltip text={label ?? ""} focusable={false}>
+      // имя ссылки — aria-label; подсказка повторяет его, поэтому aria-describedby не добавляется
+      <Tooltip text={label} focusable={false} describe={false}>
         {href ? (
           <a href={href} className={cls} aria-label={label}>
             {arrow}

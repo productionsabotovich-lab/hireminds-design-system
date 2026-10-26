@@ -27,7 +27,6 @@
   font-weight: 400;
   text-align: left;
   white-space: normal;
-  pointer-events: none;
   opacity: 0;
   visibility: hidden;
   transition: opacity 120ms;
@@ -36,6 +35,21 @@
 .open {
   opacity: 1;
   visibility: visible;
+}
+
+/* мостик через зазор space-1: курсор переходит с элемента на подсказку, не уходя с обёртки */
+.bubble::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: var(--space-1);
+}
+
+.below::before {
+  top: auto;
+  bottom: 100%;
 }
 
 /* у верхнего края экрана — под элементом */

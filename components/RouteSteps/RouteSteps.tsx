@@ -33,6 +33,9 @@ export function RouteSteps({ steps, current = 0, done = false, live = true }: Ro
     if (!box || typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
     ro.observe(box);
+    // ширина строки шагов меняется и без изменения рамки (шрифт догрузился, шагов стало больше)
+    const list = box.firstElementChild;
+    if (list) ro.observe(list);
     return () => ro.disconnect();
   }, []);
 
@@ -40,8 +43,10 @@ export function RouteSteps({ steps, current = 0, done = false, live = true }: Ro
   useEffect(() => {
     const box = scroller.current;
     const step = box?.querySelector<HTMLElement>('[aria-current="step"]');
-    if (!box || !step || box.scrollWidth <= box.clientWidth) return;
-    box.scrollLeft = step.offsetLeft - (box.clientWidth - step.offsetWidth) / 2;
+    // тени пересчитываются всегда: шагов стало меньше — прокрутки и теней больше нет
+    if (box && step && box.scrollWidth > box.clientWidth) {
+      box.scrollLeft = step.offsetLeft - (box.clientWidth - step.offsetWidth) / 2;
+    }
     measure();
   }, [steps.length, current, done]);
 

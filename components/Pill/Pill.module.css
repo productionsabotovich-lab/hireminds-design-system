@@ -44,7 +44,8 @@
 }
 .accent .dot {
   background: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-soft); /* soft-токен тона: oklch с прозрачностью Chrome красит в анимации бирюзой */
+  /* ореол — тон 35%, смешанный в sRGB: виден на заливке -soft; oklch с альфой Chrome красил в анимации бирюзой */
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .warn {
@@ -53,7 +54,7 @@
 }
 .warn .dot {
   background: var(--warn);
-  box-shadow: 0 0 0 2px var(--warn-soft);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--warn) 35%, transparent);
 }
 
 .danger {
@@ -62,7 +63,7 @@
 }
 .danger .dot {
   background: var(--danger);
-  box-shadow: 0 0 0 2px var(--danger-soft);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 35%, transparent);
 }
 
 .dim {

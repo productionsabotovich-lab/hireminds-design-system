@@ -20,20 +20,27 @@ export interface TooltipProps {
   /** Элемент, к которому подсказка: значок, ссылка-иконка, кнопка */
   children: ReactNode;
   /**
-   * true (по умолчанию) — фокус на самой обёртке: для значка без своего фокуса.
+   * true (по умолчанию) — для значка без текста и без своего фокуса: обёртка в порядке Tab,
+   * для читалки — role="img" с именем из text.
    * false — фокус у вложенной кнопки или ссылки; ей добавляется aria-describedby.
    */
   focusable?: boolean | undefined;
+  /** false — у вложенного элемента уже есть имя с тем же текстом (aria-label): aria-describedby не добавлять */
+  describe?: boolean | undefined;
 }
+
+/** задержка закрытия: курсор успевает перейти с элемента на подсказку (WCAG 1.4.13) */
+const HIDE_DELAY = 120;
 
 /** отступ подсказки от края экрана */
 const EDGE = 8;
 
-export function Tooltip({ text, children, focusable = true }: TooltipProps) {
+export function Tooltip({ text, children, focusable = true, describe = true }: TooltipProps) {
   const id = `${useId()}tip`;
   const [open, setOpen] = useState(false);
   const [shift, setShift] = useState({ x: 0, below: false });
   const bubble = useRef<HTMLSpanElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // у края экрана — сдвиг внутрь по горизонтали; у верхнего края — под элементом
   useLayoutEffect(() => {
@@ -47,22 +54,34 @@ export function Tooltip({ text, children, focusable = true }: TooltipProps) {
 
   useEffect(() => {
     if (!open) return;
+    // Esc закрывает только подсказку: перехват в фазе capture, дальше событие не идёт (диалог под ней остаётся)
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Escape") return;
+      e.stopPropagation();
+      setOpen(false);
     };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.addEventListener("keydown", onKey, true);
+    return () => document.removeEventListener("keydown", onKey, true);
   }, [open]);
 
-  const show = () => setOpen(true);
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const show = () => {
+    clearTimeout(timer.current);
+    setOpen(true);
+  };
+  // курсор ушёл и с элемента, и с подсказки (она внутри обёртки) — закрыть с задержкой
   const hide = () => {
-    setOpen(false);
-    setShift({ x: 0, below: false });
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      setOpen(false);
+      setShift({ x: 0, below: false });
+    }, HIDE_DELAY);
   };
 
   // фокус у вложенного элемента: ему — aria-describedby, чтобы читалка прочла подсказку вместе с ним
   const child =
-    !focusable && isValidElement(children)
+    !focusable && describe && isValidElement(children)
       ? cloneElement(children as ReactElement<{ "aria-describedby"?: string }>, { "aria-describedby": id })
       : children;
 
@@ -70,7 +89,8 @@ export function Tooltip({ text, children, focusable = true }: TooltipProps) {
     <span
       className={s.root}
       tabIndex={focusable ? 0 : undefined}
-      aria-describedby={focusable ? id : undefined}
+      role={focusable ? "img" : undefined}
+      aria-label={focusable ? text : undefined}
       onMouseEnter={show}
       onMouseLeave={hide}
       onFocus={show}
@@ -81,6 +101,7 @@ export function Tooltip({ text, children, focusable = true }: TooltipProps) {
         ref={bubble}
         id={id}
         role="tooltip"
+        aria-hidden={focusable || !describe ? true : undefined}
         className={[s.bubble, open ? s.open : "", shift.below ? s.below : ""].filter(Boolean).join(" ")}
         style={{ transform: `translateX(calc(-50% + ${shift.x}px))` }}
       >

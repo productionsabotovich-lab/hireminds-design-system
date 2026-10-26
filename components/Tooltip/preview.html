@@ -1,4 +1,4 @@
-<!-- @dsCard group="Overlays" height=420 -->
+<!-- @dsCard group="Overlays" height=470 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -10,11 +10,15 @@
   .pv-box { display: flex; flex-direction: column; gap: 6px; }
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
   /* открытые состояния: над ними — место под подсказку */
-  .pv-open { padding-top: 34px; }
+  /* место под подсказку — между подписью состояния и строкой */
+  .pv-open > :last-child { margin-top: 30px; }
+  .pv-tall > :last-child { margin-top: 48px; }
   .pv-row { display: flex; align-items: center; gap: 8px; color: var(--mute); font-size: 12px; }
   .pv-edge { display: flex; justify-content: flex-end; }
   .pv-go:focus-visible, .pv-go:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
   .pv-go { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: var(--r-sm); color: var(--ink-2); text-decoration: none; }
+  /* снимок без анимации появления: подсказка сразу видна целиком */
+  [role="tooltip"] { transition: none !important; }
 </style>
 </head>
 <body>
@@ -33,7 +37,7 @@
         h('span', { className: 'pv-row', 'data-open': 'focus' }, 'Developer · свободен', h(H.Tooltip, { text: 'Открыть карточку агента', focusable: false }, go('Открыть карточку агента Developer')))),
       h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'У правого края экрана: сдвиг внутрь'),
         h('div', { className: 'pv-edge', 'data-open': 'hover' }, h(H.Tooltip, { text: 'Открыть карточку агента', focusable: false }, go('Открыть карточку агента QA')))),
-      h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'Длинный текст переносится, не шире 280px'),
+      h('div', { className: 'pv-box pv-open pv-tall' }, h('span', { className: 'pv-cap' }, 'Длинный текст переносится, не шире 280px'),
         h('span', { className: 'pv-row', 'data-open': 'hover' }, h(H.Tooltip, { text: 'Раннер: Claude Code · Sonnet 5.5 · подключение через ключ команды' }, h(H.Icon, { name: 'runner', size: 16 })), 'Claude Code'))
     )
   );
