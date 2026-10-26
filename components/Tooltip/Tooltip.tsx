@@ -34,11 +34,19 @@ export interface TooltipProps {
 /** задержка закрытия: курсор успевает перейти с элемента на подсказку (WCAG 1.4.13) */
 const HIDE_DELAY = 120;
 
-/** есть ли внутри элемент, чей текст не поместился */
+/**
+ * Обрезан ли текст внутри: проверяются только элементы с многоточием (text-overflow: ellipsis) или line-clamp.
+ * Пузырь подсказки и скрытые подписи для читалки (1×1px) не считаются: они шире своей коробки нарочно.
+ */
 const truncated = (root: HTMLElement) =>
-  [root, ...Array.from(root.querySelectorAll<HTMLElement>("*"))].some(
-    (el) => el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1,
-  );
+  Array.from(root.querySelectorAll<HTMLElement>("*")).some((el) => {
+    if (el.closest('[role="tooltip"]')) return false;
+    const cs = getComputedStyle(el);
+    const clamp = cs.getPropertyValue("-webkit-line-clamp");
+    const cut = cs.textOverflow === "ellipsis" || (clamp !== "" && clamp !== "none");
+    if (!cut || el.clientWidth <= 1) return false;
+    return el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1;
+  });
 
 /** отступ подсказки от края экрана */
 const EDGE = 8;

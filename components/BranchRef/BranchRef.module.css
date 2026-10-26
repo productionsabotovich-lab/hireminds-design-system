@@ -25,21 +25,20 @@
   color: var(--mute);
 }
 
-/* чип в одну строку: длинное имя — многоточие (CodeChip в тексте переносится, здесь — нет) */
+/* чип в одну строку: длинное имя — многоточие (CodeChip truncate) */
 .chip {
   display: inline-flex;
   min-width: 0;
   max-width: 100%;
 }
 
-.chip > * {
-  display: inline-block;
-  min-width: 0;
-  max-width: 100%;
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
-  vertical-align: middle;
 }
 
 .arrow {

@@ -79,7 +79,9 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
 
   // подсказка: hint — всегда (у ссылки — ещё и описание для читалки); в размере title — полное название, если обрезано.
   // Обёртка не focusable: у ключа и названия есть видимый текст, role="img" его бы скрыл
-  if (hint) return <Tooltip text={hint} focusable={false} describe={!!href}>{el}</Tooltip>;
+  // в размере title с подсказкой — в ней и полное название: оно может быть обрезано
+  const tip = hint && size === "title" && title ? `${id} ${title} · ${hint}` : hint;
+  if (tip) return <Tooltip text={tip} focusable={false} describe={!!href}>{el}</Tooltip>;
   if (size === "title" && title) {
     return (
       <Tooltip text={`${id} ${title}`} focusable={false} describe={false} whenTruncated>

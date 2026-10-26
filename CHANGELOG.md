@@ -19,7 +19,9 @@
 - `BranchRef` — `name`, `href`, `base`, `baseHref`: иконка ветки и `CodeChip`-ссылка, «откуда → куда» одним видом,
   длинная ветка — многоточие и `Tooltip`.
 - `Icon`: `commit` (Lucide git-commit-horizontal) и размер 24.
-- `Tooltip`: `whenTruncated` — открывается, только если текст внутри обрезан; без `text` не открывается.
+- `Tooltip`: `whenTruncated` — открывается, только если обрезан текст с многоточием или line-clamp (пузырь и скрытые
+  подписи не считаются); без `text` не открывается.
+- `CodeChip`: `truncate` — одна строка с многоточием.
 
 ### Изменено
 - `TaskRef` — устарел (`@deprecated`): замена — `EntityRef kind="task"`, таблица соответствия в README. Остаётся до

@@ -24,7 +24,7 @@ function Branch({ name, href, fixed = false }: { name: string; href?: string | u
       {/* имя ветки — видимый текст чипа: describe не нужен, обёртка не focusable */}
       <Tooltip text={name} focusable={false} describe={false} whenTruncated>
         <span className={s.chip}>
-          <CodeChip href={href} newTab={!!href}>
+          <CodeChip href={href} newTab={!!href} truncate>
             {name}
           </CodeChip>
         </span>
@@ -39,9 +39,10 @@ export function BranchRef({ name, href, base, baseHref }: BranchRefProps) {
       <Branch name={name} href={href} />
       {base && (
         <>
-          <span className={s.arrow} aria-label="в">
+          <span className={s.arrow} aria-hidden="true">
             →
           </span>
+          <span className={s.srOnly}>в</span>
           {/* целевая ветка (main) короткая и не сжимается: многоточие — у исходной */}
           <Branch name={base} href={baseHref} fixed />
         </>
