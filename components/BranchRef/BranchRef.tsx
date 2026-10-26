@@ -21,7 +21,8 @@ function Branch({ name, href, fixed = false }: { name: string; href?: string | u
         <Icon name="branch" size={14} />
       </span>
       {/* длинная ветка — многоточие в чипе, полное имя — в подсказке */}
-      <Tooltip text={name} focusable={!href} whenTruncated>
+      {/* имя ветки — видимый текст чипа: describe не нужен, обёртка не focusable */}
+      <Tooltip text={name} focusable={false} describe={false} whenTruncated>
         <span className={s.chip}>
           <CodeChip href={href} newTab={!!href}>
             {name}

@@ -77,11 +77,12 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
     <span className={cls}>{body}</span>
   );
 
-  // подсказка: hint — всегда; в размере title — полное название, если оно обрезано
-  if (hint) return <Tooltip text={hint} focusable={!href}>{el}</Tooltip>;
+  // подсказка: hint — всегда (у ссылки — ещё и описание для читалки); в размере title — полное название, если обрезано.
+  // Обёртка не focusable: у ключа и названия есть видимый текст, role="img" его бы скрыл
+  if (hint) return <Tooltip text={hint} focusable={false} describe={!!href}>{el}</Tooltip>;
   if (size === "title" && title) {
     return (
-      <Tooltip text={`${id} ${title}`} focusable={false} whenTruncated>
+      <Tooltip text={`${id} ${title}`} focusable={false} describe={false} whenTruncated>
         {el}
       </Tooltip>
     );
