@@ -26,14 +26,14 @@
 | `report` | отчёт (QA и другие) |
 | `priority` | приоритет задачи |
 | `type` | тип задачи |
-| `epic` | эпик |
+| `epic` | эпик — стопка слоёв (Lucide `layers`) |
 | `repo` | репозиторий |
 | `branch` | ветка |
 | `runner` | раннер и модель |
 | `calendar` | дата |
 | `check` | пройдено, выполнено |
 | `inbox` | входящие |
-| `layers` | слои: скиллы и правила |
+| `layers` | слои: скиллы и правила (тот же контур, что у `epic`) |
 | `doc` | документ, спецификация |
 | `log` | журнал |
 | `file-ts` | `.ts`, `.tsx` |
@@ -42,6 +42,23 @@
 | `file-yaml` | `.yaml`, `.yml` |
 | `file-css` | `.css` |
 | `file-test` | `*.test.*`, `*.spec.*` |
+| `session` | сессия агента (Lucide `activity`) |
+| `decision` | решение (Lucide `split`) |
+| `tracker` | трекер задач (Lucide `square-kanban`) |
+| `workflow` | процесс, маршрут (Lucide `workflow`) |
+| `hard-drive` | хранилище, раннер на своём сервере |
+| `box` | пакет, артефакт |
+| `milestone` | веха, этап проекта |
+| `circle-dot` | состояние, точка маршрута |
+| `tags` | метки |
+| `clock` | время, ожидание |
+| `ellipsis` | ещё действия |
+| `search` | поиск |
+| `globe` | веб, внешний источник |
+| `brain` | модель, рассуждение агента |
+| `reply` | ответ |
+| `queue` | очередь (Lucide `list-end`: в Lucide нет `queue`) |
+| `alert` | внимание, ошибка (Lucide `circle-alert`) |
 
 ## Правила
 - Иконки типов файлов — только 16 px: на 14 px метки `file-md`, `file-yaml`, `file-css` различаются с трудом. 14 px — для объектов продукта в плотных строках.
