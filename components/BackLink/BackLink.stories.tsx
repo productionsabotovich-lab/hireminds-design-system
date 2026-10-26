@@ -25,3 +25,7 @@ export const Button: Story = {
     children: "Назад",
   },
 };
+
+export const IconVariant: Story = {
+  args: { variant: "icon", href: "#", children: "Назад к PIL-15" },
+};

@@ -1,6 +1,8 @@
 "use client";
 /** Pattern: data/products/hireminds/design/system/patterns/back-link.md */
 import type { ReactNode } from "react";
+import { IconArrow } from "../IconArrow";
+import { Tooltip } from "../Tooltip";
 import s from "./BackLink.module.css";
 
 export interface BackLinkProps {
@@ -11,8 +13,9 @@ export interface BackLinkProps {
   /**
    * 'subtle' → mute color, no border (default)
    * 'button' → ink-2, padding, hover bg (onboarding actions)
+   * 'icon'   → квадрат 28px со стрелкой «←»: подпись — в подсказке Tooltip и в aria-label (шапка экрана)
    */
-  variant?: "subtle" | "button" | undefined;
+  variant?: "subtle" | "button" | "icon" | undefined;
   children: ReactNode;
 }
 
@@ -34,6 +37,25 @@ const ArrowLeft = () => (
 
 export function BackLink({ href, onClick, variant = "subtle", children }: BackLinkProps) {
   const cls = [s.base, s[variant]].join(" ");
+
+  // icon: текста на экране нет — подпись «Назад к PIL-15» читается в подсказке и диктором
+  if (variant === "icon") {
+    const label = typeof children === "string" ? children : undefined;
+    const arrow = <IconArrow direction="left" size={16} />;
+    return (
+      <Tooltip text={label ?? ""} focusable={false}>
+        {href ? (
+          <a href={href} className={cls} aria-label={label}>
+            {arrow}
+          </a>
+        ) : (
+          <button type="button" onClick={onClick} className={cls} aria-label={label}>
+            {arrow}
+          </button>
+        )}
+      </Tooltip>
+    );
+  }
 
   if (href) {
     return (

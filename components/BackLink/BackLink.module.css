@@ -33,3 +33,24 @@
 .button:hover {
   background: var(--inset);
 }
+
+/* icon — ссылка-иконка «назад» в шапке экрана (IconLink набора 2b): квадрат 28px, без текста */
+.icon {
+  justify-content: center;
+  flex: none;
+  width: 28px; /* из макета: квадрат ссылки-иконки */
+  height: 28px;
+  padding: 0;
+  border-radius: var(--r-md);
+  color: var(--ink-2);
+}
+
+.icon:hover {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+
+.base:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

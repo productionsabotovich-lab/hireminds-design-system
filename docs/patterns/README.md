@@ -22,6 +22,7 @@
 | | [Container](container.md), [SplitLayout](split-layout.md), [AsidePanel](aside-panel.md), [MainPanel](main-panel.md) | Экран |
 | Действия и ссылки | [Button](button.md) | Компонент Button |
 | | [BackLink](back-link.md), [ExternalLink](external-link.md), [NavLink](nav-link.md) | Компоненты BackLink, ExternalLink, NavLink |
+| | [Tooltip](../../components/Tooltip/README.md) — подсказка к значку по наведению и фокусу | Компонент Tooltip |
 | | [Switcher](switcher.md) | Компонент Switcher |
 | Декор | [Divider](divider.md), [Dot](dot.md), [IconArrow](icon-arrow.md) | Компоненты Divider, Dot, IconArrow |
 | | [Icon](../../components/Icon/README.md) — объекты продукта и типы файлов | Компонент Icon |

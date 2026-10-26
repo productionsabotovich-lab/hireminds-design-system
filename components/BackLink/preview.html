@@ -1,4 +1,4 @@
-<!-- @dsCard group="Actions" height=64 -->
+<!-- @dsCard group="Actions" height=340 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -7,7 +7,12 @@
 <style>
   body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
   .pv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .pv-col { display: flex; flex-direction: column; gap: 12px; }
+  .pv-col { display: flex; flex-direction: column; gap: 14px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* шапка экрана: ← перед заголовком; в состояниях наведения и фокуса — место над ней под подсказку */
+  .pv-head { display: flex; align-items: center; gap: var(--space-2); font: 600 15px/1.2 var(--font-display); }
+  .pv-open { padding-top: 30px; }
+  .pv-hover a { background: var(--bg-2); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -15,10 +20,21 @@
 <script>
   var H = window.Hireminds, h = React.createElement, F = React.Fragment;
   ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div',{className:'pv-col'},
     h('div',{className:'pv-row',style:{gap:24}},
-    h(H.BackLink,{onClick:function(){}},'Назад ко входу'),
-    h(H.BackLink,{onClick:function(){},variant:'button'},'Назад'))
+      h(H.BackLink,{onClick:function(){}},'Назад ко входу'),
+      h(H.BackLink,{onClick:function(){},variant:'button'},'Назад')),
+    h('span',{className:'pv-cap'},'variant icon — шапка экрана: покой'),
+    h('div',{className:'pv-head'},h(H.BackLink,{href:'#',variant:'icon'},'Назад к PIL-15'),'D-46 Утверждение плана кампании'),
+    h('span',{className:'pv-cap'},'Наведение: подсказка'),
+    h('div',{className:'pv-head pv-open pv-hover','data-open':'hover'},h(H.BackLink,{href:'#',variant:'icon'},'Назад к «Моим решениям»'),'Мои решения'),
+    h('span',{className:'pv-cap'},'Фокус с клавиатуры'),
+    h('div',{className:'pv-head pv-open','data-open':'focus'},h(H.BackLink,{href:'#',variant:'icon'},'Назад к PIL-15'),'S-118 Developer'))
   );
+  setTimeout(function () {
+    document.querySelectorAll('[data-open="hover"] > span').forEach(function (el) { el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true, relatedTarget: document.body })); });
+    var f = document.querySelector('[data-open="focus"] a'); if (f) f.focus({ preventScroll: true });
+  }, 300);
 </script>
 </body>
 </html>

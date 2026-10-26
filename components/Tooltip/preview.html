@@ -1,0 +1,47 @@
+<!-- @dsCard group="Overlays" height=420 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Tooltip — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 14px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* открытые состояния: над ними — место под подсказку */
+  .pv-open { padding-top: 34px; }
+  .pv-row { display: flex; align-items: center; gap: 8px; color: var(--mute); font-size: 12px; }
+  .pv-edge { display: flex; justify-content: flex-end; }
+  .pv-go:focus-visible, .pv-go:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .pv-go { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: var(--r-sm); color: var(--ink-2); text-decoration: none; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var pri = h(H.Icon, { name: 'priority', size: 16 });
+  var go = function (label) { return h('a', { className: 'pv-go', href: '#', 'aria-label': label }, '↗'); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'Скрыта: значок приоритета в строке'),
+        h('span', { className: 'pv-row' }, h(H.Tooltip, { text: 'Приоритет: высокий' }, pri), 'PIL-15 · Роли и доступ')),
+      h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'По наведению'),
+        h('span', { className: 'pv-row', 'data-open': 'hover' }, h(H.Tooltip, { text: 'Приоритет: высокий' }, pri), 'PIL-15 · Роли и доступ')),
+      h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'По фокусу: вложенная ссылка (focusable=false)'),
+        h('span', { className: 'pv-row', 'data-open': 'focus' }, 'Developer · свободен', h(H.Tooltip, { text: 'Открыть карточку агента', focusable: false }, go('Открыть карточку агента Developer')))),
+      h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'У правого края экрана: сдвиг внутрь'),
+        h('div', { className: 'pv-edge', 'data-open': 'hover' }, h(H.Tooltip, { text: 'Открыть карточку агента', focusable: false }, go('Открыть карточку агента QA')))),
+      h('div', { className: 'pv-box pv-open' }, h('span', { className: 'pv-cap' }, 'Длинный текст переносится, не шире 280px'),
+        h('span', { className: 'pv-row', 'data-open': 'hover' }, h(H.Tooltip, { text: 'Раннер: Claude Code · Sonnet 5.5 · подключение через ключ команды' }, h(H.Icon, { name: 'runner', size: 16 })), 'Claude Code'))
+    )
+  );
+  // открытые состояния для статичного снимка: наведение — событием мыши, фокус — фокусом на ссылке
+  setTimeout(function () {
+    document.querySelectorAll('[data-open="hover"] > span').forEach(function (el) { el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true, relatedTarget: document.body })); });
+    var f = document.querySelector('[data-open="focus"] a'); if (f) f.focus({ preventScroll: true });
+  }, 300);
+</script>
+</body>
+</html>

@@ -1,6 +1,9 @@
 export { BackLink } from "./BackLink";
 export type { BackLinkProps } from "./BackLink";
 
+export { Tooltip } from "./Tooltip";
+export type { TooltipProps } from "./Tooltip";
+
 export { Body } from "./Body";
 export type { BodyProps } from "./Body";
 
