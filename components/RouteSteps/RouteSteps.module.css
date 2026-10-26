@@ -1,5 +1,47 @@
 /* Маршрут по макету «Карточка задачи» (.rh): равная сетка по числу шагов, линия line между точками */
 
+/* рамка прокрутки: тени у краёв — поверх строки, не прокручиваются вместе с ней */
+.wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.wrap::before,
+.wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--space-4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms;
+  z-index: 2;
+}
+
+/* лёгкая тень — ink с прозрачностью, как в токенах sh-* */
+.wrap::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(17, 20, 24, 0.08), transparent);
+}
+
+.wrap::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(17, 20, 24, 0.08), transparent);
+}
+
+.shadeLeft::before,
+.shadeRight::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap::before,
+  .wrap::after {
+    transition: none;
+  }
+}
+
 /* шагов больше, чем помещается, — строка прокручивается по горизонтали, а не сжимает подписи */
 .scroll {
   position: relative; /* offsetParent шагов: по нему компонент прокручивает к текущему */

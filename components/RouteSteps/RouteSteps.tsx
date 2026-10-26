@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Dot } from "../Dot";
 import s from "./RouteSteps.module.css";
 
@@ -17,6 +17,24 @@ export interface RouteStepsProps {
 
 export function RouteSteps({ steps, current = 0, done = false, live = true }: RouteStepsProps) {
   const scroller = useRef<HTMLDivElement>(null);
+  // тень у края, за которым есть ещё шаги: слева и справа, пропадает, когда край достигнут
+  const [edges, setEdges] = useState({ left: false, right: false });
+  const measure = () => {
+    const box = scroller.current;
+    if (!box) return;
+    const left = box.scrollLeft > 1;
+    const right = box.scrollLeft + box.clientWidth < box.scrollWidth - 1;
+    setEdges((e) => (e.left === left && e.right === right ? e : { left, right }));
+  };
+
+  useEffect(() => {
+    measure();
+    const box = scroller.current;
+    if (!box || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    return () => ro.disconnect();
+  }, []);
 
   // шагов больше, чем помещается, — строка прокручивается; текущий шаг держим в видимой части
   useEffect(() => {
@@ -24,10 +42,12 @@ export function RouteSteps({ steps, current = 0, done = false, live = true }: Ro
     const step = box?.querySelector<HTMLElement>('[aria-current="step"]');
     if (!box || !step || box.scrollWidth <= box.clientWidth) return;
     box.scrollLeft = step.offsetLeft - (box.clientWidth - step.offsetWidth) / 2;
+    measure();
   }, [steps.length, current, done]);
 
   return (
-    <div ref={scroller} className={s.scroll}>
+    <div className={[s.wrap, edges.left ? s.shadeLeft : "", edges.right ? s.shadeRight : ""].filter(Boolean).join(" ")}>
+    <div ref={scroller} className={s.scroll} onScroll={measure}>
       <ol className={s.list} style={{ "--n": steps.length } as CSSProperties}>
         {steps.map((label, i) => {
           const state = done || i < current ? "done" : i === current ? "current" : "future";
@@ -49,6 +69,7 @@ export function RouteSteps({ steps, current = 0, done = false, live = true }: Ro
           );
         })}
       </ol>
+    </div>
     </div>
   );
 }

@@ -44,7 +44,7 @@
 }
 .accent .dot {
   background: var(--accent);
-  box-shadow: 0 0 0 2px oklch(0.78 0.16 150 / 0.35);
+  box-shadow: 0 0 0 2px var(--accent-soft); /* soft-токен тона: oklch с прозрачностью Chrome красит в анимации бирюзой */
 }
 
 .warn {
@@ -53,7 +53,7 @@
 }
 .warn .dot {
   background: var(--warn);
-  box-shadow: 0 0 0 2px oklch(0.85 0.12 65 / 0.45);
+  box-shadow: 0 0 0 2px var(--warn-soft);
 }
 
 .danger {
@@ -62,7 +62,7 @@
 }
 .danger .dot {
   background: var(--danger);
-  box-shadow: 0 0 0 2px oklch(0.8 0.12 25 / 0.35);
+  box-shadow: 0 0 0 2px var(--danger-soft);
 }
 
 .dim {

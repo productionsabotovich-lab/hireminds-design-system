@@ -17,6 +17,13 @@
 .tone-ink     { background: var(--ink); }
 .tone-mute    { background: var(--mute); }
 
+/* место под ореол: у status и kicker внешний отступ 3px (радиус ореола) — ореол не обрезается
+   overflow: hidden родителя, ячейкой сетки и строкой с многоточием */
+.variant-status,
+.variant-kicker {
+  margin: 3px;
+}
+
 /* variants — halo */
 .variant-status.tone-accent, .variant-kicker.tone-accent {
   box-shadow: 0 0 0 3px var(--accent-soft);

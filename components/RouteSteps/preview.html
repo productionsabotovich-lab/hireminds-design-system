@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=900 -->
+<!-- @dsCard group="Navigation" height=1020 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -9,6 +9,7 @@
   .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 560px; }
   .pv-box { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .pv-narrow { max-width: 343px; }
+  .pv-col320 { max-width: 320px; }
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
   .pv-card { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
 </style>
@@ -32,7 +33,8 @@
       box('375 px', { current: 1 }, 'pv-narrow'),
       box('Длинные названия: перенос по словам', { steps: LONG, current: 1 }),
       box('375 px · длинные названия', { steps: LONG, current: 1 }, 'pv-narrow'),
-      box('375 px · десять шагов: прокрутка, текущий виден', { steps: MANY, current: 7 }, 'pv-narrow'))
+      box('375 px · десять шагов: прокрутка, текущий виден, тени с обеих сторон', { steps: MANY, current: 7 }, 'pv-narrow'),
+      box('320 px · правая колонка, начало маршрута: тень только справа', { steps: MANY, current: 0 }, 'pv-col320'))
   );
 </script>
 </body>
