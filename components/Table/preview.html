@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=230 -->
+<!-- @dsCard group="Data" height=800 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -6,6 +6,10 @@
 <title>Table — preview</title>
 <style>
   body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
   .pv-key { font-family: var(--font-mono); font-size: 12px; color: var(--mute); margin-right: 8px; }
 </style>
 </head>
@@ -14,8 +18,19 @@
 <script>
   var H = window.Hireminds, h = React.createElement;
   function task(k, t) { return h('span', null, h('span',{className:'pv-key'},k), t); }
+  var cmp = function () { return h(H.Table, { caption: 'Сравнение вариантов очереди', dense: true, rowHeaders: true,
+    columns: [{ key: 'v', label: 'Вариант' }, { key: 'lat', label: 'Задержка, мс', numeric: true }, { key: 'cost', label: '₽ в месяц', numeric: true }, { key: 'sup', label: 'Поддержка' }],
+    rows: [{ id: 'pg', pick: true, cells: { v: 'Postgres + SKIP LOCKED', lat: '120', cost: '0', sup: 'уже в стеке' } },
+      { id: 'redis', cells: { v: 'Redis Streams', lat: '15', cost: '4 800', sup: 'новый сервис' } },
+      { id: 'sqs', cells: { v: 'SQS', lat: '60', cost: '2 300', sup: 'облако AWS' } }] }); };
+  var budget = h(H.Table, { caption: 'Бюджет кампании', dense: true, rowHeaders: true,
+    columns: [{ key: 'ch', label: 'Канал' }, { key: 'w1', label: 'Неделя 1', numeric: true }, { key: 'w2', label: 'Неделя 2', numeric: true }],
+    rows: [{ id: 'tg', cells: { ch: 'Telegram-каналы', w1: '40 000', w2: '30 000' } }, { id: 'mail', cells: { ch: 'Рассылка', w1: '5 000', w2: '5 000' } },
+      { id: 'sum', total: true, cells: { ch: 'Всего', w1: '45 000', w2: '35 000' } }] });
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
   ReactDOM.createRoot(document.getElementById('root')).render(
-    h(H.Table,{
+    h('div', { className: 'pv-col' },
+    box('строки ведут в карточку запуска', '', h(H.Table,{
       caption:'Запуски проекта',
       onRowClick:function(){},
       columns:[
@@ -27,7 +42,10 @@
         {id:'1',cells:{task:task('HIR-31','Экспорт отчёта в CSV'),phase:'Code',state:h(H.Pill,{tone:'accent',dot:true,pulse:true},'Выполняется'),time:'12 мин'}},
         {id:'2',cells:{task:task('HIR-28','Роли проекта'),phase:'Review',state:h(H.Pill,{tone:'warn',dot:true},'Ожидает решения'),time:'2 ч 05 мин'}},
         {id:'3',cells:{task:task('HIR-24','Вход по ссылке'),phase:'Done',state:h(H.Pill,{tone:'dim'},'Завершён'),time:'—'}}]
-    })
+    })),
+    box('сравнение · числа справа, строка-рекомендация', '', cmp()),
+    box('бюджет · итоговая строка', '', budget),
+    box('375 px · от 4 колонок — прокрутка в рамке, тень у края', 'pv-narrow', cmp()))
   );
 </script>
 </body>

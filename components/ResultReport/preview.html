@@ -1,0 +1,60 @@
+<!-- @dsCard group="Data" height=2280 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ResultReport — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var compareTable = { type: 'table', title: 'Сравнение вариантов очереди',
+    columns: [{ label: 'Вариант' }, { label: 'Задержка, мс', num: true }, { label: 'Стоимость, ₽/мес', num: true }, { label: 'Поддержка' }],
+    rows: [
+      { cells: ['Postgres + SKIP LOCKED', '120', '0', 'уже в стеке'], pick: true },
+      { cells: ['Redis Streams', '15', '4 800', 'новый сервис'] },
+      { cells: ['SQS', '60', '2 300', 'облако AWS'] }
+    ] };
+  var arch = [
+    { type: 'text', text: 'Предлагаю очередь задач агентов на Postgres: задержки хватает для шагов длиннее секунды, отдельный сервис не нужен. Redis Streams быстрее, но это новый сервис с отдельной поддержкой и деньгами; SQS привязывает нас к AWS. Нагрузку до 400 задач в минуту Postgres держит, дальше вернёмся к выбору.' },
+    { type: 'compare', before: 'опрос таблицы раз в 5 с, двойной запуск задачи', after: 'SKIP LOCKED, задача берётся одним раннером' },
+    compareTable,
+    { type: 'diagram', label: 'Схема: API кладёт задачу в очередь Postgres, раннер берёт её и пишет результат', caption: 'Путь задачи от API до результата',
+      width: 580, height: 170, nodeWidth: 130, nodes: [{ id: 'api', label: 'API', x: 4, y: 20 }, { id: 'q', label: 'Очередь (Postgres)', x: 222, y: 20, accent: true }, { id: 'run', label: 'Раннер', x: 444, y: 20 }, { id: 'res', label: 'Результат', x: 444, y: 120 }],
+      edges: [['api', 'q', 'задача'], ['q', 'run', 'SKIP LOCKED'], ['run', 'res']] },
+    { type: 'chart', label: 'Задержка взятия задачи по нагрузке: Postgres растёт до 180 мс, Redis держится около 20 мс', caption: 'Задержка взятия задачи при росте нагрузки',
+      x: ['10', '50', '100', '200', '400'], unit: 'мс', xLabel: 'задач в минуту', max: 200, ticks: [0, 100, 200],
+      series: [{ label: 'Postgres', tone: 'accent', values: [40, 60, 90, 130, 180] }, { label: 'Redis Streams', tone: 'warn', values: [10, 12, 14, 16, 20] }] },
+    { type: 'findings', title: 'Риски', items: [{ tone: 'warn', text: 'При 400 задачах в минуту задержка подходит к 200 мс' }, { tone: 'ok', text: 'Миграция без простоя: таблица новая' }] },
+    { type: 'callout', tone: 'info', title: 'Что дальше', items: ['Утвердить вариант', 'Developer переносит очередь за 2 дня', 'QA гоняет нагрузку 400 задач в минуту'] }
+  ];
+  var plan = [
+    { type: 'text', text: 'План кампании запуска для первых команд: две недели, три канала, бюджет в пределах лимита.' },
+    { type: 'table', title: 'Бюджет', columns: [{ label: 'Канал' }, { label: 'Неделя 1', num: true }, { label: 'Неделя 2', num: true }, { label: 'Итого, ₽', num: true }],
+      rows: [{ cells: ['Telegram-каналы', '40 000', '30 000', '70 000'] }, { cells: ['Рассылка', '5 000', '5 000', '10 000'] }, { cells: ['Вебинар', '0', '15 000', '15 000'] }, { cells: ['Всего', '45 000', '50 000', '95 000'], total: true }] },
+    { type: 'artifact', artifact: { type: 'images', title: 'Макеты постов', items: [
+      { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3Crect width='160' height='100' fill='%23eef3ef'/%3E%3Crect x='12' y='12' width='90' height='10' rx='3' fill='%23a9c4b2'/%3E%3Crect x='12' y='30' width='136' height='6' rx='3' fill='%23d4ddd7'/%3E%3Crect x='12' y='42' width='120' height='6' rx='3' fill='%23d4ddd7'/%3E%3Crect x='12' y='70' width='50' height='16' rx='4' fill='%232f7a4f'/%3E%3C/svg%3E", alt: 'Пост для Telegram: заголовок, два абзаца, кнопка', caption: 'Пост · Telegram' },
+      { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3Crect width='160' height='100' fill='%23f3f1ec'/%3E%3Crect x='12' y='12' width='136' height='40' rx='4' fill='%23ddd8cc'/%3E%3Crect x='12' y='60' width='100' height='6' rx='3' fill='%23cfc8b8'/%3E%3Crect x='12' y='72' width='70' height='6' rx='3' fill='%23cfc8b8'/%3E%3C/svg%3E", alt: 'Письмо рассылки: обложка и текст', caption: 'Письмо · рассылка' }
+    ] } }
+  ];
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('архитектурное решение · сравнение, схема, график', '', h(H.ResultReport, { blocks: arch, caption: 'Архитектор · 12 мин назад' })),
+      box('план кампании · бюджет таблицей, макеты вложением', '', h(H.ResultReport, { blocks: plan, caption: 'Маркетинг · сегодня, 11:40' })),
+      box('clamp · 3 строки и «Показать результат полностью»', '', h(H.ResultReport, { blocks: arch, clamp: true })),
+      box('промежуточный', '', h(H.ResultReport, { blocks: arch.slice(0, 1), interim: true, caption: 'Developer · идёт' })),
+      box('375 px · таблица сравнения прокручивается в рамке, тень у края', 'pv-narrow', h(H.ResultReport, { blocks: [arch[0], compareTable] }))
+    )
+  );
+</script>
+</body>
+</html>

@@ -45,7 +45,8 @@ export type IconName =
   | "commit"
   | "user"
   | "target"
-  | "cycle";
+  | "cycle"
+  | "x";
 
 export interface IconProps {
   /** Имя иконки из набора */
@@ -310,6 +311,13 @@ const SHAPES: Record<IconName, ReactElement> = {
     <>
       <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
       <path d="M21 3v5h-5" />
+    </>
+  ),
+  // не пройдено (проверка), закрыть — Lucide x
+  x: (
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
     </>
   ),
 };

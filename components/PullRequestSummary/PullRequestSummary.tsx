@@ -52,8 +52,8 @@ const filesWord = (n: number) => {
   return d === 1 && dd !== 11 ? "файл" : d >= 2 && d <= 4 && (dd < 12 || dd > 14) ? "файла" : "файлов";
 };
 
-/** «+312 −41»: цифры цветом, для читалки — словами */
-function Stat({ additions, deletions }: { additions: number; deletions: number }) {
+/** «+312 −41»: цифры цветом, для читалки — словами; внутренний — его берёт и ArtifactView */
+export function DiffStat({ additions, deletions }: { additions: number; deletions: number }) {
   return (
     <span className={s.stat}>
       <span className={s.add} aria-hidden="true">
@@ -69,11 +69,12 @@ function Stat({ additions, deletions }: { additions: number; deletions: number }
   );
 }
 
-function Ci({ passed, total }: { passed: number; total: number }) {
+/** Итог CI «✓ 4 из 4»; внутренний — его берёт и ArtifactView */
+export function Ci({ passed, total }: { passed: number; total: number }) {
   const ok = passed === total;
   return (
     <span className={[s.ci, ok ? s.ciOk : s.ciFail].join(" ")} title={`Проверки CI: ${passed} из ${total} пройдены`}>
-      <Icon name={ok ? "check" : "alert"} size={14} />
+      <Icon name={ok ? "check" : "x"} size={14} />
       <span className={s.srOnly}>проверки CI </span>
       {passed} из {total}
     </span>
@@ -85,7 +86,7 @@ function Row(p: PullRequestSummaryProps & { lead?: boolean }) {
   const hasDiff = p.additions != null && p.deletions != null;
   const diff = hasDiff ? (
     <span className={s.diff}>
-      <Stat additions={p.additions!} deletions={p.deletions!} />
+      <DiffStat additions={p.additions!} deletions={p.deletions!} />
       {p.files != null && (
         <span className={s.files}>
           {" "}
@@ -109,7 +110,7 @@ function Row(p: PullRequestSummaryProps & { lead?: boolean }) {
       subtitleShort={
         hasDiff || ci ? (
           <span className={s.short}>
-            {hasDiff && <Stat additions={p.additions!} deletions={p.deletions!} />}
+            {hasDiff && <DiffStat additions={p.additions!} deletions={p.deletions!} />}
             {hasDiff && ci && " · "}
             {ci}
           </span>
