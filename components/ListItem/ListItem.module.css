@@ -267,6 +267,12 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+  /* titleClamp={false}: название целиком */
+  .row .titleFull {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
   .nstate {
     display: inline-flex;
   }

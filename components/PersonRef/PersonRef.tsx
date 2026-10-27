@@ -187,6 +187,11 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
           }
           later(true, 0);
         }}
+        onBlur={() => {
+          // фокус ушёл: флаги «после Esc» и «от нажатия» сбрасываются — следующий Tab на триггер снова открывает карточку
+          skipFocus.current = false;
+          pressed.current = false;
+        }}
         onClick={() => {
           pressed.current = false;
           press();

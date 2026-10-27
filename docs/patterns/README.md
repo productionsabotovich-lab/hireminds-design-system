@@ -45,6 +45,7 @@
 | | [ListRow](../../components/ListRow/README.md) — строка списка в боковой колонке | Устарел → ListItem |
 | | [TaskSummary](../../components/TaskSummary/README.md) — задача из трекера: карточка, «О задаче», строка списка, всплывающая карточка, описание | Компонент TaskSummary |
 | | [AgentStatus](../../components/AgentStatus/README.md) — виджет агента: состояние, задача, очередь попапом; [PersonRef](../../components/PersonRef/README.md) — участник в тексте с карточкой по наведению | Компоненты AgentStatus, PersonRef |
+| | [PullRequestSummary](../../components/PullRequestSummary/README.md) — PR строкой или карточкой «Влить PR»; [DiffView](../../components/DiffView/README.md) — изменения одного файла | Компоненты PullRequestSummary, DiffView |
 | | [RouteSteps](../../components/RouteSteps/README.md) — маршрут задачи в одну строку | Компонент RouteSteps |
 | | [ActivityFeed](../../components/ActivityFeed/README.md), [ActivityEvent](../../components/ActivityEvent/README.md) — журнал задачи и лента «Шаги» сессии | Компоненты ActivityFeed, ActivityEvent |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |

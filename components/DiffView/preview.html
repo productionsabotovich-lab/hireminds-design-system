@@ -1,0 +1,76 @@
+<!-- @dsCard group="Data" height=1180 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>DiffView — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var DIFFS = {
+    "apps/web/src/members/MemberMenu.tsx": [{ oldStart: 14, newStart: 14, context: "export function MemberMenu({ member, viewer }: MemberMenuProps) {", lines: [
+      "   const { openRoleDialog } = useRoleDialog(member);",
+      "   const confirmRemove = useConfirmRemove(member);",
+      "   const items: MenuItem[] = [];",
+      "-  items.push({ id: \"change-role\", label: \"Сменить роль\", onSelect: openRoleDialog });",
+      "-  items.push({ id: \"remove\", label: \"Удалить участника\", tone: \"danger\", onSelect: confirmRemove });",
+      "-  if (member.id === viewer.id) items.push({ id: \"leave\", label: \"Покинуть проект\", onSelect: leave });",
+      "+  const can = viewer.permissions;",
+      "+  if (can.changeRole && member.id !== viewer.id) {",
+      "+    items.push({ id: \"change-role\", label: \"Сменить роль\", onSelect: openRoleDialog });",
+      "+  }",
+      "+  if (can.removeMember && member.id !== viewer.id) {",
+      "+    items.push({ id: \"remove\", label: \"Удалить участника\", tone: \"danger\", onSelect: confirmRemove });",
+      "+  }",
+      "+  if (member.id === viewer.id) items.push({ id: \"leave\", label: \"Покинуть проект\", onSelect: leave });",
+      "+  if (!items.length) return null;",
+      "   return <ActionMenu items={items} label={`Действия: ${member.name}`} />;",
+      " }",
+      " ",
+    ] }],
+    "apps/web/src/members/MembersTable.tsx": [{ oldStart: 41, newStart: 41, context: "function MemberRow({ member, viewer }: RowProps) {", lines: [
+      "   return (",
+      "     <tr>",
+      "       <td><UserCell user={member.user} /></td>",
+      "-      <td><RoleSelect value={member.role} onChange={(r) => changeRole(member, r)} /></td>",
+      "-      <td>",
+      "-        <Button tone=\"danger\" onClick={() => removeMember(member)}>Удалить участника</Button>",
+      "-      </td>",
+      "+      <td>",
+      "+        {viewer.permissions.changeRole",
+      "+          ? <RoleSelect value={member.role} onChange={(r) => changeRole(member, r)} />",
+      "+          : <RoleLabel role={member.role} />}",
+      "+      </td>",
+      "+      <td>",
+      "+        {viewer.permissions.removeMember && member.id !== viewer.id && (",
+      "+          <Button tone=\"danger\" onClick={() => removeMember(member)}>Удалить участника</Button>",
+      "+        )}",
+      "+      </td>",
+      "+      <td><MemberMenu member={member} viewer={viewer} /></td>",
+      "+      {/* меню действий скрывается целиком, если действий нет */}",
+      "     </tr>",
+      "   );",
+      " }",
+    ] }],
+    };
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
+  var menu = 'apps/web/src/members/MemberMenu.tsx', table = 'apps/web/src/members/MembersTable.tsx';
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('MemberMenu.tsx · короткий diff целиком', '', h(H.DiffView, { path: menu, hunks: DIFFS[menu] })),
+      box('MembersTable.tsx · первые 20 строк и «показать всё»', '', h(H.DiffView, { path: table, hunks: DIFFS[table] })),
+      box('375 px · широкие строки прокручиваются внутри блока', 'pv-narrow', h(H.DiffView, { path: menu, hunks: DIFFS[menu], limit: 8 }))
+    )
+  );
+</script>
+</body>
+</html>

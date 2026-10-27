@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { Dot } from "../Dot";
 import { EntityRef, type EntityKind } from "../EntityRef";
 import { IconArrow } from "../IconArrow";
@@ -42,6 +42,8 @@ export interface ListItemProps {
   path?: string | undefined;
   /** Название моноширинным */
   mono?: boolean | undefined;
+  /** false — в узкой колонке название целиком, без обрезки до двух строк (строка PR) */
+  titleClamp?: boolean | undefined;
   /** Вторая строка: кто, когда, канал */
   subtitle?: ReactNode;
   /** Вторая строка в узкой колонке (до 360px): только имя */
@@ -87,6 +89,7 @@ export function ListItem({
   title,
   path,
   mono = false,
+  titleClamp = true,
   subtitle,
   subtitleShort,
   state,
@@ -106,6 +109,9 @@ export function ListItem({
   resultTone,
 }: ListItemProps) {
   const [open, setOpen] = useState(!!expand?.open);
+  // подсказка сущности (hint) — и описание строки для читалки и клавиатуры: строка-ссылка ссылается на скрытый текст
+  const hintId = `${useId()}hint`;
+  const described = entity?.hint ? hintId : undefined;
   const titleText = typeof title === "string" ? title : path;
   const titleNode = path ? (
     <>
@@ -170,7 +176,7 @@ export function ListItem({
   const body = (
     <>
       {lead}
-      <span className={[s.title, mono || path ? s.mono : ""].filter(Boolean).join(" ")} title={hint ?? titleText}>
+      <span className={[s.title, mono || path ? s.mono : "", titleClamp ? "" : s.titleFull].filter(Boolean).join(" ")} title={hint ?? (entity?.hint ? undefined : titleText)}>
         {entity && (
           <>
             <EntityRef kind={entity.kind} id={entity.id} hint={entity.hint} bare={entity.bare} />{" "}
@@ -233,11 +239,11 @@ export function ListItem({
     .join(" ");
 
   const row = expand ? (
-    <button type="button" className={cls} aria-expanded={open} onClick={() => setOpen(!open)}>
+    <button type="button" className={cls} aria-expanded={open} aria-describedby={described} onClick={() => setOpen(!open)}>
       {body}
     </button>
   ) : href ? (
-    <a className={cls} href={href} {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+    <a className={cls} href={href} aria-describedby={described} {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
       {body}
     </a>
   ) : (
@@ -247,6 +253,11 @@ export function ListItem({
   return (
     <li className={[s.wrap, density === "compact" ? s.wrapCompact : ""].filter(Boolean).join(" ")}>
       {row}
+      {described && (
+        <span id={hintId} hidden>
+          {entity!.hint}
+        </span>
+      )}
       {detail}
     </li>
   );

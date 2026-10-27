@@ -49,6 +49,9 @@ export type { CrumbProps, CrumbItem } from "./Crumb";
 export { DescriptionList } from "./DescriptionList";
 export type { DescriptionListProps, DescriptionItem } from "./DescriptionList";
 
+export { DiffView } from "./DiffView";
+export type { DiffViewProps, DiffHunk } from "./DiffView";
+
 export { Divider } from "./Divider";
 export type { DividerProps } from "./Divider";
 
@@ -126,6 +129,9 @@ export type { PillProps, PillTone } from "./Pill";
 
 export { Plate } from "./Plate";
 export type { PlateProps, PlateVariant } from "./Plate";
+
+export { PullRequestSummary } from "./PullRequestSummary";
+export type { PullRequestSummaryProps, PullRequestState } from "./PullRequestSummary";
 
 export { ResultList } from "./ResultList";
 export type { ResultListProps } from "./ResultList";
