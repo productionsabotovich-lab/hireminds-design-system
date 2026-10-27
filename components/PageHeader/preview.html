@@ -1,4 +1,4 @@
-<!-- @dsCard group="Navigation" height=760 -->
+<!-- @dsCard group="Navigation" height=1000 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -13,6 +13,7 @@
   .pv-page { padding: 12px 16px 12px 44px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
   .pv-page > * { outline: 1px dashed var(--line-2); outline-offset: 0; }
   .pv-narrow { max-width: 375px; padding-left: 16px; }
+  .pv-tight { padding-left: 16px; }
 </style>
 </head>
 <body>
@@ -40,6 +41,15 @@
         phase: 'Утверждение', state: { label: 'Ждёт решения', tone: 'warn' },
         meta: ['ждёт Антона Саботовича 40 мин', 'напоминание сегодня 17:32', 'коммит 7c2e0b1'],
         actions: B('primary', 'Утвердить') }),
+      page('поле слева 16px (шапка 640–1150px без поля) · «←» в строке', 'pv-tight', {
+        back: { href: '#', label: 'К задаче PIL-15' },
+        entity: { kind: 'session', id: 'S-118', title: 'Developer' },
+        phase: 'Code', state: { label: 'Идёт', tone: 'accent', pulse: true },
+        meta: ['запущена 14:02'] }),
+      page('375 px · длинное название переносится рядом с «←»', 'pv-narrow', {
+        back: { href: '#', label: 'К задаче PIL-15' },
+        entity: { kind: 'decision', id: 'D-46', title: 'Утверждение плана кампании запуска' },
+        phase: 'Утверждение', state: { label: 'Ждёт решения', tone: 'warn' } }),
       page('375 px · «←» в строке, строки 2 нет', 'pv-narrow', {
         back: { href: '#', label: 'К задаче PIL-15' },
         entity: { kind: 'decision', id: 'D-44', title: 'Лимит возвратов' },

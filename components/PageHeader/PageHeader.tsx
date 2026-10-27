@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { BackLink } from "../BackLink";
 import { EntityRef, type EntityKind } from "../EntityRef";
 import { H1 } from "../H1";
@@ -21,24 +23,46 @@ export interface PageHeaderProps {
   actions?: ReactNode;
 }
 
+/** поле слева, в котором помещается висячая «←»: 28px кнопка + space-2 */
+const HANG_FIELD = 36;
+
 export function PageHeader({ back, entity: e, phase, state, meta, actions }: PageHeaderProps) {
   const line = (meta ?? []).filter((m): m is string => !!m);
+  const root = useRef<HTMLElement>(null);
+  // «←» висит слева, только если слева от шапки есть поле не меньше HANG_FIELD; иначе — в строке
+  const [hang, setHang] = useState(false);
+  useLayoutEffect(() => {
+    const el = root.current;
+    if (!el || !back) return;
+    const measure = () => setHang(el.getBoundingClientRect().left >= HANG_FIELD);
+    measure();
+    window.addEventListener("resize", measure);
+    const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    ro?.observe(el);
+    return () => {
+      window.removeEventListener("resize", measure);
+      ro?.disconnect();
+    };
+  }, [back]);
   return (
-    <header className={s.hd}>
+    <header ref={root} className={[s.hd, hang ? s.hang : ""].filter(Boolean).join(" ")}>
       <div className={s.row}>
         <div className={s.main}>
           <div className={s.title}>
-            {/* «←» висит слева от края контента; в шапке уже 600px — в строке */}
-            {back && (
-              <span className={s.back}>
-                <BackLink variant="icon" href={back.href}>
-                  {back.label}
-                </BackLink>
-              </span>
-            )}
-            <H1 size="section">
-              <EntityRef kind={e.kind} id={e.id} title={e.title} href={e.href} newTab={e.newTab} hint={e.hint} size="heading" />
-            </H1>
+            {/* «←» и заголовок — одна строка: длинное название переносится внутри, «←» остаётся рядом */}
+            <span className={s.lead}>
+              {/* «←» висит слева от края контента, если там есть поле; иначе — в строке */}
+              {back && (
+                <span className={s.back}>
+                  <BackLink variant="icon" href={back.href}>
+                    {back.label}
+                  </BackLink>
+                </span>
+              )}
+              <H1 size="section">
+                <EntityRef kind={e.kind} id={e.id} title={e.title} href={e.href} newTab={e.newTab} hint={e.hint} size="heading" />
+              </H1>
+            </span>
             {(phase || state) && (
               // бейджи плотной группой: сначала фаза, потом состояние
               <span className={s.badges}>

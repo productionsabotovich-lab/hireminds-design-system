@@ -1,6 +1,5 @@
 /* PageHeader по набору 2b (.k-hd): одна шапка экрана сущности на трёх экранах */
 .hd {
-  container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров; висячая «←» — по ширине шапки */
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
@@ -25,7 +24,6 @@
 }
 
 .title {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -47,19 +45,28 @@
   gap: var(--space-2);
 }
 
-.back {
-  display: inline-flex;
+/* «←» и заголовок: «←» по первой строке, название переносится рядом */
+.lead {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
 }
 
-/* шапка шире 600px: «←» висит слева от края контента — иконка сущности на одной вертикали с блоками ниже */
-@container (min-width: 600px) {
-  .back {
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-right: var(--space-2);
-    transform: translateY(-50%);
-  }
+.back {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 26px; /* по первой строке заголовка: H1 section 24px × 1.1 */
+}
+
+/* слева от шапки есть поле (≥ 36px, замер в коде): «←» висит в нём — иконка сущности на одной вертикали с блоками ниже */
+.hang .back {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  margin-right: var(--space-2);
 }
 
 .meta {

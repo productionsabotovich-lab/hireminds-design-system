@@ -33,7 +33,7 @@ import { Topbar, Brand, TopbarStatus } from "../index";
 Одна и та же на всех экранах и во всех состояниях («Карточка задачи», «Сессия агента», «Страница решения»):
 - слева — `Brand`, затем `Crumb` с `leadingChevron`: проект, эпик, задача (последняя — `active`);
 - справа — «Файлы» (`TopbarLink` `soon`), «Мои решения» (`TopbarLink` `tone="attention"`, иконка `inbox`), `UserAvatar` sm круглый — последним.
-- На узком экране крошки можно не показывать; состав справа тот же.
+- До 600px `Topbar` сам скрывает `center` (крошки): правому слоту нужно место; до 400px скрыты пункты `soon`. Длинные крошки на широком экране обрезаются, а не наезжают на правый слот.
 
 ```tsx
 import { Topbar, Brand, Crumb, TopbarLink, UserAvatar } from "../index";

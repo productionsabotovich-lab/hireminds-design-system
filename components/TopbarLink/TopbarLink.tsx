@@ -65,12 +65,14 @@ export function TopbarLink({ href, label, shortLabel, icon, badge, current = fal
   if (badge?.kind === "soon") {
     // пункта ещё нет: «итерация N» в интерфейсе не пишется — только подсказка «Скоро»
     return (
-      <Tooltip text="Скоро" focusable={false} describe={false}>
-        <span className={[s.link, s.soon].join(" ")} aria-disabled="true">
-          {text}
-          <span className={s.srOnly}>, скоро</span>
-        </span>
-      </Tooltip>
+      <span className={s.soonWrap}>
+        <Tooltip text="Скоро" focusable={false} describe={false}>
+          <span className={[s.link, s.soon].join(" ")}>
+            {text}
+            <span className={s.srOnly}>, скоро</span>
+          </span>
+        </Tooltip>
+      </span>
     );
   }
 

@@ -107,7 +107,18 @@ a.current:hover {
   display: none;
 }
 
-/* порог из макета: короткая подпись — до 600px; состав шапки одинаков на всех ширинах */
+/* порог из макета: короткая подпись — до 600px. Пункты soon видны до 400px: на 320px шапке не хватает места */
+.soonWrap {
+  display: inline-flex;
+}
+
+@media (max-width: 400px) {
+  .soonWrap {
+    display: none;
+  }
+}
+
+
 @media (max-width: 600px) {
   .long {
     display: none;
