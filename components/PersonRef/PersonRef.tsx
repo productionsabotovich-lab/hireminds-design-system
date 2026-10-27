@@ -11,6 +11,8 @@ export interface PersonInfo {
   human?: boolean | undefined;
   /** Человек: «владелец проекта» */
   role?: string | undefined;
+  /** Имя в дательном падеже — «В ответ Архитектору» в беседе; без него — «В ответ: Архитектор» */
+  dative?: string | undefined;
   /** Профиль человека или карточка агента */
   href?: string | undefined;
   /** Агент: раннер и модель; по умолчанию — роль = имя, Claude Code, Sonnet 5.5 */

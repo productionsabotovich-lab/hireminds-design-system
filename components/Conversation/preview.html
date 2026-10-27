@@ -1,0 +1,47 @@
+<!-- @dsCard group="Forms" height=1900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Conversation — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 22px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 375px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  [role="tooltip"] { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var ME = 'Антон Саботович';
+  var team = [{ name: 'PM', kind: 'role' }, { name: 'Архитектор', kind: 'role' }, { name: 'Маркетинг', kind: 'role' }, { name: 'Reviewer', kind: 'role' }, { name: ME, kind: 'person' }];
+  var dir = {
+    'Архитектор': { dative: 'Архитектору' }, 'Маркетинг': { dative: 'Маркетингу' }, 'PM': { dative: 'PM' },
+    'Антон Саботович': { human: true, role: 'владелец проекта', dative: 'Антону Саботовичу', href: '#' }
+  };
+  var plan = [
+    { id: 's1', system: true, actor: 'Маркетинг', text: 'Маркетинг открыл решение', link: 'ред. 1', time: '10:12' },
+    { id: 'm1', who: ME, human: true, time: '10:40', text: 'Бюджет на вебинар кажется завышенным. @PM, посмотри, можно ли без него.' },
+    { id: 's2', system: true, actor: 'PM', text: 'PM подключился к беседе', time: '10:41' },
+    { id: 'm2', who: 'PM', time: '10:58', text: 'Без вебинара охват падает на треть. Предлагаю перенести его на вторую неделю и урезать до 10 000 ₽.', replyTo: 'm1' },
+    { id: 's3', system: true, actor: 'Маркетинг', text: 'Маркетинг обновил план', link: 'ред. 2', time: '11:20' }];
+  var arch = [
+    { id: 'a1', who: 'Архитектор', time: '09:05', text: 'Предлагаю очередь на Postgres: отдельный сервис не нужен.' },
+    { id: 'a2', who: 'Reviewer', time: '09:20', text: 'При 400 задачах в минуту задержка подходит к 200 мс — это на грани.', replyTo: 'a1' },
+    { id: 'a3', who: 'PM', time: '09:31', text: 'Итог: берём Postgres, при росте нагрузки возвращаемся к Redis. @Архитектор, зафиксируй порог в ADR.' }];
+  var C = function (p) { return h(H.Conversation, Object.assign({ author: 'Reviewer', mentions: team, directory: dir }, p)); };
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('план кампании — беседа с @PM · системные строки, ответ цитатой', '', C({ id: 'c1', author: 'Маркетинг', messages: plan, session: { label: 'Сессия PM', href: '#' } })),
+      box('архитектурное решение — ответ цитатой агенту: подсказка «Ответит Архитектор…»', '', C({ id: 'c2', author: 'Архитектор', messages: arch, defaultReplyTo: 'a1' })),
+      box('влить PR — пустая беседа: аватаров нет, ответит автор решения', '', C({ id: 'c3', messages: [] })),
+      box('375 px', 'pv-narrow', C({ id: 'c4', author: 'Маркетинг', messages: plan.slice(0, 4) })))
+  );
+</script>
+</body>
+</html>

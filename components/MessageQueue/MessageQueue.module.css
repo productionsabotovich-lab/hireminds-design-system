@@ -1,0 +1,101 @@
+/* MessageQueue по набору 2b (.k-qt): очередь сообщений к агенту над формой */
+.qt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  text-align: left;
+  cursor: pointer;
+}
+
+.bar:disabled {
+  cursor: default;
+}
+
+.bar:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.chev {
+  display: flex;
+  margin-left: auto;
+  color: var(--mute);
+}
+
+.list {
+  margin: 0;
+  padding: var(--space-1) 0;
+  list-style: none;
+}
+
+.moreRow {
+  list-style: none;
+  padding: var(--space-1) var(--space-4);
+}
+
+.more {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.more:hover {
+  color: var(--ink);
+}
+
+.more:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.x {
+  display: flex;
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--r-xs);
+  background: none;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.x:hover {
+  color: var(--ink);
+  background: var(--inset);
+}
+
+.x:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}

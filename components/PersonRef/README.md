@@ -12,7 +12,7 @@
 |---|---|---|---|
 | name | `string` | — | Имя или роль: «PM», «Антон Саботович»; ключ в `directory`. |
 | human | `boolean` | `false` | Человек, если записи в `directory` нет. |
-| directory | `Record<string, { human?, role?, href?, agent?, state?, queue? }>` | — | Справочник участников: человеку — роль и профиль; агенту — данные `AgentStatus` (по умолчанию роль = имя, Claude Code, Sonnet 5.5, свободен). |
+| directory | `Record<string, { human?, role?, dative?, href?, agent?, state?, queue? }>` | — | Справочник участников: человеку — роль и профиль; агенту — данные `AgentStatus` (по умолчанию роль = имя, Claude Code, Sonnet 5.5, свободен). |
 | open | `boolean` | `false` | Карточка открыта сразу (состояние макета). |
 | children | `ReactNode` | — | Триггер: «@PM», имя, `UserAvatar`. |
 

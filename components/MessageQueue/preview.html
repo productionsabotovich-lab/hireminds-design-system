@@ -1,0 +1,32 @@
+<!-- @dsCard group="Forms" height=720 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>MessageQueue — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 22px; max-width: 560px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var ME = 'Антон Саботович';
+  var items = [
+    { id: 'q1', who: 'QA', source: 'из сессии S-121', time: '09:28', text: 'Проверь, что viewer не видит «Сменить роль» и в мобильном меню.' },
+    { id: 'q2', who: ME, own: true, source: 'из Linear', time: '09:30', text: 'Почему viewer видит меню участника?' },
+    { id: 'q3', who: ME, own: true, source: 'из беседы D-44', time: '09:34', text: 'После правки — прогони e2e участников целиком.' }];
+  var box = function (cap, el) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('три сообщения в очереди — свёрнута до последнего', h(H.MessageQueue, { role: 'Developer', items: items })),
+      box('очередь раскрыта · × только у своих', h(H.MessageQueue, { role: 'Developer', items: items, defaultOpen: true })),
+      box('над формой сессии', h(H.CommentForm, { id: 'mq-form', divider: false, label: 'Сообщение агенту', hint: 'Дойдёт после текущего шага', above: h(H.MessageQueue, { role: 'Developer', items: items.slice(1) }) })))
+  );
+</script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+/* Conversation по набору 2b (.k-cv): беседа решения — шапка с участниками, плоский список, форма без линии */
+.cv {
+  container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+
+@container (max-width: 600px) {
+  .cv {
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-width: 0;
+}
+
+.people {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.sp {
+  flex: 1;
+}
+
+.session {
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+  text-decoration: none;
+  border-radius: var(--r-xs);
+}
+
+.session:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.session:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* плоский список */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.msg {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr); /* из макета: колонка аватара */
+  gap: var(--space-3);
+  align-items: start;
+  border-radius: var(--r-md);
+  transition: background-color 300ms;
+}
+
+/* сообщение, к которому перешли из цитаты: подсветка на секунду */
+.lit {
+  background: var(--accent-soft);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+.kind,
+.time {
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+/* «Ответить» — по наведению на сообщение и по фокусу с клавиатуры */
+.replyWrap {
+  display: inline-flex;
+  opacity: 0;
+}
+
+.msg:hover .replyWrap,
+.replyWrap:focus-within {
+  opacity: 1;
+}
+
+.reply {
+  display: inline-flex;
+  padding: 2px; /* из макета */
+  border: 0;
+  border-radius: var(--r-xs);
+  background: none;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.reply:hover {
+  color: var(--ink);
+  background: var(--inset);
+}
+
+.reply:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.text {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+/* «@Имя» — выделено, открывает карточку участника */
+.at {
+  font-weight: 500;
+  color: var(--accent-ink);
+}
+
+/* цитата — одна строка с многоточием, линия слева */
+.quote {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+  max-width: 100%;
+  padding: 2px 0 2px var(--space-2); /* из макета */
+  border: 0;
+  border-left: 2px solid var(--line-3);
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--mute);
+  text-align: left;
+  cursor: pointer;
+}
+
+.quote strong {
+  flex: none;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.quote:hover {
+  border-left-color: var(--ink-3);
+  color: var(--ink-2);
+}
+
+.quote:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.qtext {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* системное событие — разделитель по центру; линии не короче 16px */
+.sys {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: calc(-1 * var(--space-2));
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+.rule {
+  flex: 1 1 0;
+  min-width: 16px; /* из макета */
+  height: 1px;
+  background: var(--line);
+}
+
+.sysText {
+  flex: 0 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.sysAv {
+  display: inline-flex;
+  margin-right: var(--space-1);
+  vertical-align: middle;
+}
+
+.sysLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.sysLink:hover {
+  color: var(--ink);
+}
+
+.sysLink:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.empty {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--mute);
+}
+
+/* полоса «В ответ …» над полем */
+.replyBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--r-sm);
+  background: var(--inset);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.replyTo {
+  display: flex;
+  flex: 1;
+  gap: var(--space-1);
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.x {
+  display: inline-flex;
+  flex: none;
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--r-xs);
+  background: none;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.x:hover {
+  color: var(--ink);
+  background: var(--surface);
+}
+
+.x:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg {
+    transition: none;
+  }
+}

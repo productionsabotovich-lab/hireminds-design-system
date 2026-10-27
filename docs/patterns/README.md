@@ -38,6 +38,7 @@
 | Ввод | [Field](form-field.md), [Input](input.md) | Компоненты Field, Input |
 | | [Textarea](../../components/Textarea/README.md) — многострочное поле | Компонент Textarea |
 | | [CommentForm](../../components/CommentForm/README.md) — комментарий к задаче с подсказкой упоминаний на «@» (роли и специалисты) | Компонент CommentForm |
+| | [Conversation](../../components/Conversation/README.md) — беседа решения; [MessageQueue](../../components/MessageQueue/README.md) — очередь сообщений к агенту | Компоненты Conversation, MessageQueue |
 | | [PasswordStrengthMeter](password-strength.md) | Компонент PasswordStrengthMeter |
 | | [KeyInput](key-input.md), [SaveBar](save-bar.md) | Заявка |
 | Данные | [UserAvatar](user-avatar.md) | Компонент UserAvatar |
