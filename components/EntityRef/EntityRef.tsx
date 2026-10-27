@@ -51,6 +51,11 @@ const SAY: Record<EntityKind, string> = {
 export function EntityRef({ kind, id, title, href, newTab = false, size = "inline", bare = false, hint }: EntityRefProps) {
   const hintId = `${useId()}hint`;
   const iconSize = size === "heading" ? 24 : size === "title" ? 16 : 14;
+  const ext = (
+    <span className={s.ext} aria-hidden="true">
+      {" "}↗
+    </span>
+  );
   const body = (
     <>
       {!bare && (
@@ -63,12 +68,10 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
         <span className={s.srOnly}>{SAY[kind]} </span>
         <span className={s.id}>{id}</span>
         {title && <span className={s.title}> {title}</span>}
-        {href && newTab && (
-          <span className={s.ext} aria-hidden="true">
-            {" "}↗
-          </span>
-        )}
+        {href && newTab && size !== "title" && ext}
       </span>
+      {/* title: название обрезается многоточием — ↗ отдельным элементом после текста, не уходит под многоточие */}
+      {href && newTab && size === "title" && ext}
     </>
   );
 

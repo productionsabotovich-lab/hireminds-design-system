@@ -70,6 +70,12 @@
   white-space: nowrap;
 }
 
+/* ↗ в размере title — отдельный элемент после текста: остаётся видимым при обрезанном названии */
+.ref.sizeTitle > .ext {
+  flex: none;
+  white-space: pre;
+}
+
 /* heading — рядом с заголовком страницы: кегль родителя, ключ mute, название переносится */
 .ref.sizeHeading {
   gap: var(--space-2);

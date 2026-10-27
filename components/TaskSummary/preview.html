@@ -1,0 +1,69 @@
+<!-- @dsCard group="Data" height=1900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>TaskSummary — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-side { width: 320px; max-width: 100%; }
+  .pv-narrow { width: 280px; max-width: 100%; }
+  .pv-full { width: 420px; max-width: 100%; }
+  .pv-list { width: 640px; max-width: 100%; }
+  .pv-list-n { width: 340px; max-width: 100%; }
+  .pv-main { width: 560px; max-width: 100%; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var T = function (p) { return h(H.TaskSummary, p); };
+  var dev = { name: 'Developer' }, anton = { name: 'Антон Саботович', human: true };
+  var pil15 = {
+    key: 'PIL-15', title: 'Роли участников проекта: owner, admin и viewer', href: '#', tracker: 'Linear',
+    state: { label: 'В работе', tone: 'accent', pulse: true }, status: 'In Progress', priority: 'high',
+    epic: { name: 'Доступ и роли', href: '#' }, goal: { name: 'Командный доступ к проекту', href: '#' },
+    assignee: dev, phase: 'Code', labels: ['backend', 'web'], cycle: 'Цикл 14 · 20–26 окт', due: '31 окт', created: '18 окт', updated: '12 мин назад',
+    description: [
+      { type: 'p', text: ['Нужны три роли участника проекта. Права проверяются в ', { code: 'can()' }, ' на сервере, меню участника показывает только доступные действия.'] },
+      { type: 'list', items: ['owner — всё, включая удаление проекта', 'admin — участники и настройки, без удаления', 'viewer — только чтение'] },
+      { type: 'p', text: ['Макет меню — в ', { text: 'Figma', href: '#' }, '.'] }
+    ]
+  };
+  var pil22 = { key: 'PIL-22', title: 'Экспорт отчёта QA в PDF', href: '#', tracker: 'Linear', state: { label: 'Ждёт решения', tone: 'warn', pulse: true }, priority: 'urgent', assignee: anton, phase: 'Утверждение', epic: { name: 'Отчёты' } };
+  var pil9 = { key: 'PIL-9', title: 'Приглашение по ссылке', href: '#', tracker: 'Linear', state: { label: 'Завершена', tone: 'accent' }, priority: 'low', assignee: dev };
+  var pil31 = { key: 'PIL-31', title: 'Лимит возвратов на доработку для одной задачи', href: '#', tracker: 'Linear', state: { label: 'В очереди', tone: 'warn' }, priority: 'medium', queuePosition: 2 };
+  var cap = function (t) { return h('span', { className: 'pv-cap' }, t); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      h('div', { className: 'pv-box pv-side' }, cap('side · боковая колонка сессии'),
+        T({ task: pil15, preset: 'side', reason: 'Продолжена после возврата из QA', cardHref: '#' })),
+      h('div', { className: 'pv-box pv-narrow' }, cap('side · 280px: приоритет — иконкой, эпик обрезан'),
+        T({ task: pil15, preset: 'side', reason: 'Продолжена после возврата из QA', cardHref: '#' })),
+      h('div', { className: 'pv-box pv-side' }, cap('decision · колонка 320: приоритет иконкой, фаза целиком'),
+        T({ task: pil22, preset: 'decision', cardHref: '#' })),
+      h('div', { className: 'pv-box' }, cap('popover · по наведению на задачу'),
+        T({ task: pil15, preset: 'popover' })),
+      h('div', { className: 'pv-box pv-full' }, cap('full · «О задаче» в карточке задачи'),
+        T({ task: pil15, preset: 'full', reason: 'Продолжена после возврата из QA' })),
+      h('div', { className: 'pv-box pv-main' }, cap('description · над вкладками карточки задачи'),
+        T({ task: pil15, preset: 'description' }),
+        T({ task: { key: 'PIL-9', title: 'Приглашение по ссылке', tracker: 'Linear' }, preset: 'description' })),
+      h('div', { className: 'pv-box pv-list' }, cap('row · список задач'),
+        h(H.List, { title: 'Задачи', count: 3 },
+          T({ task: pil15, preset: 'row' }), T({ task: pil22, preset: 'row' }), T({ task: pil9, preset: 'row' }))),
+      h('div', { className: 'pv-box pv-list-n' }, cap('row · узкий список: состояние точкой'),
+        h(H.List, { title: 'Задачи', count: 2 },
+          T({ task: pil15, preset: 'row' }), T({ task: pil22, preset: 'row' }))),
+      h('div', { className: 'pv-box pv-list' }, cap('queue · очередь'),
+        h(H.List, { title: 'Очередь', count: 2 },
+          T({ task: pil31, preset: 'queue' }), T({ task: Object.assign({}, pil9, { queuePosition: 3, state: undefined }), preset: 'queue' })))
+    )
+  );
+</script>
+</body>
+</html>

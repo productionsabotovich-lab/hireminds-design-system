@@ -43,6 +43,7 @@
 | | [ResultRow](../../components/ResultRow/README.md), [ResultList](../../components/ResultList/README.md) — строки артефактов pr, file, report | Устарели → List, ListItem |
 | | [List](../../components/List/README.md), [ListItem](../../components/ListItem/README.md) — список и строка любого списка; композиции — в README List | Компоненты List, ListItem |
 | | [ListRow](../../components/ListRow/README.md) — строка списка в боковой колонке | Устарел → ListItem |
+| | [TaskSummary](../../components/TaskSummary/README.md) — задача из трекера: карточка, «О задаче», строка списка, всплывающая карточка, описание | Компонент TaskSummary |
 | | [RouteSteps](../../components/RouteSteps/README.md) — маршрут задачи в одну строку | Компонент RouteSteps |
 | | [ActivityFeed](../../components/ActivityFeed/README.md), [ActivityEvent](../../components/ActivityEvent/README.md) — журнал задачи и лента «Шаги» сессии | Компоненты ActivityFeed, ActivityEvent |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |

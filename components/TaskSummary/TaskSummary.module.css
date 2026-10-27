@@ -1,0 +1,362 @@
+/* TaskSummary по набору 2b (.k-ts, .k-td): задача из трекера — карточка, всплывающая карточка, строка списка, описание */
+.ts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+
+.popover {
+  width: 320px; /* из макета */
+  max-width: 100%;
+  box-sizing: border-box;
+  box-shadow: var(--sh-3);
+}
+
+.bare {
+  display: block;
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  min-width: 0;
+}
+
+.link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.ic {
+  display: inline-flex;
+  flex: none;
+  color: var(--mute);
+}
+
+/* состояние: точка тоном и подпись */
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+/* приоритет: иконка цветом приоритета и подпись */
+.prio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+
+.prioIcon {
+  display: inline-flex;
+  color: var(--mute);
+}
+
+.prio-danger .prioIcon { color: var(--danger); }
+.prio-warn .prioIcon { color: var(--warn-2); } /* warn на белом ниже 3:1 для иконки */
+.prio-ink .prioIcon { color: var(--ink-2); }
+
+/* фаза: Pill ink; подпись обрезается многоточием, полное название — в title */
+.phase {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.phase > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.phaseLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* строка метаданных: без «·» и без переноса, элементы через space-3 */
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--space-3);
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-ui);
+  font-size: 12px; /* стиль body-small */
+  line-height: 20px; /* из макета: строка метаданных */
+  color: var(--ink-2);
+}
+
+/* подсказка приоритета не обрезается краем строки */
+.meta:hover,
+.meta:focus-within {
+  overflow: visible;
+}
+
+.meta > * {
+  flex: none;
+}
+
+.mi {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  white-space: nowrap;
+}
+
+/* фаза и эпик сжимаются первыми; остаётся начало подписи */
+.meta > .miShrink {
+  flex: 0 1 auto;
+  min-width: 24px; /* из макета */
+  overflow: hidden;
+}
+
+.epicName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.phaseLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+.foot {
+  padding-top: var(--space-1);
+}
+
+/* не хватает места в строке метаданных (замер в коде): подпись приоритета скрыта, остаётся иконка с подсказкой */
+.meta.narrow .prioLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* сетка «подпись — значение» (DescriptionList row) — от края до края карточки, под заголовком */
+.grid {
+  margin: 0 calc(-1 * var(--space-4));
+  border-top: 1px solid var(--line);
+}
+
+.grid:last-child {
+  margin-bottom: calc(-1 * var(--space-3));
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.phaseRow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* в сетке бейдж фазы целиком, обрезается причина */
+.phaseRow > .phase {
+  flex: none;
+}
+
+.reason {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+.chips {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: var(--space-1);
+}
+
+/* ---------- описание ---------- */
+.desc {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.descBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  max-width: 72ch;
+  line-height: 1.5;
+}
+
+.descBody > * {
+  margin: 0;
+}
+
+/* свёрнуто: 3 строки (2 — в боковой колонке и всплывающей карточке). line-clamp даёт многоточие в абзаце,
+   max-height — предел для нескольких блоков (абзацы, списки): строки без зазоров, срез ровно по строке 18px */
+.clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  max-height: 54px; /* 3 строки body-small: 12px × 1.5 */
+  overflow: hidden;
+}
+
+.clamped.two {
+  -webkit-line-clamp: 2;
+  max-height: 36px; /* 2 строки */
+}
+
+.clamped .list {
+  gap: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-left: var(--space-5);
+}
+
+.code {
+  padding: var(--space-2) var(--space-3);
+  overflow-x: auto;
+  background: var(--inset);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  white-space: pre;
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thumb {
+  display: block;
+  overflow: hidden;
+  background: var(--inset);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+
+.thumb:hover {
+  border-color: var(--line-3);
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.thumb img {
+  display: block;
+  width: 96px; /* из макета */
+  height: 64px; /* из макета: миниатюра 3:2 */
+  object-fit: cover;
+}
+
+.more {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.more:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+.more:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.empty {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--mute);
+}
+
+/* ---------- строка списка: колонки справа постоянной ширины во всех строках ---------- */
+.av {
+  display: inline-flex;
+  justify-content: center;
+  width: 20px; /* из макета: колонка аватара */
+}
+
+.col {
+  display: inline-flex;
+  min-width: 104px; /* из макета */
+}
+
+.colPrio {
+  min-width: 84px; /* из макета */
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
