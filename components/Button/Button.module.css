@@ -13,6 +13,12 @@
   white-space: nowrap;
 }
 
+/* href — ссылка с видом кнопки */
+a.root {
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
 /* фокус с клавиатуры — кольцо accent, как рамка Input в фокусе: 3.3:1 к surface и bg на всех вариантах */
 .root:focus-visible {
   outline: 2px solid var(--accent);

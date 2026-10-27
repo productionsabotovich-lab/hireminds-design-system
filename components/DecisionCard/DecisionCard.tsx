@@ -12,11 +12,13 @@ export interface DecisionCardProps {
   gate: string;
   /** Строка ожидания: «Ждёт Антона Саботовича 23 ч 45 мин · напоминание в треде Linear» */
   line?: string | undefined;
-  /** Страница решения */
+  /** Страница решения: «Открыть решение» — ссылка */
+  href?: string | undefined;
+  /** Вместо перехода по href — своё действие */
   onOpen?: (() => void) | undefined;
 }
 
-export function DecisionCard({ id, gate, line, onOpen }: DecisionCardProps) {
+export function DecisionCard({ id, gate, line, href, onOpen }: DecisionCardProps) {
   return (
     <section className={s.dc} aria-label={`Решение ${id}: ${gate}`}>
       <div className={s.main}>
@@ -33,7 +35,7 @@ export function DecisionCard({ id, gate, line, onOpen }: DecisionCardProps) {
           </p>
         )}
       </div>
-      <Button variant="primary" size="sm" onClick={onOpen}>
+      <Button variant="primary" size="sm" href={href} onClick={onOpen}>
         Открыть решение
       </Button>
     </section>

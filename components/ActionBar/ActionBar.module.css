@@ -74,6 +74,7 @@
     height: auto;
     min-height: 34px; /* как кнопка md */
     padding-block: var(--space-1);
+    padding-inline: var(--space-2); /* на 320px три подписи укладываются в две строки */
     line-height: 1.25;
     white-space: normal;
   }

@@ -22,7 +22,7 @@
       h('div', { className: 'pv-screen' },
         h('div', { style: { height: 8 } }),
         h(H.PinnedZone, { top: 0 },
-          h(H.DecisionCard, { id: 'D-44', gate: 'Лимит возвратов исчерпан', line: 'Ждёт Антона Саботовича 23 ч 45 мин', onOpen: function () {} }),
+          h(H.DecisionCard, { id: 'D-44', gate: 'Лимит возвратов исчерпан', line: 'Ждёт Антона Саботовича 23 ч 45 мин', href: '#' }),
           h(H.SessionLive, { role: 'Developer', sessionId: 'S-118', href: '#', resumed: 'transcript', elapsed: '25 мин', plan: { done: 3, total: 6 }, operation: 'ждёт решения по лимиту возвратов' })),
         h('div', { className: 'pv-log' }, ['Журнал задачи: QA вернул задачу в Code · 08:42', 'QA → Code · возврат 2 из 2 · 09:14', 'Hireminds открыл решение D-44 · 09:15'].map(function (t) { return h('span', { key: t }, t); }))))
   );

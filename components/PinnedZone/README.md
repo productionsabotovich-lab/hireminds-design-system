@@ -15,12 +15,13 @@
 
 ## Правила
 - `position: sticky` под шапкой; фон `bg` закрывает журнал, который уходит под зону; между элементами — `space-2`.
+- Sticky работает, только если зона — прямой потомок прокручиваемой колонки (или её содержимого без своего `overflow`): обёртка с `overflow: hidden` между ними закрепление отключает.
 - Виджет сессии в зоне — во всю ширину.
 
 ## Пример
 ```tsx
 <PinnedZone>
-  <DecisionCard id="D-44" gate="Лимит возвратов исчерпан" line="Ждёт 23 ч 45 мин" onOpen={openDecision} />
+  <DecisionCard id="D-44" gate="Лимит возвратов исчерпан" line="Ждёт 23 ч 45 мин" href="/decisions/D-44" />
   <SessionLive role="Developer" sessionId="S-118" href="/sessions/S-118" elapsed="25 мин" plan={{ done: 3, total: 6 }} operation="ждёт решения" />
 </PinnedZone>
 ```

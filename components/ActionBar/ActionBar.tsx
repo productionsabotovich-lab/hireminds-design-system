@@ -20,8 +20,8 @@ export interface ActionBarProps {
   /** Кнопки по порядку: основная — первой (левее) */
   actions: ActionBarAction[];
   /**
-   * bar — полоса, закреплённая внизу экрана: дубль блока «Ваше решение» для мыши и касаний — кнопки вне порядка Tab
-   * и скрыты от читалки; block — сам блок «Ваше решение» на странице, тот же вид, кнопки доступны
+   * bar — полоса, закреплённая внизу экрана, «Действия решения»: дубль блока «Ваше решение» для мыши и касаний — кнопки
+   * вне порядка Tab (tabIndex=-1); block — сам блок «Ваше решение» на странице, тот же вид
    */
   variant?: "bar" | "block" | undefined;
 }
@@ -31,14 +31,14 @@ export function ActionBar({ question, summary, actions, variant = "bar" }: Actio
   return (
     // хост во всю ширину: контейнер с inline-size не берёт ширину от содержимого
     <div className={[s.host, bar ? s.sticky : ""].filter(Boolean).join(" ")}>
-      <div className={[s.ab, bar ? s.bar : s.block].join(" ")} role={bar ? undefined : "region"} aria-label={bar ? undefined : "Ваше решение"}>
+      <div className={[s.ab, bar ? s.bar : s.block].join(" ")} role="region" aria-label={bar ? "Действия решения" : "Ваше решение"}>
         <div className={s.text} title={summary ? `${question} ${summary}` : question}>
           <Body tone="ink-2" size="small">
             <strong>{question}</strong>
             {summary && ` ${summary}`}
           </Body>
         </div>
-        <div className={s.btns} aria-hidden={bar || undefined}>
+        <div className={s.btns}>
           {actions.map((a) => (
             <Button
               key={a.label}
