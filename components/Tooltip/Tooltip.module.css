@@ -2,6 +2,8 @@
 .root {
   position: relative;
   display: inline-flex;
+  min-width: 0; /* внутри строки с многоточием обёртка сжимается вместе с текстом */
+  max-width: 100%;
   border-radius: var(--r-xs);
 }
 

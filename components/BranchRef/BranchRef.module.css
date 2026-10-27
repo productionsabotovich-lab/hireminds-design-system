@@ -1,0 +1,49 @@
+/* BranchRef по набору 2b (.k-br): иконка ветки и CodeChip; «откуда → куда» одним видом */
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.branch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.fixed {
+  flex: none;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--mute);
+}
+
+/* чип в одну строку: длинное имя — многоточие (CodeChip truncate) */
+.chip {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.arrow {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}

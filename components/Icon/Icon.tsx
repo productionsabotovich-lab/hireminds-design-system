@@ -41,13 +41,14 @@ export type IconName =
   | "brain"
   | "reply"
   | "queue"
-  | "alert";
+  | "alert"
+  | "commit";
 
 export interface IconProps {
   /** Имя иконки из набора */
   name: IconName;
-  /** Размер в px */
-  size?: 14 | 16 | undefined;
+  /** Размер в px; 24 — рядом с заголовком страницы (EntityRef heading) */
+  size?: 14 | 16 | 24 | undefined;
   /** Подпись для диктора; без неё иконка декоративная (aria-hidden) */
   title?: string | undefined;
 }
@@ -279,6 +280,13 @@ const SHAPES: Record<IconName, ReactElement> = {
       <circle cx="12" cy="12" r="10" />
       <line x1="12" x2="12" y1="8" y2="12" />
       <line x1="12" x2="12.01" y1="16" y2="16" />
+    </>
+  ),
+  commit: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <line x1="3" x2="9" y1="12" y2="12" />
+      <line x1="15" x2="21" y1="12" y2="12" />
     </>
   ),
 };
