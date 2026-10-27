@@ -1,0 +1,100 @@
+/* PersonRef по набору 2b (.k-pr): триггер в тексте и всплывающая карточка участника */
+.ref {
+  position: relative;
+  display: inline-flex;
+  vertical-align: baseline;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-xs);
+  cursor: pointer;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* карточка: под триггером, 300px; сдвиг у правого края — из кода */
+.card {
+  position: absolute;
+  z-index: 40; /* над попапами виджетов и строками */
+  top: calc(100% + var(--space-1));
+  left: 0;
+  box-sizing: border-box;
+  width: 300px; /* из макета */
+  max-width: calc(100vw - var(--space-4));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-3);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+}
+
+/* виджет агента в карточке — без своей тени: тень у карточки */
+.card > section {
+  box-shadow: none;
+}
+
+.person {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* из макета */
+  min-width: 0;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.name {
+  font-size: 13.5px; /* стиль h3-inline */
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: var(--r-xs);
+}
+
+.name:hover,
+.name:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+}
+
+.name:focus-visible,
+.go:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* из макета */
+  height: 16px;
+  border-radius: var(--r-xs);
+  font-size: 12px;
+  color: var(--mute);
+  text-decoration: none;
+}
+
+.go:hover {
+  color: var(--ink);
+}

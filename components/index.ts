@@ -4,6 +4,9 @@ export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile 
 export { ActivityFeed } from "./ActivityFeed";
 export type { ActivityFeedProps, ActivityFeedEvent, ActivityFeedView } from "./ActivityFeed";
 
+export { AgentStatus } from "./AgentStatus";
+export type { AgentStatusProps, AgentInfo, AgentState, AgentFix, AgentQueueItem } from "./AgentStatus";
+
 export { BackLink } from "./BackLink";
 export type { BackLinkProps } from "./BackLink";
 
@@ -114,6 +117,9 @@ export type { PageFooterProps } from "./PageFooter";
 
 export { PasswordStrengthMeter } from "./PasswordStrengthMeter";
 export type { PasswordStrengthMeterProps } from "./PasswordStrengthMeter";
+
+export { PersonRef } from "./PersonRef";
+export type { PersonRefProps, PersonInfo } from "./PersonRef";
 
 export { Pill } from "./Pill";
 export type { PillProps, PillTone } from "./Pill";

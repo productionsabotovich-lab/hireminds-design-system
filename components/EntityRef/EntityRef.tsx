@@ -25,6 +25,8 @@ export interface EntityRefProps {
   bare?: boolean | undefined;
   /** Подсказка к ссылке: «Открыть в Linear» */
   hint?: string | undefined;
+  /** inline: одна строка с многоточием — строка задачи в виджете агента */
+  truncate?: boolean | undefined;
 }
 
 /** Иконка по типу сущности: List переносит её в колонку leading строки */
@@ -48,7 +50,7 @@ const SAY: Record<EntityKind, string> = {
   doc: "документ",
 };
 
-export function EntityRef({ kind, id, title, href, newTab = false, size = "inline", bare = false, hint }: EntityRefProps) {
+export function EntityRef({ kind, id, title, href, newTab = false, size = "inline", bare = false, hint, truncate = false }: EntityRefProps) {
   const hintId = `${useId()}hint`;
   const iconSize = size === "heading" ? 24 : size === "title" ? 16 : 14;
   const ext = (
@@ -76,7 +78,7 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
   );
 
   const sizeClass = { inline: s.sizeInline, title: s.sizeTitle, heading: s.sizeHeading }[size];
-  const cls = [s.ref, sizeClass, href ? s.link : ""].filter(Boolean).join(" ");
+  const cls = [s.ref, sizeClass, truncate ? s.truncate : "", href ? s.link : ""].filter(Boolean).join(" ");
   const tip = hint && size === "title" && title ? `${id} ${title} · ${hint}` : hint;
   // подсказка длиннее hint (ключ и название уже в имени ссылки): читалке описанием — только hint, скрытым текстом
   const ownHint = !!href && !!tip && tip !== hint;

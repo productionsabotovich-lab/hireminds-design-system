@@ -44,6 +44,8 @@ export interface ListProps {
   more?: { label: string; href: string } | undefined;
   /** EmptyState mini, пока строк нет */
   emptyText?: ReactNode;
+  /** fill — по ширине родителя, узкая раскладка строк по ширине списка; content — по содержимому строк (попап очереди) */
+  width?: "fill" | "content" | undefined;
 }
 
 /**
@@ -99,6 +101,7 @@ export function List({
   folded,
   more,
   emptyText = "Пока ничего нет",
+  width = "fill",
 }: ListProps) {
   const [open, setOpen] = useState(defaultOpen);
   const secs = (sections ?? [{ items: children }]).map((sec) => ({ ...sec, items: alignLeading(sec.items) }));
@@ -120,7 +123,7 @@ export function List({
   );
 
   return (
-    <section className={s.list} aria-label={label}>
+    <section className={[s.list, width === "content" ? s.fitContent : ""].filter(Boolean).join(" ")} aria-label={label}>
       {title != null &&
         (collapsible ? (
           <button type="button" className={[s.head, s.headToggle].join(" ")} aria-expanded={open} onClick={() => setOpen(!open)}>
