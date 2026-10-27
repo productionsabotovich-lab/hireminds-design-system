@@ -13,7 +13,7 @@
 Лента по утверждённым макетам 2b (HIR-67, заявка 10 из 13). Новых токенов нет.
 
 ### Добавлено
-- `ActivityEvent`: `kind="step"` — шаг агента (`step: { kind, tool, arg }`: вид шага иконкой, инструмент `CodeChip` sm
+- `ActivityEvent`: `kind="step"` — шаг агента (`step: { kind, tool, arg }`, все виды ACP: вид шага иконкой, инструмент `CodeChip` sm
   как есть, аргумент), `result` (итог вызова обычным шрифтом, «показать вывод» — `TerminalBox`), `detailed`;
   `kind="run"` — разделитель запуска с `action` «показать N шагов»; `author` — слот имени (`PersonRef`); файлы с
   `additions`, `deletions`, `diff` — чип раскрывает `DiffView`. Экспорт `STEP_ICON`, типы `ActivityStep`,

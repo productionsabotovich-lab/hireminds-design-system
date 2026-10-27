@@ -44,8 +44,8 @@ export interface ActivityFile {
   diff?: DiffHunk[] | undefined;
 }
 
-/** Вид шага агента — как в модели событий ACP: read, edit, search, execute, fetch, think */
-export type ActivityStepKind = "read" | "edit" | "search" | "execute" | "fetch" | "think";
+/** Вид шага агента — виды инструментов модели событий ACP (ToolKind) */
+export type ActivityStepKind = "read" | "edit" | "delete" | "move" | "search" | "execute" | "think" | "fetch" | "switch_mode" | "other";
 
 /** Шаг агента: вид — иконкой слева, инструмент — CodeChip sm как есть (Grep, Read, Edit, Bash), аргумент */
 export interface ActivityStep {
@@ -72,6 +72,11 @@ export const STEP_ICON: Record<ActivityStepKind, IconName> = {
   execute: "runner",
   fetch: "globe",
   think: "brain",
+  // остальные виды ACP — общей иконкой: шаг есть, отдельного знака для него в макетах нет
+  delete: "circle-dot",
+  move: "circle-dot",
+  switch_mode: "circle-dot",
+  other: "circle-dot",
 };
 
 /** Одна запись журнала: маркер, кто и что сделал одной строкой, причина второй строкой, время справа */
