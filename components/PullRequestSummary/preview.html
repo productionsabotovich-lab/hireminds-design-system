@@ -1,0 +1,38 @@
+<!-- @dsCard group="Data" height=1080 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PullRequestSummary — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  [role="tooltip"] { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var pr18 = { number: 18, title: 'Роли участников проекта: owner, admin и viewer', href: '#', state: 'open',
+    head: 'hm/PIL-15-project-roles', headHref: '#', base: 'main', additions: 312, deletions: 41, files: 7, checks: { passed: 4, total: 4 },
+    description: ['Три роли участника: owner, admin, viewer — права проверяются на сервере', 'Меню участника показывает только доступные действия', 'Тесты прав для каждой роли'],
+    commit: 'a4b23ec', commitHref: '#', author: 'Developer' };
+  var pr21 = { number: 21, title: 'Экспорт отчёта QA в PDF', href: '#', state: 'draft', head: 'hm/PIL-22-qa-pdf', base: 'main', additions: 88, deletions: 12, files: 3, checks: { passed: 3, total: 4 } };
+  var pr9 = { number: 9, title: 'Приглашение по ссылке', href: '#', state: 'merged', head: 'hm/PIL-9-invite-link', base: 'main', additions: 140, deletions: 6, files: 5, checks: { passed: 4, total: 4 } };
+  var row = function (p) { return h(H.PullRequestSummary, Object.assign({ variant: 'row', key: p.number }, p)); };
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('full · страница решения «Влить PR»', '', h(H.PullRequestSummary, pr18)),
+      box('row · список PR: справа диф, состояние, итог CI, ↗', '', h(H.List, { title: 'Pull requests', count: 3 }, row(pr18), row(pr21), row(pr9))),
+      box('375 px · вторая строка «● Открыт · +312 −41 · ✓ 4 из 4»', 'pv-narrow', h(H.List, { title: 'Pull requests', count: 2 }, row(pr18), row(pr21))),
+      box('375 px · full', 'pv-narrow', h(H.PullRequestSummary, pr18))
+    )
+  );
+</script>
+</body>
+</html>
