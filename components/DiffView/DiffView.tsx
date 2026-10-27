@@ -51,12 +51,24 @@ const lines = (n: number) => {
 };
 
 const SIGN = { add: "+", del: "−", ctx: " " };
-const SAY = { add: "добавлено", del: "удалено", ctx: "" };
+
+const say = (r: Extract<Row, { type: "add" | "del" | "ctx" }>) =>
+  r.type === "add" ? `строка ${r.n}, добавлено` : r.type === "del" ? `строка ${r.o}, удалено` : `строка ${r.n}`;
 
 export function DiffView({ path, hunks, limit = 20 }: DiffViewProps) {
   const [all, setAll] = useState(false);
   const rows = toRows(hunks);
-  const shown = all || rows.length <= limit ? rows : rows.slice(0, limit);
+  // считаются строки кода, заголовки фрагментов «@@» — нет
+  const total = rows.filter((r) => r.type !== "hunk").length;
+  let code = 0;
+  const shown =
+    all || total <= limit
+      ? rows
+      : rows.filter((r) => {
+          if (r.type === "hunk") return code < limit;
+          code += 1;
+          return code <= limit;
+        });
 
   return (
     <div className={s.diff} role="region" aria-label={`Изменения в ${path}`}>
@@ -79,7 +91,8 @@ export function DiffView({ path, hunks, limit = 20 }: DiffViewProps) {
                   </td>
                   <td className={s.sign}>
                     <span aria-hidden="true">{SIGN[r.type]}</span>
-                    {SAY[r.type] && <span className={s.srOnly}>{SAY[r.type]}</span>}
+                    {/* номер строки и знак — словами для читалки: «строка 12, добавлено» */}
+                    <span className={s.srOnly}>{say(r)}</span>
                   </td>
                   <td className={s.code}>{r.text || " "}</td>
                 </tr>
@@ -88,9 +101,9 @@ export function DiffView({ path, hunks, limit = 20 }: DiffViewProps) {
           </tbody>
         </table>
       </div>
-      {rows.length > limit && (
+      {total > limit && (
         <button type="button" className={s.more} aria-expanded={all} onClick={() => setAll(!all)}>
-          {all ? "свернуть" : `показать всё (${rows.length} ${lines(rows.length)})`}
+          {all ? "свернуть" : `показать всё (${total} ${lines(total)})`}
         </button>
       )}
     </div>

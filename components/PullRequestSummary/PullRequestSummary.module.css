@@ -7,8 +7,11 @@
 }
 
 /* карточка — контейнер: в узкой карточке строка PR берёт узкую раскладку ListItem */
+/* контейнер не берёт ширину от содержимого: без width в flex-ряду карточка схлопнулась бы */
 .card {
   container-type: inline-size;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -88,11 +91,12 @@
   white-space: pre;
 }
 
+/* итог CI — шрифт интерфейса: в моноширинном пробелы «4 из 4» слишком широкие */
 .ci {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-size: 11.5px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;

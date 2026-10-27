@@ -16,6 +16,8 @@ export interface PullRequestSummaryProps {
   /** PR в GitHub: открывается в новой вкладке (↗) */
   href?: string | undefined;
   state: PullRequestState;
+  /** Репозиторий — в подсказке на ключе PR: «hireminds-pilot-app» */
+  repo?: string | undefined;
   /** Ветка PR → целевая */
   head: string;
   headHref?: string | undefined;
@@ -97,8 +99,9 @@ function Row(p: PullRequestSummaryProps & { lead?: boolean }) {
     <ListItem
       leading={p.lead ? <Icon name={p.state === "merged" ? "pull-request-merged" : "pull-request"} size={16} /> : undefined}
       leadingTone={p.lead ? "mute" : undefined}
-      entity={{ kind: "pr", id: `#${p.number}`, bare: !!p.lead }}
+      entity={{ kind: "pr", id: `#${p.number}`, bare: !!p.lead, hint: p.repo ? `Репозиторий ${p.repo}` : undefined }}
       title={p.title}
+      titleClamp={false}
       href={p.href}
       newTab
       subtitle={<BranchRef name={p.head} href={p.headHref} base={p.base} baseHref={p.baseHref} />}

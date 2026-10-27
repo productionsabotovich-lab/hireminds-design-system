@@ -42,6 +42,8 @@ export interface ListItemProps {
   path?: string | undefined;
   /** Название моноширинным */
   mono?: boolean | undefined;
+  /** false — в узкой колонке название целиком, без обрезки до двух строк (строка PR) */
+  titleClamp?: boolean | undefined;
   /** Вторая строка: кто, когда, канал */
   subtitle?: ReactNode;
   /** Вторая строка в узкой колонке (до 360px): только имя */
@@ -87,6 +89,7 @@ export function ListItem({
   title,
   path,
   mono = false,
+  titleClamp = true,
   subtitle,
   subtitleShort,
   state,
@@ -170,7 +173,7 @@ export function ListItem({
   const body = (
     <>
       {lead}
-      <span className={[s.title, mono || path ? s.mono : ""].filter(Boolean).join(" ")} title={hint ?? titleText}>
+      <span className={[s.title, mono || path ? s.mono : "", titleClamp ? "" : s.titleFull].filter(Boolean).join(" ")} title={hint ?? titleText}>
         {entity && (
           <>
             <EntityRef kind={entity.kind} id={entity.id} hint={entity.hint} bare={entity.bare} />{" "}
