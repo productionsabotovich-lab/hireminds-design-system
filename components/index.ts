@@ -121,6 +121,9 @@ export type { NavLinkProps } from "./NavLink";
 export { PageFooter } from "./PageFooter";
 export type { PageFooterProps } from "./PageFooter";
 
+export { PageHeader } from "./PageHeader";
+export type { PageHeaderProps } from "./PageHeader";
+
 export { PasswordStrengthMeter } from "./PasswordStrengthMeter";
 export type { PasswordStrengthMeterProps } from "./PasswordStrengthMeter";
 
@@ -200,6 +203,9 @@ export type { TerminalForecastProps, TerminalForecastItem } from "./TerminalFore
 
 export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
+
+export { ToggleChip } from "./ToggleChip";
+export type { ToggleChipProps } from "./ToggleChip";
 
 export { Tooltip } from "./Tooltip";
 export type { TooltipProps } from "./Tooltip";

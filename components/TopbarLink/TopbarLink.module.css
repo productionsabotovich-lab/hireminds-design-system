@@ -35,8 +35,25 @@ a.current:hover {
 }
 
 .icon {
+  position: relative;
   display: inline-flex;
   color: var(--mute);
+}
+
+/* attention: точка у правого верхнего края иконки входящих */
+.dot {
+  position: absolute;
+  top: -5px; /* из макета: центр точки — на углу иконки */
+  right: -5px;
+  display: inline-flex;
+}
+
+/* attention: число — обычным текстом после подписи */
+.num {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
 }
 
 .current .icon {
@@ -69,38 +86,38 @@ a.current:hover {
   background: var(--surface);
 }
 
-/* неактивная ссылка следующей итерации: без рамки и фона */
+/* пункта ещё нет: без рамки и фона, приглушённо, без метки — подсказка «Скоро» */
 .soon {
   border-color: transparent;
   background: transparent;
-  color: var(--dim);
+  color: var(--mute);
   cursor: default;
 }
 
-.soonBadge {
-  height: 18px; /* из макета: пометка итерации */
-  padding: 0 6px; /* из макета */
-  border-radius: var(--r-xs);
-  display: inline-flex;
-  align-items: center;
-  background: var(--inset);
-  color: var(--mute);
-  font-family: var(--font-mono);
-  font-size: 10.5px; /* стиль caption-mono */
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .short {
   display: none;
 }
 
-/* пороги из макета: ссылки soon скрыты до 720px, короткая подпись — до 600px */
-@media (max-width: 720px) {
-  .soon {
+/* порог из макета: короткая подпись — до 600px. Пункты soon видны до 400px: на 320px шапке не хватает места */
+.soonWrap {
+  display: inline-flex;
+}
+
+@media (max-width: 400px) {
+  .soonWrap {
     display: none;
   }
 }
+
 
 @media (max-width: 600px) {
   .long {

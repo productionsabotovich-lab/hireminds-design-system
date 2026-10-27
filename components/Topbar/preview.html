@@ -1,4 +1,4 @@
-<!-- @dsCard group="Layout" height=140 -->
+<!-- @dsCard group="Layout" height=230 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -16,6 +16,10 @@
   var H = window.Hireminds, h = React.createElement, F = React.Fragment;
   ReactDOM.createRoot(document.getElementById('root')).render(
     h('div',{className:'pv-col',style:{gap:12}},
+    // TopBar — композиция шапки webapp: Brand, Crumb; «Файлы» скоро, «Мои решения» attention, аватар
+    h('div',{style:{border:'1px solid var(--line)',borderRadius:'var(--r-lg)',overflow:'hidden'}},
+      h(H.Topbar,{left:h(H.Brand,{onClick:function(){}}),center:h(H.Crumb,{leadingChevron:true,items:[{label:'Hireminds pilot',href:'#'},{label:'Доступ и роли',href:'#'},{label:'PIL-15',mono:true,active:true}]}),
+        right:h(F,null,h(H.TopbarLink,{label:'Файлы',badge:{kind:'soon'}}),h(H.TopbarLink,{href:'#',label:'Мои решения',shortLabel:'Решения',icon:'inbox',tone:'attention',badge:{kind:'count',value:4},unseen:2}),h(H.UserAvatar,{name:'Антон Саботович',size:'sm',shape:'circle'}))})),
     h('div',{style:{border:'1px solid var(--line)',borderRadius:'var(--r-lg)',overflow:'hidden'}},
       h(H.Topbar,{left:h(H.Brand,{onClick:function(){}}),center:h(H.Crumb,{leadingChevron:true,items:[{label:'Settings',href:'#'},{label:'acme-engineering',mono:true},{label:'General',active:true}]}),right:h(H.UserAvatar,{name:'Антон Саботович',size:'md',shape:'circle'})})),
     h(H.Topbar,{variant:'auth',left:h(H.Brand,{onClick:function(){}}),right:h(H.TopbarStatus,{label:'Ждём подтверждения'})}))

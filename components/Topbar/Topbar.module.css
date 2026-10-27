@@ -27,6 +27,14 @@
   min-width: 0;
   display: flex;
   align-items: center;
+  overflow: hidden; /* длинные крошки не наезжают на правый слот */
+}
+
+/* до 600px крошки не показываются: на телефоне правому слоту (решения, аватар) нужно место */
+@media (max-width: 600px) {
+  .center {
+    display: none;
+  }
 }
 
 .right {

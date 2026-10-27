@@ -1,0 +1,95 @@
+/* PageHeader по набору 2b (.k-hd): одна шапка экрана сущности на трёх экранах */
+.hd {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  min-width: 0;
+}
+
+/* колонка заголовка: строка 2 — в space-1 под заголовком */
+.main {
+  display: flex;
+  flex: 1 1 320px; /* из макета */
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  min-width: 0;
+}
+
+/* без строчного бокса вокруг EntityRef: высота — строка заголовка */
+.title h1 {
+  display: flex;
+  min-width: 0;
+  margin: 0;
+}
+
+.badges {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* «←» и заголовок: «←» по первой строке, название переносится рядом */
+.lead {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.back {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  height: 26px; /* по первой строке заголовка: H1 section 24px × 1.1 */
+}
+
+/* слева от шапки есть поле (≥ 36px, замер в коде): «←» висит в нём — иконка сущности на одной вертикали с блоками ниже */
+.hang .back {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  margin-right: var(--space-2);
+}
+
+.meta {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
