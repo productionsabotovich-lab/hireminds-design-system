@@ -140,6 +140,15 @@
   grid-template-columns: minmax(0, 1fr) auto auto;
 }
 
+/* action="none": без колонки действия */
+.noAct {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.noLead.noAct {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .noLead .title,
 .noLead .sub {
   grid-column: 1;

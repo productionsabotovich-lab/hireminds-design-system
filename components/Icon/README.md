@@ -68,8 +68,8 @@
 | `pencil` | шаг агента «правка» (Lucide `pencil`) |
 | `square` | пункт плана ожидает (Lucide `square`) |
 | `square-check` | пункт плана сделан (Lucide `square-check`) |
-| `square-dot` | пункт плана в работе (Lucide `square-dot`) |
-| `square-dash` | пункт плана прерван |
+| `square-dot` | пункт плана в работе (рамка Lucide `square` и заполненная точка — свой контур) |
+| `square-dash` | пункт плана прерван (Lucide `square-minus`) |
 
 ## Правила
 - Иконки типов файлов — только 16 px: на 14 px метки `file-md`, `file-yaml`, `file-css` различаются с трудом. 14 px — для объектов продукта в плотных строках.
