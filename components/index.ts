@@ -1,3 +1,6 @@
+export { ActionBar } from "./ActionBar";
+export type { ActionBarProps, ActionBarAction } from "./ActionBar";
+
 export { ActivityEvent, ACTIVITY_TONE, STEP_ICON } from "./ActivityEvent";
 export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile, ActivityStep, ActivityStepKind, ActivityResult } from "./ActivityEvent";
 
@@ -48,6 +51,9 @@ export type { ConfirmDialogProps } from "./ConfirmDialog";
 
 export { Crumb } from "./Crumb";
 export type { CrumbProps, CrumbItem } from "./Crumb";
+
+export { DecisionCard } from "./DecisionCard";
+export type { DecisionCardProps } from "./DecisionCard";
 
 export { DescriptionList } from "./DescriptionList";
 export type { DescriptionListProps, DescriptionItem } from "./DescriptionList";
@@ -135,6 +141,9 @@ export type { PhaseResultProps, PhaseVersion } from "./PhaseResult";
 
 export { Pill } from "./Pill";
 export type { PillProps, PillTone } from "./Pill";
+
+export { PinnedZone } from "./PinnedZone";
+export type { PinnedZoneProps } from "./PinnedZone";
 
 export { PlanProgress } from "./PlanProgress";
 export type { PlanProgressProps } from "./PlanProgress";

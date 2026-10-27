@@ -1,0 +1,31 @@
+<!-- @dsCard group="Layout" height=420 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PinnedZone — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; max-width: 640px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* рамка экрана с прокруткой: зона остаётся под шапкой (top=0 внутри рамки), журнал уходит под неё */
+  .pv-screen { height: 340px; overflow: auto; padding: 0 16px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--bg); }
+  .pv-log { display: flex; flex-direction: column; gap: 10px; padding-block: 16px 220px; color: var(--mute); font-size: 12px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, 'карточка задачи · решение выше идущей сессии; журнал прокручивается под зоной'),
+      h('div', { className: 'pv-screen' },
+        h('div', { style: { height: 8 } }),
+        h(H.PinnedZone, { top: 0 },
+          h(H.DecisionCard, { id: 'D-44', gate: 'Лимит возвратов исчерпан', line: 'Ждёт Антона Саботовича 23 ч 45 мин', onOpen: function () {} }),
+          h(H.SessionLive, { role: 'Developer', sessionId: 'S-118', href: '#', resumed: 'transcript', elapsed: '25 мин', plan: { done: 3, total: 6 }, operation: 'ждёт решения по лимиту возвратов' })),
+        h('div', { className: 'pv-log' }, ['Журнал задачи: QA вернул задачу в Code · 08:42', 'QA → Code · возврат 2 из 2 · 09:14', 'Hireminds открыл решение D-44 · 09:15'].map(function (t) { return h('span', { key: t }, t); }))))
+  );
+</script>
+</body>
+</html>

@@ -20,6 +20,7 @@
 | type | `"button" \| "submit" \| "reset"` | `"button"` | HTML-тип. |
 | onClick | `() => void` | — | Обработчик клика. |
 | className | `string` | `""` | Дополнительный класс (ширина, отступы). |
+| tabIndex | `number` | — | `-1` — кнопка-дубль вне порядка Tab: полоса `ActionBar` дублирует блок «Ваше решение». |
 
 ## Правила
 - primary: фон `ink`, текст `#fff`, на hover `ink-2`. Никогда не заливай primary в `accent`: зелёный остаётся для kicker и success.
