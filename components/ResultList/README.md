@@ -1,6 +1,18 @@
 # ResultList
 
-Список строк `ResultRow` в тонкой рамке на `surface` с заголовком и числом строк; умеет сворачиваться и показывать «ещё n файлов в PR».
+Список строк `ResultRow` в тонкой рамке на `surface` с заголовком и числом строк; умеет сворачиваться и показывать «ещё n файлов в PR». **Устарел — используй `List`.**
+
+## Замена
+`ResultList` остаётся для экранов webapp на 0.7–0.10 и будет удалён в итерации 3.
+
+| ResultList | List |
+|---|---|
+| `title`, `rows` | `title`, строки `ListItem` в `children` |
+| `collapsible`, `defaultOpen` | `collapsible`, `defaultOpen` |
+| `more` + `moreHref` | `more: { label: "ещё 11 файлов в PR #21", href }` |
+| `emptyText` | `emptyText` |
+| число строк в заголовке | `count` |
+
 
 ## Когда использовать
 - «Результат» в карточке задачи — сворачиваемый (`collapsible`).

@@ -1,0 +1,79 @@
+<!-- @dsCard group="Data" height=1650 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>List — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-pair { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; align-items: start; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-stat { display: inline-block; min-width: 64px; text-align: right; font-family: var(--font-mono); font-size: 11.5px; }
+  .pv-add { color: var(--accent-ink); } .pv-del { color: var(--danger-ink); }
+  .pv-place { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--ink); }
+  .pv-sp { flex: 1; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  // имена openRows / closedRows: глобальные window.open и window.closed (только чтение) перехватили бы переменные
+  var H = window.Hireminds, h = React.createElement;
+  var ME = 'Антон Саботович';
+  var me = h(H.UserAvatar, { name: ME, size: 'xs', shape: 'circle' });
+  var role = function (n) { return h(H.UserAvatar, { name: n, size: 'xs' }); };
+  var I = function (p, k) { return h(H.ListItem, Object.assign({ key: k }, p)); };
+  var stat = function (a, d) { return h('span', { className: 'pv-stat' }, h('span', { className: 'pv-add' }, '+' + a), ' ', h('span', { className: 'pv-del' }, '−' + d)); };
+  var ok = h(H.Icon, { name: 'check', size: 16 }), bad = h(H.Icon, { name: 'alert', size: 16 });
+  var box = function (cap, el) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), el); };
+
+  var openRows = [I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-44' }, title: 'Лимит возвратов', subtitle: ME + ' · ждёт 1 д 2 ч · напоминание 15:20', subtitleShort: 'ждёт 1 д 2 ч', state: { tone: 'warn', label: 'Ждёт решения', pulse: true }, emphasis: 'attention' }, 'a'),
+              I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-46' }, title: 'Утверждение плана кампании', subtitle: ME + ' · ждёт 2 ч 52 мин', subtitleShort: 'ждёт 2 ч 52 мин', state: { tone: 'warn', label: 'Ждёт решения', pulse: true }, emphasis: 'attention' }, 'b')];
+  var closedRows = [I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-34' }, title: 'Объём согласован', subtitle: 'кнопка в треде · 22 окт', state: { tone: 'accent', label: 'Утверждено' }, emphasis: 'muted' }, 'c'),
+                I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-41' }, title: 'Ревью', subtitle: 'перенос карточки · 23 окт', state: { tone: 'accent', label: 'Утверждено' }, emphasis: 'muted' }, 'd'),
+                I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-30' }, title: 'Приёмка', subtitle: 'страница решения · 19 окт', state: { tone: 'dim', label: 'Остановлено' }, emphasis: 'muted' }, 'e')];
+  var checks = function () {
+    return h(H.List, { title: 'Проверки', count: 1, countTone: 'danger', grid: 'cells' },
+      I({ cells: true, leading: ok, leadingTone: 'accent', title: 'lint', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: 'без замечаний', action: h('a', { href: '#', className: 'pv-place' }, 'CI') }),
+      I({ cells: true, leading: bad, leadingTone: 'danger', title: 'typecheck', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: '3 ошибки в MemberMenu.tsx', resultTone: 'danger', action: h('a', { href: '#', className: 'pv-place' }, 'CI'), expand: { open: true, content: h(H.TerminalBox, { variant: 'log' }, h(H.TerminalLine, null, 'MemberMenu.tsx:42 свойство canRemove не существует в типе Member')) } }),
+      I({ cells: true, leading: ok, leadingTone: 'accent', title: 'тесты участников', badge: h(H.Icon, { name: 'hard-drive', size: 14 }), trailing: '42 из 42' }));
+  };
+  var decisions = function () { return h(H.List, { title: 'Решения', count: 5, folded: { label: 'Закрытые', items: closedRows } }, openRows); };
+
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      h('div', { className: 'pv-pair' },
+        box('Решения: открытые сверху, закрытые свёрнуты', decisions()),
+        box('Сессии ролей', h(H.List, { title: 'Сессии ролей', count: 3 },
+          I({ href: '#', leading: role('Developer'), entity: { kind: 'session', id: 'S-118' }, title: 'Developer', subtitle: 'Code · после возврата · 24 мин', subtitleShort: '24 мин', state: { tone: 'ink', label: 'идёт', pulse: true }, emphasis: 'attention' }),
+          I({ href: '#', leading: role('QA'), entity: { kind: 'session', id: 'S-117' }, title: 'QA', subtitle: 'вернул в Code · 57 мин', subtitleShort: '57 мин', state: { tone: 'warn', label: 'вернул' } }),
+          I({ href: '#', leading: role('Reviewer'), entity: { kind: 'session', id: 'S-116' }, title: 'Reviewer', subtitle: 'одобрено · 16 мин', subtitleShort: '16 мин', state: { tone: 'dim', label: 'завершена' }, emphasis: 'muted' })))),
+      box('Ссылки: у одной строки иконка в leading — иконки типа всех строк уходят в leading', h(H.List, { title: 'Ссылки' },
+        I({ href: '#', newTab: true, leading: h(H.Icon, { name: 'tracker', size: 16 }), leadingTone: 'mute', title: 'PIL-15 в Linear' }),
+        I({ href: '#', newTab: true, entity: { kind: 'pr', id: '#21' }, title: 'Роли участников проекта', trailing: h(H.Pill, null, 'открыт') }),
+        I({ href: '#', entity: { kind: 'doc', id: 'PIL-15-roles.md' }, title: 'Спецификация, ред. 2' }),
+        I({ title: 'Строка без иконки — пустая колонка' }))),
+      box('Проверки: grid="cells", «вывод» раскрыт — TerminalBox под строкой', checks()),
+      box('Изменённые файлы: секции по месту, «+n −m» в колонке фиксированной ширины', h(H.List, { title: 'Изменённые файлы', count: 4, more: { label: 'ещё 11 файлов в PR #21', href: '#' },
+        sections: [
+          { label: 'Репозиторий hireminds-pilot-app', header: h(React.Fragment, null, h(H.Icon, { name: 'repo', size: 14 }), h('span', { className: 'pv-place' }, 'hireminds-pilot-app'), h(H.BranchRef, { name: 'hm/PIL-15-project-roles', href: '#' }), h('span', { className: 'pv-sp' }), 'в ветке'),
+            items: [I({ density: 'compact', leading: h(H.Icon, { name: 'file-ts', size: 16 }), leadingTone: 'mute', path: 'apps/web/src/members/MembersTable.tsx', trailing: stat(142, 38), expand: { content: h(H.Body, { size: 'small' }, 'DiffView — заявка 7.') } }, 1),
+                    I({ density: 'compact', leading: h(H.Icon, { name: 'file-test', size: 16 }), leadingTone: 'mute', path: 'apps/web/src/members/roles.test.ts', trailing: stat(118, 0), href: '#', newTab: true }, 2)] },
+          { label: 'Файлы проекта', header: h(React.Fragment, null, h(H.Icon, { name: 'hard-drive', size: 14 }), h('span', { className: 'pv-place' }, 'Файлы проекта'), h('span', { className: 'pv-sp' }), 'сохранены'),
+            items: [I({ density: 'compact', leading: h(H.Icon, { name: 'file-md', size: 16 }), leadingTone: 'mute', path: 'docs/specs/PIL-15-roles.md', trailing: stat(46, 9), href: '#' }, 3)] }] })),
+      h('div', { className: 'pv-pair' },
+        box('375 px · решения', h('div', { style: { maxWidth: 343 } }, decisions())),
+        box('Пусто и свёрнутый список', h('div', { className: 'pv-col', style: { gap: 12 } },
+          h(H.List, { title: 'Очередь агента', count: 0, emptyText: 'Задач в очереди нет' }),
+          h(H.List, { title: 'Результат', count: 3, collapsible: true, defaultOpen: false }, I({ title: 'скрыто' }))))),
+      h('div', { className: 'pv-pair' },
+        box('375 px · проверки: три строки, «вывод» раскрыт', h('div', { style: { maxWidth: 343 } }, checks())),
+        box('В flex-ряду: ширину задаёт родитель, строка раскрыта', h('div', { style: { display: 'flex' } },
+          h(H.List, { title: 'Результат', count: 1 },
+            I({ entity: { kind: 'pr', id: '#21' }, title: 'Роли участников проекта', trailing: '12:04', expand: { open: true, content: h(H.Body, { size: 'small' }, 'Открыт 12:04 · 3 файла · проверки идут.') } }))))))
+  );
+</script>
+</body>
+</html>

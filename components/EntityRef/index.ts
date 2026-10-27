@@ -1,2 +1,2 @@
-export { EntityRef } from "./EntityRef";
+export { EntityRef, ENTITY_ICON } from "./EntityRef";
 export type { EntityRefProps, EntityKind } from "./EntityRef";

@@ -1,0 +1,180 @@
+/* List по набору 2b (.k-list): рамка карточки, шапка со счётчиком, секции; контейнер ds-list — узкая раскладка строк */
+.list {
+  --list-r: calc(var(--r-lg) - 1px); /* радиус внутренних углов: рамка 1px */
+  container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров по модулям; ближайший контейнер строки — List */
+  /* контейнер не берёт ширину от содержимого: без width в flex-ряду, auto-колонке и поповере List схлопнулся бы */
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* без overflow: hidden — подсказки строк (EntityRef hint) выходят за рамку; углы — радиусом у крайних слоёв ниже */
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+
+/* углы: заливки шапки, секции, «Закрытые N» и полоса строки у края — по радиусу рамки */
+.list > :first-child,
+.list > .sec:first-child > .secHead {
+  border-top-left-radius: var(--list-r);
+  border-top-right-radius: var(--list-r);
+}
+
+.list > :last-child,
+.list > .fold:last-child > .foldBtn:last-child {
+  border-bottom-left-radius: var(--list-r);
+  border-bottom-right-radius: var(--list-r);
+}
+
+.list > .sec:first-child > .items:first-child {
+  --li-r-top: var(--list-r);
+}
+
+.list > .sec:last-child > .items,
+.list > .fold:last-child > .items {
+  --li-r-bottom: var(--list-r);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  text-align: left;
+}
+
+.headToggle {
+  cursor: pointer;
+}
+
+.headToggle:hover {
+  background: var(--bg-2);
+}
+
+.headToggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 12.5px; /* стиль nav-item */
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.count {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.countDanger {
+  color: var(--danger-ink);
+}
+
+.headAct,
+.chev {
+  margin-left: auto;
+  display: inline-flex;
+  color: var(--mute);
+}
+
+.headAct + .chev {
+  margin-left: 0;
+}
+
+.sec + .sec {
+  border-top: 1px solid var(--line);
+}
+
+.secHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* проверки: колонки выровнены по всему списку — иконка (отступ строки + 20px) · название · источник · результат · действия */
+.cells {
+  display: grid;
+  grid-template-columns: 36px minmax(0, max-content) 36px minmax(0, 1fr) max-content; /* из макета: space-4 + колонка иконки 20px */
+}
+
+.empty {
+  padding: var(--space-3) var(--space-4);
+}
+
+.more {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.fold {
+  border-top: 1px solid var(--line);
+}
+
+.head + .fold {
+  border-top: 0;
+}
+
+.foldBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--mute);
+  text-align: left;
+  cursor: pointer;
+}
+
+.foldBtn:hover {
+  background: var(--bg-2);
+  color: var(--ink);
+}
+
+.foldBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.foldItems {
+  border-top: 1px solid var(--line);
+}
+
+/* проверки в узкой колонке — столбцом (раскладку строки задаёт ListItem) */
+@container (max-width: 480px) {
+  .cells {
+    display: flex;
+    flex-direction: column;
+  }
+}

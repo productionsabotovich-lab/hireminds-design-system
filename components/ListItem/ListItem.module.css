@@ -1,0 +1,406 @@
+/* ListItem по набору 2b (.k-li): сетка leading · название и подпись · trailing · action; одна сетка на все списки */
+.wrap {
+  list-style: none;
+  min-width: 0;
+}
+
+/* разделитель между обычными строками; плотные (файлы, проверки) — без него */
+.wrap + .wrap:not(.wrapCompact) {
+  border-top: 1px solid var(--line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: 44px; /* из макета: строка regular */
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-ui);
+}
+
+.compact {
+  min-height: 32px; /* из макета: строка compact */
+  padding-block: var(--space-1);
+}
+
+.toggle {
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+}
+
+/* leading — колонка 20px, по центру первой строки (строка названия 20px) */
+.lead {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* из макета: колонка иконки */
+  height: 20px; /* из макета: строка названия */
+  color: var(--ink-2);
+}
+
+.tone-mute.lead { color: var(--mute); }
+.tone-accent.lead { color: var(--accent); }
+.tone-warn.lead { color: var(--warn-2); }
+.tone-danger.lead { color: var(--danger); }
+.tone-ink.lead { color: var(--ink-2); }
+
+.title {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px; /* из макета: название строки */
+  line-height: 20px; /* из макета */
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.compact .title {
+  font-size: 12.5px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.dir {
+  color: var(--mute);
+  font-weight: 400;
+}
+
+.file {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.sub {
+  grid-column: 2;
+  grid-row: 2;
+  display: block;
+  min-width: 0;
+  margin-top: 2px; /* из макета */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px; /* стиль caption-ui */
+  line-height: 1.4;
+  color: var(--mute);
+}
+
+.trail,
+.ntrail {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+/* action — фиксированная ширина 16px: один правый край во всех строках */
+.act {
+  grid-column: 4;
+  grid-row: 1 / 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; /* из макета */
+  color: var(--dim);
+}
+
+.go {
+  display: inline-flex;
+  justify-content: center;
+  width: 16px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--dim);
+  transition: color 120ms, transform 120ms;
+}
+
+/* без leading — на одну колонку меньше: название тянется, справа по содержимому */
+.noLead {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.noLead .title,
+.noLead .sub {
+  grid-column: 1;
+}
+
+.noLead .trail,
+.noLead .ntrail {
+  grid-column: 2;
+}
+
+.noLead .act {
+  grid-column: 3;
+}
+
+.ntrail {
+  display: none;
+}
+
+/* состояние: широкая колонка — Pill справа; узкая — точка с подписью во второй строке */
+.nstate {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+.nsep {
+  color: var(--mute);
+  white-space: pre;
+}
+
+.subShort {
+  display: none;
+}
+
+.plain {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.tone-accent.nstate, .tone-accent.plain { color: var(--accent-ink); }
+.tone-warn.nstate, .tone-warn.plain { color: var(--warn-ink); }
+.tone-danger.nstate, .tone-danger.plain { color: var(--danger-ink); }
+.tone-ink.nstate, .tone-ink.plain { color: var(--ink-2); }
+.tone-dim.nstate, .tone-dim.plain { color: var(--mute); }
+
+/* открытое — название обычным весом; закрытое — приглушённо */
+.attention .title {
+  font-weight: 400;
+}
+
+.muted .title {
+  color: var(--mute);
+  font-weight: 400;
+}
+
+/* наведение и фокус: без заливки — полоса 3px у левого края тоном состояния; фокус — ещё кольцо accent 2px, как во всей системе */
+.link {
+  cursor: pointer;
+  transition: box-shadow 120ms;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.edge-neutral.link:hover { box-shadow: inset 3px 0 0 var(--line-3); }
+.edge-neutral.link:focus-visible { box-shadow: inset 3px 0 0 var(--line-3), inset 0 0 0 2px var(--accent); }
+.edge-warn.link:hover { box-shadow: inset 3px 0 0 var(--warn); }
+.edge-warn.link:focus-visible { box-shadow: inset 3px 0 0 var(--warn), inset 0 0 0 2px var(--accent); }
+.edge-accent.link:hover { box-shadow: inset 3px 0 0 var(--accent); }
+.edge-accent.link:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--accent); }
+.edge-danger.link:hover { box-shadow: inset 3px 0 0 var(--danger); }
+.edge-danger.link:focus-visible { box-shadow: inset 3px 0 0 var(--danger), inset 0 0 0 2px var(--accent); }
+.edge-mute.link:hover { box-shadow: inset 3px 0 0 var(--mute); }
+.edge-mute.link:focus-visible { box-shadow: inset 3px 0 0 var(--mute), inset 0 0 0 2px var(--accent); }
+
+/* углы строки у края списка: List задаёт радиус первой и последней строке (у List нет overflow: hidden) */
+.wrap:first-child > .row {
+  border-top-left-radius: var(--li-r-top, 0);
+  border-top-right-radius: var(--li-r-top, 0);
+}
+
+.wrap:last-child > .row:last-child {
+  border-bottom-left-radius: var(--li-r-bottom, 0);
+  border-bottom-right-radius: var(--li-r-bottom, 0);
+}
+
+.link:hover .go,
+.link:focus-visible .go {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+.detail {
+  min-width: 0;
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+/* узкая колонка (List до 360px): название до двух строк, состояние точкой во второй строке,
+   справа только действие (и trailingNarrow, если задан) */
+@container (max-width: 360px) {
+  .trail {
+    display: none;
+  }
+  .ntrail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    white-space: nowrap;
+  }
+  .row .title {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .nstate {
+    display: inline-flex;
+  }
+  .hasShort .subFull {
+    display: none;
+  }
+  .hasShort .subShort {
+    display: inline;
+  }
+  .dir {
+    display: none;
+  }
+}
+
+/* ---------- cells: проверки в сетке колонок списка (List grid="cells") ---------- */
+.cellsWrap {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+.cells {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-rows: auto;
+  column-gap: 0;
+  padding-left: 0;
+}
+
+.cells > .lead {
+  grid-column: 1;
+  justify-self: center;
+  align-self: center;
+}
+
+.cells > .title {
+  grid-column: 2;
+  padding-left: var(--space-3);
+}
+
+.badge {
+  grid-column: 3;
+  display: inline-flex;
+  align-items: center;
+  padding-left: var(--space-3);
+  color: var(--mute);
+}
+
+.res {
+  grid-column: 4;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--mute);
+}
+
+.resDanger {
+  color: var(--danger-ink);
+}
+
+.cellAct {
+  grid-column: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-left: var(--space-3);
+  white-space: nowrap;
+}
+
+.cellsWrap > .detail {
+  grid-column: 1 / -1;
+}
+
+.linkBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.linkBtn:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+.linkBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+/* проверки в узкой колонке (List до 480px): иконка и название; источник и результат; ссылки и «вывод» */
+@container (max-width: 480px) {
+  .cellsWrap {
+    display: block;
+  }
+  .cells {
+    grid-template-columns: 20px auto minmax(0, 1fr);
+    grid-template-areas: "lead title title" ". badge res" ". act act";
+    column-gap: var(--space-3);
+    row-gap: 2px;
+    padding-left: var(--space-4);
+  }
+  .cells > .lead {
+    grid-area: lead;
+    align-self: start;
+    height: 20px;
+  }
+  .cells > .title {
+    grid-area: title;
+    padding-left: 0;
+    white-space: normal;
+  }
+  .cells > .badge {
+    grid-area: badge;
+    padding-left: 0;
+  }
+  .cells > .res {
+    grid-area: res;
+  }
+  .cells > .cellAct {
+    grid-area: act;
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .go {
+    transition: none;
+  }
+}

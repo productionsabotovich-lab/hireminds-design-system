@@ -8,6 +8,39 @@
 
 Раздел: `## X.Y.Z — ГГГГ-ММ-ДД`, внутри — «Добавлено», «Изменено», «Исправлено» и «Что обновить в платформе».
 
+## 0.11.0 — 2026-10-26
+
+Строка списка и список по утверждённым макетам 2b (HIR-61, заявка 4 из 13). Новых токенов нет.
+
+### Добавлено
+- `ListItem` — строка любого списка: `leading`, `leadingTone`, `entity`, `title`, `path`, `mono`, `subtitle`,
+  `subtitleShort`, `state`, `trailingStart`, `trailing`, `action`, `href`, `newTab`, `hint`, `density`, `emphasis`,
+  `expand`, `cells`, `badge`, `resultTone`, `trailingNarrow`. Наведение — полоса 3px тоном состояния, фокус — ещё
+  кольцо `accent` 2px; узкая колонка (список до 360px, проверки до 480px) — название до двух строк, состояние точкой
+  во второй строке, справа только действие (`trailingNarrow` — что оставить справа, если экрану нужно).
+- `List` — `title`, `count`, `countTone`, `headAction`, `collapsible`, `defaultOpen`, `sections`, `grid="cells"`,
+  `folded`, `more`, `emptyText`; сам выравнивает иконки прямых дочерних `ListItem` в `leading`. Ширина `100%`
+  (контейнер не схлопывается в flex-ряду и поповере); без `overflow: hidden` — подсказки строк не обрезаются.
+  README — композиции экранов 2b.
+- `EntityRef`: экспорт `ENTITY_ICON` (иконка по типу сущности); со `hint`, `href` и `title` читалке описанием — только
+  `hint` (ключ и название уже в имени ссылки).
+
+### Изменено
+- `ListRow`, `ResultList`, `ResultRow` — устарели (`@deprecated`), работают как раньше до итерации 3.
+
+### Миграция
+Ломающих изменений нет: webapp на 0.7–0.10 обновляется без правок. Переход — по таблицам «Замена» в README:
+- `ListRow` → `ListItem` в `List`: `lead` → `leading`, `code` → `entity: { kind, id }`, `trailing` (Pill) → `state`,
+  `sub` → `subtitle`; своя рамка списка → `List`.
+- `ResultList` → `List`: `rows` → `children` из `ListItem`, `more` + `moreHref` → `more: { label, href }`.
+- `ResultRow` → `ListItem`: файл — `leading={<Icon name={iconForFile(path)} />}` + `path` + `density="compact"`;
+  PR — `entity: { kind: "pr" }`; `stat` → `trailing` «+n −m».
+
+### Что обновить в платформе
+- Тег `#v0.11.0`.
+- Новые списки экранов 2b собирать из `List` и `ListItem` по композициям README `List`; `ListItem`, `List`,
+  `StatusDot` и строки списков из набора макетов удалить.
+
 ## 0.10.0 — 2026-10-26
 
 Ссылки на сущности по утверждённым макетам 2b (HIR-60, заявка 3 из 13). Новых токенов нет.

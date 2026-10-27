@@ -1,3 +1,6 @@
+"use client";
+
+import { useId } from "react";
 import { Icon, type IconName } from "../Icon";
 import { Tooltip } from "../Tooltip";
 import s from "./EntityRef.module.css";
@@ -24,7 +27,8 @@ export interface EntityRefProps {
   hint?: string | undefined;
 }
 
-const ICON: Record<EntityKind, IconName> = {
+/** Иконка по типу сущности: List переносит её в колонку leading строки */
+export const ENTITY_ICON: Record<EntityKind, IconName> = {
   task: "tracker",
   session: "session",
   decision: "decision",
@@ -45,13 +49,14 @@ const SAY: Record<EntityKind, string> = {
 };
 
 export function EntityRef({ kind, id, title, href, newTab = false, size = "inline", bare = false, hint }: EntityRefProps) {
+  const hintId = `${useId()}hint`;
   const iconSize = size === "heading" ? 24 : size === "title" ? 16 : 14;
   const body = (
     <>
       {!bare && (
         // коробка высотой в одну строку: иконка по центру первой строки при любом кегле
         <span className={s.icon} aria-hidden="true">
-          <Icon name={ICON[kind]} size={iconSize} />
+          <Icon name={ENTITY_ICON[kind]} size={iconSize} />
         </span>
       )}
       <span className={s.text}>
@@ -69,9 +74,22 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
 
   const sizeClass = { inline: s.sizeInline, title: s.sizeTitle, heading: s.sizeHeading }[size];
   const cls = [s.ref, sizeClass, href ? s.link : ""].filter(Boolean).join(" ");
+  const tip = hint && size === "title" && title ? `${id} ${title} · ${hint}` : hint;
+  // подсказка длиннее hint (ключ и название уже в имени ссылки): читалке описанием — только hint, скрытым текстом
+  const ownHint = !!href && !!tip && tip !== hint;
   const el = href ? (
-    <a className={cls} href={href} {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+    <a
+      className={cls}
+      href={href}
+      aria-describedby={ownHint ? hintId : undefined}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {body}
+      {ownHint && (
+        <span id={hintId} hidden>
+          {hint}
+        </span>
+      )}
     </a>
   ) : (
     <span className={cls}>{body}</span>
@@ -80,7 +98,13 @@ export function EntityRef({ kind, id, title, href, newTab = false, size = "inlin
   // подсказка: hint — всегда (у ссылки — ещё и описание для читалки); в размере title — полное название, если обрезано.
   // Обёртка не focusable: у ключа и названия есть видимый текст, role="img" его бы скрыл
   // в размере title с подсказкой — в ней и полное название: оно может быть обрезано
-  const tip = hint && size === "title" && title ? `${id} ${title} · ${hint}` : hint;
+  if (ownHint) {
+    return (
+      <Tooltip text={tip} focusable={false} describe={false}>
+        {el}
+      </Tooltip>
+    );
+  }
   if (tip) return <Tooltip text={tip} focusable={false} describe={!!href}>{el}</Tooltip>;
   if (size === "title" && title) {
     return (

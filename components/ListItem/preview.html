@@ -1,0 +1,47 @@
+<!-- @dsCard group="Data" height=900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ListItem — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: grid; grid-template-columns: minmax(0, 560px); gap: 18px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var ME = 'Антон Саботович';
+  var me = h(H.UserAvatar, { name: ME, size: 'xs', shape: 'circle' });
+  var role = function (n) { return h(H.UserAvatar, { name: n, size: 'xs' }); };
+  var I = function (p, k) { return h(H.ListItem, Object.assign({ key: k }, p)); };
+  var box = function (cap, items, cls, listProps) {
+    return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, h('span', { className: 'pv-cap' }, cap), h(H.List, listProps || {}, items.map(I)));
+  };
+  var rows = [
+    { href: '#', leading: me, entity: { kind: 'decision', id: 'D-44' }, title: 'Лимит возвратов', subtitle: ME + ' · ждёт 1 д 2 ч · напоминание сегодня 15:20', subtitleShort: 'ждёт 1 д 2 ч', state: { tone: 'warn', label: 'Ждёт решения', pulse: true }, emphasis: 'attention' },
+    { href: '#', leading: me, entity: { kind: 'decision', id: 'D-34' }, title: 'Объём согласован', subtitle: ME + ' · кнопка в треде · 22 окт', subtitleShort: '22 окт', state: { tone: 'accent', label: 'Утверждено' } },
+    { href: '#', leading: me, entity: { kind: 'decision', id: 'D-30' }, title: 'Приёмка', subtitle: ME + ' · страница решения · 19 окт', subtitleShort: '19 окт', state: { tone: 'dim', label: 'Остановлено' }, emphasis: 'muted' }];
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      box('regular · attention, обычная, muted · ссылки', rows),
+      box('375 px · название до двух строк, состояние точкой во второй строке', rows.concat([{ href: '#', leading: role('Developer'), entity: { kind: 'session', id: 'S-118' }, title: 'Developer · после возврата из QA, вторая итерация правок', subtitle: 'Code · 24 мин', state: { tone: 'ink', label: 'идёт', pulse: true } }]), 'pv-narrow'),
+      box('compact · файлы с «+n −m», раскрытие, новая вкладка, без действия', [
+        { density: 'compact', leading: h(H.Icon, { name: 'file-ts', size: 16 }), leadingTone: 'mute', path: 'apps/web/src/members/MembersTable.tsx', trailing: h('span', null, '+142 −38'), expand: { content: h(H.Body, { size: 'small' }, 'Здесь — DiffView (заявка 7): изменения файла построчно.') } },
+        { density: 'compact', leading: h(H.Icon, { name: 'file-md', size: 16 }), leadingTone: 'mute', path: 'docs/specs/PIL-15-roles.md', trailing: 'Аналитик · ред. 2', href: '#', newTab: true },
+        { density: 'compact', leading: h(H.Icon, { name: 'file-test', size: 16 }), leadingTone: 'mute', path: 'apps/web/src/members/roles.test.ts', trailing: h('span', null, '+118 −0'), action: 'none' }]),
+      box('Без leading и без ссылки', [
+        { title: 'Пункт без иконки', subtitle: 'вторая строка — подпись' },
+        { title: 'Ещё пункт', trailing: '12:04' }])
+    )
+  );
+  // фокус с клавиатуры на первой строке — полоса тоном состояния и кольцо accent
+  setTimeout(function () { var a = document.querySelector('a'); if (a) a.focus({ preventScroll: true }); }, 300);
+</script>
+</body>
+</html>
