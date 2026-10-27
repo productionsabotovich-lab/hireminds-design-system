@@ -12,7 +12,7 @@
 |---|---|---|---|
 | leading | `ReactNode` | — | Иконка типа (`Icon` 16), аватар (`UserAvatar` xs) или точка; колонка 20px по центру первой строки. |
 | leadingTone | `"ink" \| "mute" \| "accent" \| "warn" \| "danger"` | — | Цвет иконки в `leading`. |
-| entity | `{ kind, id, hint?, bare? }` | — | `EntityRef` перед названием. |
+| entity | `{ kind, id, hint?, bare? }` | — | `EntityRef` перед названием; `hint` — подсказка на ключе и описание строки для читалки и клавиатуры (`aria-describedby`); браузерный `title` у названия тогда не ставится. |
 | title | `ReactNode` | — | Название: одна строка с многоточием; в узкой колонке — до двух строк. |
 | path | `string` | — | Путь файла вместо названия: каталог `mute`, имя файла — моно. |
 | mono | `boolean` | `false` | Название моноширинным. |

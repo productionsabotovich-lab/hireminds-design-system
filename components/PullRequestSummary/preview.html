@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=1080 -->
+<!-- @dsCard group="Data" height=1200 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -30,7 +30,8 @@
       box('full · страница решения «Влить PR»', '', h(H.PullRequestSummary, pr18)),
       box('row · список PR: справа диф, состояние, итог CI, ↗', '', h(H.List, { title: 'Pull requests', count: 3 }, row(pr18), row(pr21), row(pr9))),
       box('375 px · вторая строка «● Открыт · +312 −41 · ✓ 4 из 4»', 'pv-narrow', h(H.List, { title: 'Pull requests', count: 2 }, row(pr18), row(pr21))),
-      box('375 px · full', 'pv-narrow', h(H.PullRequestSummary, pr18))
+      box('375 px · full', 'pv-narrow', h(H.PullRequestSummary, pr18)),
+      box('в flex-ряду: ширину задаёт родитель', '', h('div', { style: { display: 'flex' } }, h(H.PullRequestSummary, Object.assign({}, pr18, { description: null, commit: null }))))
     )
   );
 </script>
