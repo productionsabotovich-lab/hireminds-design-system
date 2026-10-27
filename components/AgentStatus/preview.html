@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=700 -->
+<!-- @dsCard group="Data" height=900 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -21,8 +21,8 @@
   var pm = { role: 'PM', runner: 'Claude Code', model: 'Sonnet 5.5', connection: 'раннер на VPS' };
   var dev = { role: 'Developer', runner: 'Claude Code', model: 'Sonnet 5.5' };
   var queue = [
-    { key: 'PIL-15', title: 'Роли участников проекта: owner, admin и viewer', current: true, priority: 'high', href: '#' },
     { key: 'PIL-22', title: 'Экспорт отчёта QA в PDF', waited: '2 ч', priority: 'urgent', href: '#' },
+    { key: 'PIL-15', title: 'Роли участников проекта: owner, admin и viewer', current: true, priority: 'high', href: '#' },
     { key: 'PIL-31', title: 'Лимит возвратов на доработку', waited: '1 д', priority: 'medium', href: '#' }
   ];
   var working = { kind: 'working', task: { key: 'PIL-15', title: 'Роли участников проекта: owner, admin и viewer', href: '#', phase: 'Code', plan: { done: 3, total: 7 } } };
@@ -30,7 +30,7 @@
   ReactDOM.createRoot(document.getElementById('root')).render(
     h('div', { className: 'pv-grid' },
       A('working · задача в работе, очередь', { agent: pm, state: working, queue: queue }),
-      A('free · только «Свободен» и модель', { agent: dev, state: { kind: 'free' } }),
+      A('free · без карточки агента — имя текстом, без ↗', { agent: dev, state: { kind: 'free' }, agentHref: undefined }),
       A('error · лимит, восстановится, команда', { agent: dev, state: { kind: 'error', title: 'Лимит Claude Code исчерпан', until: '18:00', fix: { text: 'Или переключите модель:', cmd: 'hm agent model Developer opus' } }, queue: queue.slice(1) }),
       A('paused', { agent: pm, state: { kind: 'paused', since: '14:20', by: 'Антон Саботович' }, queue: queue.slice(1) }),
       A('off · раннер не подключён', { agent: { role: 'QA', runner: 'Claude Code', model: 'Sonnet 5.5' }, state: { kind: 'off', fix: { text: 'Подключите раннер:', cmd: 'hm runner connect QA' } } }),

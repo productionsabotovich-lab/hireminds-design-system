@@ -52,6 +52,10 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
   const skipFocus = useRef(false);
   // открыта пользователем (не пропом open): только тогда закрывает остальные карточки
   const byUser = useRef(false);
+  // фокус от нажатия мышью или пальцем карточку не открывает: открывает само нажатие (click)
+  const pressed = useRef(false);
+  // закреплена нажатием: уход курсора её не закрывает, повторное нажатие — закрывает
+  const pinned = useRef(false);
   const id = useId();
   const cardId = `${id}card`;
   const info: PersonInfo = directory?.[name] ?? { human };
@@ -63,10 +67,21 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
       setOpen(value);
     }, delay);
   };
-  const toggle = () => {
+  const close = () => {
+    clearTimeout(timer.current);
+    pinned.current = false;
+    setOpen(false);
+  };
+  // нажатие: закрытую — открыть; открытую наведением или фокусом — закрепить; закреплённую — закрыть
+  const press = () => {
     clearTimeout(timer.current);
     byUser.current = true;
-    setOpen((v) => !v);
+    if (open && pinned.current) {
+      close();
+      return;
+    }
+    pinned.current = true;
+    setOpen(true);
   };
 
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -89,17 +104,16 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
   useEffect(() => {
     if (!open) return;
     const onDown = (e: globalThis.PointerEvent) => {
-      if (root.current && !root.current.contains(e.target as Node)) setOpen(false);
+      if (root.current && !root.current.contains(e.target as Node)) close();
     };
     const onKey = (e: globalThis.KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      clearTimeout(timer.current);
-      setOpen(false);
+      close();
       skipFocus.current = true;
       trigger.current?.focus();
     };
     const onOther = (e: Event) => {
-      if ((e as CustomEvent<string>).detail !== id) setOpen(false);
+      if ((e as CustomEvent<string>).detail !== id) close();
     };
     document.addEventListener("pointerdown", onDown, true);
     document.addEventListener("keydown", onKey);
@@ -117,12 +131,12 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
     if (e.pointerType === "mouse") later(true, SHOW_DELAY);
   };
   const onLeave = (e: PointerEvent) => {
-    if (e.pointerType === "mouse") later(false, HIDE_DELAY);
+    if (e.pointerType === "mouse" && !pinned.current) later(false, HIDE_DELAY);
   };
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key !== "Enter" && e.key !== " ") return;
     e.preventDefault();
-    toggle();
+    press();
   };
 
   const href = info.href ?? "#";
@@ -161,14 +175,22 @@ export function PersonRef({ name, human = false, directory, open: openProp = fal
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? cardId : undefined}
+        onPointerDown={() => {
+          pressed.current = true;
+        }}
         onFocus={() => {
-          if (skipFocus.current) {
+          // открывает только фокус с клавиатуры (Tab); после Esc — не открывает
+          if (skipFocus.current || pressed.current) {
             skipFocus.current = false;
+            pressed.current = false;
             return;
           }
           later(true, 0);
         }}
-        onClick={toggle}
+        onClick={() => {
+          pressed.current = false;
+          press();
+        }}
         onKeyDown={onKeyDown}
       >
         {children}

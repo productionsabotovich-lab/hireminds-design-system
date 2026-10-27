@@ -8,7 +8,7 @@ import { Icon } from "../Icon";
 import { IconArrow } from "../IconArrow";
 import { List } from "../List";
 import { ListItem } from "../ListItem";
-import { PriorityNode, type TaskPriority } from "../TaskSummary/TaskSummary";
+import { PriorityNode, type TaskPriority } from "../TaskSummary";
 import { Tooltip } from "../Tooltip";
 import { UserAvatar } from "../UserAvatar";
 import s from "./AgentStatus.module.css";
@@ -114,6 +114,8 @@ function QueueRow({ item }: { item: AgentQueueItem }) {
 
 export function AgentStatus({ agent, state, queue = [], queueOpen = false, agentHref }: AgentStatusProps) {
   const waiting = queue.filter((q) => !q.current).length;
+  // текущая задача — всегда первой, остальные — в порядке очереди
+  const ordered = [...queue.filter((q) => q.current), ...queue.filter((q) => !q.current)];
   const [open, setOpen] = useState(queueOpen);
   const [shift, setShift] = useState<{ left: number; min: number; max: number } | null>(null);
   const [size, setSize] = useState(0);
@@ -197,7 +199,6 @@ export function AgentStatus({ agent, state, queue = [], queueOpen = false, agent
   }, [show, id]);
 
   const [label, tone, pulse] = STATE[state.kind];
-  const href = agentHref ?? "#";
 
   let line: ReactNode = null;
   if (state.kind === "working") {
@@ -252,19 +253,26 @@ export function AgentStatus({ agent, state, queue = [], queueOpen = false, agent
     <section ref={root} className={[s.aw, state.kind === "error" ? s.isError : ""].filter(Boolean).join(" ")} aria-label={`Агент ${agent.role}: ${label}`}>
       <div className={s.head}>
         <UserAvatar name={agent.role} size="xs" shape="square" color="var(--ink-2)" />
-        <a className={s.name} href={href}>
-          {agent.role}
-        </a>
+        {/* без карточки агента — имя текстом и без ↗ */}
+        {agentHref ? (
+          <a className={s.name} href={agentHref}>
+            {agent.role}
+          </a>
+        ) : (
+          <span className={s.name}>{agent.role}</span>
+        )}
         <span className={[s.state, s[`tone-${tone}`]].join(" ")}>
           <Dot variant="status" tone={tone} size="md" pulse={pulse} />
           {label}
         </span>
         <span className={s.sp} />
-        <Tooltip text="Открыть карточку агента" focusable={false} describe={false}>
-          <a className={s.go} href={href} aria-label={`Открыть карточку агента ${agent.role}`}>
-            ↗
-          </a>
-        </Tooltip>
+        {agentHref && (
+          <Tooltip text="Открыть карточку агента" focusable={false} describe={false}>
+            <a className={s.go} href={agentHref} aria-label={`Открыть карточку агента ${agent.role}`}>
+              ↗
+            </a>
+          </Tooltip>
+        )}
       </div>
       {line}
       <div className={s.meta}>
@@ -272,7 +280,9 @@ export function AgentStatus({ agent, state, queue = [], queueOpen = false, agent
           <span className={s.ic} aria-hidden="true">
             <Icon name="runner" size={14} />
           </span>
-          {agent.runner} · {agent.model}
+          <span className={s.modelText}>
+            {agent.runner} · {agent.model}
+          </span>
         </span>
         <span className={s.sp} />
         {waiting > 0 && (
@@ -306,8 +316,8 @@ export function AgentStatus({ agent, state, queue = [], queueOpen = false, agent
                 aria-label={`Очередь ${agent.role}`}
                 style={shift ? { left: shift.left, minWidth: shift.min, maxWidth: shift.max } : { visibility: "hidden" }}
               >
-                <List title={`Очередь ${agent.role} · ${waiting} ${waits(waiting)}`}>
-                  {queue.map((q) => (
+                <List title={`Очередь ${agent.role} · ${waiting} ${waits(waiting)}`} width="content">
+                  {ordered.map((q) => (
                     <QueueRow key={q.key} item={q} />
                   ))}
                 </List>

@@ -15,6 +15,12 @@
   box-shadow: var(--sh-1);
 }
 
+/* по содержимому (попап очереди): не контейнер — ширину задают строки, узкой раскладки строк нет */
+.fitContent {
+  container-type: normal;
+  width: auto;
+}
+
 /* углы: заливки шапки, секции, «Закрытые N» и полоса строки у края — по радиусу рамки */
 .list > :first-child,
 .list > .sec:first-child > .secHead {
