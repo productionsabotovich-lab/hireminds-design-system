@@ -1,0 +1,16 @@
+/* PinnedZone по набору 2b (.k-pin): при прокрутке остаётся под шапкой; фон страницы закрывает журнал под ней */
+.pin {
+  position: sticky;
+  z-index: 10; /* над журналом, под ActionBar и подсказками */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-block: calc(-1 * var(--space-2));
+  padding-block: var(--space-2);
+  background: var(--bg);
+}
+
+/* виджет сессии в зоне — во всю ширину */
+.pin > a {
+  max-width: none;
+}

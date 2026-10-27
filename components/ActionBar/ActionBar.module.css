@@ -1,0 +1,81 @@
+/* ActionBar по набору 2b (.k-ab): вопрос слева, кнопки в один ряд справа; ≤ 600px — вопрос сверху, кнопки поровну */
+.host {
+  container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров */
+  box-sizing: border-box;
+  width: 100%; /* контейнер не схлопывается в flex-ряду и auto-колонке */
+}
+
+/* bar: закреплена внизу экрана поверх содержимого */
+.sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 20; /* над содержимым страницы */
+}
+
+.ab {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  background: var(--surface);
+}
+
+.bar {
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line);
+  box-shadow: var(--sh-2);
+}
+
+/* block — «Ваше решение» на странице: тот же вид карточкой */
+.block {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+}
+
+.text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* вопрос и задача — одной строкой с многоточием; полный текст — в title */
+.text > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* кнопки — в один ряд по ширине подписи; друг под другом не встают никогда */
+.btns {
+  display: flex;
+  flex: none;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+}
+
+.btns > .btn {
+  flex: none;
+}
+
+/* узкий контейнер: вопрос сверху; кнопки поровну на всю ширину, подпись переносится на две строки */
+@container (max-width: 600px) {
+  .ab {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .text > * {
+    white-space: normal;
+  }
+  .btns > .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto;
+    min-height: 34px; /* как кнопка md */
+    padding-block: var(--space-1);
+    padding-inline: var(--space-2); /* на 320px три подписи укладываются в две строки */
+    line-height: 1.25;
+    white-space: normal;
+  }
+}

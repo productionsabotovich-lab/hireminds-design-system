@@ -1,0 +1,39 @@
+<!-- @dsCard group="Forms" height=900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ActionBar — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 18px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 375px; }
+  .pv-320 { max-width: 320px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* рамка экрана: полоса bar прижата к низу прокручиваемой страницы */
+  .pv-screen { height: 150px; overflow: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--bg); }
+  .pv-content { padding: 12px 16px; color: var(--mute); font-size: 12px; height: 220px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var approve = [{ label: 'Утвердить', variant: 'primary' }, { label: 'Вернуть на доработку', variant: 'secondary' }, { label: 'Отклонить', variant: 'ghost' }];
+  var limit = [{ label: 'Разрешить ещё один возврат', variant: 'primary' }, { label: 'Остановить задачу', variant: 'secondary' }];
+  var bar = function (p) { return h(H.ActionBar, Object.assign({ question: 'Утвердить план кампании?', summary: 'D-46 · PIL-31 · Маркетинг · бюджет 95 000 ₽ на две недели', actions: approve }, p)); };
+  var screen = function (el) { return h('div', { className: 'pv-screen' }, h('div', { className: 'pv-content' }, 'Содержимое решения прокручивается под полосой…'), el); };
+  var box = function (cap, cls, el) { return h('div', { className: 'pv-box ' + cls }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('block · «Ваше решение» на странице', '', bar({ variant: 'block' })),
+      box('bar · закреплена внизу экрана, кнопки — дубль блока (вне Tab)', '', screen(bar({}))),
+      box('лимит возвратов исчерпан · длинная подпись основной кнопки', '', bar({ variant: 'block', question: 'Лимит возвратов исчерпан.', summary: 'D-44 · PIL-15 · Роли участников проекта · возвратов 2 из 2', actions: limit })),
+      box('375 px · вопрос сверху, кнопки в один ряд поровну, подпись в две строки', 'pv-narrow', bar({ variant: 'block' })),
+      box('375 px · bar', 'pv-narrow', screen(bar({ actions: limit, question: 'Лимит возвратов исчерпан.', summary: 'D-44 · PIL-15' }))),
+      box('320 px · три кнопки — подписи в две строки', 'pv-320', bar({ variant: 'block' })))
+  );
+</script>
+</body>
+</html>

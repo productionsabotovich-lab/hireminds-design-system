@@ -24,6 +24,10 @@ export interface ButtonProps {
   type?: "button" | "submit" | "reset" | undefined;
   onClick?: (() => void) | undefined;
   className?: string | undefined;
+  /** -1 — кнопка-дубль вне порядка Tab (полоса ActionBar дублирует блок «Ваше решение») */
+  tabIndex?: number | undefined;
+  /** Переход на страницу: ссылка с видом кнопки («Открыть решение») */
+  href?: string | undefined;
 }
 
 /**
@@ -41,10 +45,21 @@ export function Button({
   type = "button",
   onClick,
   className = "",
+  tabIndex,
+  href,
 }: ButtonProps) {
   const cls = [styles.root, styles[variant], styles[size], className]
     .filter(Boolean)
     .join(" ");
+
+  if (href && !disabled && !loading) {
+    return (
+      <a href={href} className={cls} tabIndex={tabIndex}>
+        {icon && <span className={styles.icon}>{icon}</span>}
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button
@@ -52,6 +67,7 @@ export function Button({
       disabled={disabled || loading}
       onClick={onClick}
       className={cls}
+      tabIndex={tabIndex}
     >
       {loading ? (
         <span className={styles.spinner} aria-hidden="true" />
