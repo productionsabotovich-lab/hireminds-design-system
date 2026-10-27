@@ -153,7 +153,8 @@ function StateNode({ state }: { state: TaskSummaryState }) {
   );
 }
 
-function PriorityNode({ priority }: { priority: TaskPriority }) {
+/** Приоритет иконкой цвета и подписью; внутренний — его берёт и очередь AgentStatus */
+export function PriorityNode({ priority }: { priority: TaskPriority }) {
   const [label, tone] = PRIORITY[priority];
   return (
     <span className={cx(s.prio, s[`prio-${tone}`])}>

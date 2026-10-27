@@ -1,0 +1,44 @@
+<!-- @dsCard group="Data" height=620 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PersonRef — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px 32px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; width: 320px; max-width: 100%; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-text { margin: 0; font-size: 13px; color: var(--ink-2); }
+  .pv-at { font-weight: 500; color: var(--ink); }
+  .pv-card { padding-bottom: 190px; }
+  .pv-agent { padding-bottom: 150px; }
+  [role="tooltip"] { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var dir = {
+    'PM': { href: '#', agent: { role: 'PM', runner: 'Claude Code', model: 'Sonnet 5.5' },
+      state: { kind: 'working', task: { key: 'PIL-15', title: 'Роли участников проекта', href: '#', phase: 'Plan' } },
+      queue: [{ key: 'PIL-15', title: 'Роли участников проекта', current: true, priority: 'high' }, { key: 'PIL-22', title: 'Экспорт отчёта QA в PDF', waited: '2 ч', priority: 'urgent' }] },
+    'Антон Саботович': { human: true, role: 'владелец проекта', href: '#' }
+  };
+  var P = function (name, open, child) { return h(H.PersonRef, { name: name, directory: dir, open: open }, child); };
+  var cap = function (t) { return h('span', { className: 'pv-cap' }, t); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      h('div', { className: 'pv-box pv-agent' }, cap('упоминание агента · карточка открыта'),
+        h('p', { className: 'pv-text' }, 'Нужен план кампании — ', P('PM', true, h('span', { className: 'pv-at' }, '@PM')), ', посмотри бюджет.')),
+      h('div', { className: 'pv-box pv-card' }, cap('имя автора · карточка человека'),
+        h('p', { className: 'pv-text' }, 'Решение принял ', P('Антон Саботович', true, h('span', { className: 'pv-at' }, 'Антон Саботович')), '.')),
+      h('div', { className: 'pv-box' }, cap('аватары участников · по наведению 300 мс'),
+        h('div', { style: { display: 'flex', gap: 6 } },
+          P('PM', false, h(H.UserAvatar, { name: 'PM', size: 'xs', color: 'var(--ink-3)' })),
+          P('Антон Саботович', false, h(H.UserAvatar, { name: 'Антон Саботович', size: 'xs', shape: 'circle' })))))
+  );
+</script>
+</body>
+</html>
