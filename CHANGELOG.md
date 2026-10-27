@@ -8,6 +8,26 @@
 
 Раздел: `## X.Y.Z — ГГГГ-ММ-ДД`, внутри — «Добавлено», «Изменено», «Исправлено» и «Что обновить в платформе».
 
+## 0.17.0 — 2026-10-27
+
+Лента по утверждённым макетам 2b (HIR-67, заявка 10 из 13). Новых токенов нет.
+
+### Добавлено
+- `ActivityEvent`: `kind="step"` — шаг агента (`step: { kind, tool, arg }`: вид шага иконкой, инструмент `CodeChip` sm
+  как есть, аргумент), `result` (итог вызова обычным шрифтом, «показать вывод» — `TerminalBox`), `detailed`;
+  `kind="run"` — разделитель запуска с `action` «показать N шагов»; `author` — слот имени (`PersonRef`); файлы с
+  `additions`, `deletions`, `diff` — чип раскрывает `DiffView`. Экспорт `STEP_ICON`, типы `ActivityStep`,
+  `ActivityStepKind`, `ActivityResult`.
+- `ActivityFeed`: `header={false}` и `panelId` (вид журнала — `Switcher` с `ACTIVITY_VIEWS` в заголовке экрана),
+  `live` — последняя строка «Сейчас», `detailed` — режим «Подробно».
+- `Icon`: `eye`, `pencil`.
+- `PullRequestSummary`: экспорт `DiffStat`.
+
+### Что обновить в платформе
+- Тег `#v0.17.0`.
+- Лента «Хода работы» и журнал карточки задачи — `ActivityFeed` и `ActivityEvent` системы; `ActivityFeed`,
+  `ActivityEvent`, `EventFiles`, `ToolResult` из набора макетов удалить.
+
 ## 0.16.0 — 2026-10-27
 
 Шапка экрана по утверждённым макетам 2b (HIR-66, заявка 9 из 13). Новых токенов нет.

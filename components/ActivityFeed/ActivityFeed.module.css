@@ -52,3 +52,9 @@
   min-height: 160px; /* из макета: место журнала на время загрузки */
   color: var(--mute);
 }
+
+/* строка «Сейчас» — последней, без маркера журнала */
+.live {
+  list-style: none;
+  padding-top: var(--space-2);
+}

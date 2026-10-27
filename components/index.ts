@@ -1,7 +1,7 @@
-export { ActivityEvent, ACTIVITY_TONE } from "./ActivityEvent";
-export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile } from "./ActivityEvent";
+export { ActivityEvent, ACTIVITY_TONE, STEP_ICON } from "./ActivityEvent";
+export type { ActivityEventProps, ActivityEventKind, ActivityTone, ActivityFile, ActivityStep, ActivityStepKind, ActivityResult } from "./ActivityEvent";
 
-export { ActivityFeed } from "./ActivityFeed";
+export { ActivityFeed, ACTIVITY_VIEWS } from "./ActivityFeed";
 export type { ActivityFeedProps, ActivityFeedEvent, ActivityFeedView } from "./ActivityFeed";
 
 export { AgentStatus } from "./AgentStatus";

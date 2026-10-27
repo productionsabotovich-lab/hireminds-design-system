@@ -12,20 +12,39 @@
 ## Пропсы
 | Prop | Тип | По умолчанию | Что делает |
 |---|---|---|---|
-| kind | `ActivityEventKind` | обязательный | Вид: контрольные точки `phase`, `session`, `message`, `pr`, `decision`, `return`, `note`, `error`, `reminder`, `system`; шаги `files`, `check`, `push`, `ask`. |
+| kind | `ActivityEventKind` | обязательный | Вид: контрольные точки `phase`, `session`, `message`, `pr`, `decision`, `return`, `note`, `error`, `reminder`, `system`; шаги `files`, `check`, `push`, `ask`, `step` (шаг агента); `run` — разделитель запуска. |
 | tone | `"ink" \| "accent" \| "warn" \| "danger" \| "dim"` | по виду | Цвет точки `Dot`; задаётся, когда смысл отличается от вида: итог решения, остановка. |
 | actor | `string` | — | Кто: роль, человек, «Hireminds», «Linear». У `message` — ещё и аватар. |
 | time | `Date \| string \| number` | обязательный | Время события; выводится «09:14» в часовом поясе браузера, `<time dateTime>` — ISO. |
 | children | `ReactNode` | — | Что произошло, после `actor`. У `phase` — название фазы: «Code → Review». |
 | detail | `ReactNode` | — | Вторая строка `mute`, одна, с многоточием; у строки — полный текст в `title`. У `phase` — причина перехода. |
 | quote | `ReactNode` | — | Реплика роли на `bg-2`, до 68 знаков в строке. |
-| files | `(string \| { path, href? })[]` | — | Файлы — `CodeChip`; с `href` открываются в новой вкладке. |
+| files | `(string \| { path, href?, additions?, deletions?, diff? })[]` | — | Файлы — `CodeChip` и «+n −m»; с `href` открываются в новой вкладке; с `diff` чип — кнопка, раскрывает `DiffView` под записью (в «Подробно» — раскрыт). |
 | pill | `ReactNode` | — | Итог: `Pill` решения («Утверждено») или результат проверки (`accent` / `danger`). |
+| author | `ReactNode` | — | Слот имени автора вместо текста `actor`: `PersonRef` с карточкой участника. |
+| step | `{ kind, tool?, arg? }` | — | `step`: вид шага — иконкой (таблица ниже), инструмент — `CodeChip` sm как есть, аргумент моноширинным. |
+| result | `{ summary, ok?, out? }` | — | `step`: итог вызова обычным шрифтом (`ok: false` — `danger-ink`); «показать вывод» — `TerminalBox`. |
+| detailed | `boolean` | `false` | Режим «Подробно»: вывод и diff раскрыты. |
+| action | `ReactNode` | — | `run`, `phase`: действие вместо времени — «показать 12 шагов». |
+
+### Вид шага → инструменты → иконка
+Те же виды, что в модели событий ACP. Название инструмента — как есть, обычным регистром (Grep, Read, Edit, Bash): прописными не пишется.
+
+| Вид (`step.kind`) | Инструменты | Иконка |
+|---|---|---|
+| `read` | Read, NotebookRead | `eye` |
+| `edit` | Edit, Write, NotebookEdit | `pencil` |
+| `search` | Grep, Glob, LS | `search` |
+| `execute` | Bash | `runner` |
+| `fetch` | WebFetch, WebSearch | `globe` |
+| `think` | рассуждение, план | `brain` |
 
 ## Правила
 | Вид | Маркер | Тон по умолчанию | Что пишется |
 |---|---|---|---|
 | `phase` | — (глава) | `Pill` `ink` | Название фазы или переход «QA → Code», причина, линия `line-2` на всю ширину |
+| `run` | — (глава) | текст 600 | «Запуск 2», причина «после возврата из ревью …», линия, справа `action` «показать 12 шагов» |
+| `step` | иконка вида | `ink` | Роль, инструмент `CodeChip` sm, аргумент; итог вызова и вывод; файлы с diff |
 | `session` | точка | `ink` | Начало, возобновление (с транскриптом и без — в `detail`), остановка (`tone="dim"`) |
 | `message` | аватар роли | — | Итог работы или сообщение: `quote`, `files` |
 | `pr` | точка | `accent` | PR открыт, влит; обновлён — `tone="ink"` |

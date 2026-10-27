@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=4500 -->
+<!-- @dsCard group="Data" height=6200 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -10,6 +10,7 @@
   .pv-box { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 640px; }
   .pv-narrow { max-width: 343px; }
   .pv-pair { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 24px; align-items: start; max-width: 720px; }
+  .pv-link { padding: 0; border: 0; background: none; font: 500 11.5px var(--font-ui); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--line-3); text-underline-offset: 2px; cursor: pointer; }
   .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
 </style>
 </head>
@@ -57,6 +58,24 @@
     { kind: 'push', time: at(0, '09:35'), actor: 'Developer', children: ['отправил коммит ', chip('9f2c1e0'), ' в ветку ', chip('feature/pil-15-roles')] }];
   var DONE = STEPS.concat([{ kind: 'message', time: at(0, '09:36'), actor: 'Developer', children: ['завершил работу · 15 мин · ', chip('S-118')], quote: 'Кнопка «Удалить участника» скрыта у viewer, добавлен тест на меню.' }]);
 
+  var hunk = [{ oldStart: 14, newStart: 14, context: 'export function MemberMenu({ member, viewer }: MemberMenuProps) {', lines: ['   const items: MenuItem[] = [];', '-  items.push(remove);', '+  if (can.removeMember && member.id !== viewer.id) items.push(remove);', '   return <ActionMenu items={items} />;'] }];
+  var AGENT = [
+    { kind: 'run', time: at(0, '09:21'), children: 'Запуск 2', detail: 'после возврата из ревью: viewer видит «Удалить участника»', action: h('button', { type: 'button', className: 'pv-link' }, 'показать 12 шагов') },
+    { kind: 'step', time: at(0, '09:22'), actor: 'Developer', step: { kind: 'search', tool: 'Grep', arg: 'removeMember apps/web/src' }, result: { summary: '4 совпадения в 2 файлах' } },
+    { kind: 'step', time: at(0, '09:23'), actor: 'Developer', step: { kind: 'read', tool: 'Read', arg: 'apps/web/src/members/MemberMenu.tsx' } },
+    { kind: 'step', time: at(0, '09:24'), actor: 'Developer', step: { kind: 'edit', tool: 'Edit' }, files: [{ path: 'apps/web/src/members/MemberMenu.tsx', additions: 3, deletions: 1, diff: hunk }] },
+    { kind: 'step', time: at(0, '09:28'), actor: 'Developer', step: { kind: 'execute', tool: 'Bash', arg: 'npm run typecheck' }, result: { summary: '3 ошибки', ok: false, out: ['MemberMenu.tsx:42 свойство canRemove не существует в типе Member', 'MemberMenu.tsx:57 свойство canRemove не существует в типе Member'] } },
+    { kind: 'step', time: at(0, '09:30'), actor: 'Developer', step: { kind: 'think' }, children: 'canRemove есть только у Viewer — нужно брать права из viewer.permissions' }];
+  var nowLine = h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 8 } }, h(H.Dot, { variant: 'status', tone: 'accent', size: 'md', pulse: true }), h(H.Body, { size: 'small', tone: 'ink-2' }, 'Сейчас: Developer правит MemberMenu.tsx'));
+  var team = { 'Антон Саботович': { human: true, role: 'владелец проекта', href: '#' } };
+  var WITH_AUTHOR = HISTORY.slice(4, 6).map(function (e) { return Object.assign({}, e, { author: h(H.PersonRef, { name: ME, directory: team }, h('strong', null, ME)) }); });
+  function Bare() {
+    var st = React.useState('all'), view = st[0];
+    var id = 'pv-feed-panel';
+    return h('div', { style: { display: 'flex', flexDirection: 'column', gap: 8 } },
+      h(H.SectionHeader, { action: h(H.Switcher, { tabs: H.ACTIVITY_VIEWS, activeId: view, onSelect: st[1], label: 'Вид журнала', panelId: id }) }, 'Что происходило с задачей'),
+      h(H.ActivityFeed, { header: false, panelId: id, view: view, onViewChange: st[1], now: NOW, events: HISTORY.slice(12) }));
+  }
   var box = function (cap, el, narrow) { return h('div', { className: 'pv-box' + (narrow ? ' pv-narrow' : '') }, h('span', { className: 'pv-cap' }, cap), el); };
   var feed = function (p) { return h(H.ActivityFeed, Object.assign({ now: NOW }, p)); };
 
@@ -70,6 +89,10 @@
       box('task · загрузка', feed({ events: [], loading: true })),
       box('session · живая лента «Шаги»', feed({ variant: 'session', events: STEPS, updatedAt: Date.now() - 60000 })),
       box('session · завершённая', feed({ variant: 'session', events: DONE })),
+      box('session · шаги агента: вид шага, инструмент, итог, diff по клику, «Сейчас» последней', feed({ variant: 'session', events: AGENT, live: nowLine, updatedAt: Date.now() - 30000 })),
+      box('session · «Подробно»: вывод и diff раскрыты', feed({ variant: 'session', events: AGENT.slice(3, 5), detailed: true })),
+      box('task · автор — PersonRef с карточкой участника', feed({ events: WITH_AUTHOR })),
+      box('task · header={false}: вид журнала в строке заголовка экрана', h(Bare)),
       h('div', { className: 'pv-pair' },
         box('375 px · вся активность', feed({ events: HISTORY.slice(12) }), true),
         box('375 px · сообщения', feed({ events: HISTORY.slice(10), view: 'messages' }), true)))
