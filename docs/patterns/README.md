@@ -31,6 +31,7 @@
 | Бейджи и выбор | [Pill](pill.md) | Компонент Pill |
 | | [Chip](chip.md) | Заявка |
 | Навигация | [Crumb](crumb.md), [Topbar](topbar.md) | Компоненты Crumb, Topbar (и TopbarStatus) |
+| | [PageHeader](../../components/PageHeader/README.md) — шапка экрана задачи, сессии, решения; [ToggleChip](../../components/ToggleChip/README.md) — «Подробно» над лентой | Компоненты PageHeader, ToggleChip |
 | | [TopbarLink](../../components/TopbarLink/README.md) — ссылка шапки со счётчиком решений | Компонент TopbarLink |
 | | [TopbarSteps](topbar-steps.md) | Заявка |
 | | [StepIndicator](step-indicator.md) | Компонент StepIndicator |

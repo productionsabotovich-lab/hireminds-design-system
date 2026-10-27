@@ -29,18 +29,22 @@ import { Topbar, Brand, TopbarStatus } from "../index";
 <Topbar variant="auth" left={<Brand />} right={<TopbarStatus label="reset · token verified" />} />
 ```
 
-Шапка webapp: в правом слоте — ссылки `TopbarLink` и аватар.
+### TopBar — шапка webapp (композиция, не компонент)
+Одна и та же на всех экранах и во всех состояниях («Карточка задачи», «Сессия агента», «Страница решения»):
+- слева — `Brand`, затем `Crumb` с `leadingChevron`: проект, эпик, задача (последняя — `active`);
+- справа — «Файлы» (`TopbarLink` `soon`), «Мои решения» (`TopbarLink` `tone="attention"`, иконка `inbox`), `UserAvatar` sm круглый — последним.
+- На узком экране крошки можно не показывать; состав справа тот же.
 
 ```tsx
-import { Topbar, Brand, TopbarLink, UserAvatar } from "../index";
+import { Topbar, Brand, Crumb, TopbarLink, UserAvatar } from "../index";
 
 <Topbar
   left={<Brand />}
+  center={<Crumb leadingChevron items={[{ label: "Hireminds pilot", href: "/p/pilot" }, { label: "Доступ и роли", href: "/p/pilot/epics/roles" }, { label: "PIL-15", mono: true, active: true }]} />}
   right={
     <>
-      <TopbarLink label="Моя команда" badge={{ kind: "soon" }} />
-      <TopbarLink label="Журнал" badge={{ kind: "soon" }} />
-      <TopbarLink href="/decisions" label="Мои решения" shortLabel="Решения" icon="inbox" badge={{ kind: "count", value: 4 }} />
+      <TopbarLink label="Файлы" badge={{ kind: "soon" }} />
+      <TopbarLink href="/decisions" label="Мои решения" shortLabel="Решения" icon="inbox" tone="attention" badge={{ kind: "count", value: 4 }} unseen={2} />
       <UserAvatar name="Антон Саботович" size="sm" shape="circle" />
     </>
   }

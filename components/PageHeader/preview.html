@@ -1,0 +1,51 @@
+<!-- @dsCard group="Navigation" height=760 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PageHeader — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 18px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  /* поле страницы: «←» висит в нём слева от края контента; пунктир — край контента */
+  .pv-page { padding: 12px 16px 12px 44px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .pv-page > * { outline: 1px dashed var(--line-2); outline-offset: 0; }
+  .pv-narrow { max-width: 375px; padding-left: 16px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var B = function (v, t) { return h(H.Button, { variant: v, size: 'sm' }, t); };
+  var page = function (cap, cls, p) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), h('div', { className: 'pv-page ' + cls }, h(H.PageHeader, p))); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      page('карточка задачи · фаза и состояние, строка 2', '', {
+        back: { href: '#', label: 'К проекту Hireminds pilot' },
+        entity: { kind: 'task', id: 'PIL-15', title: 'Роли участников проекта', href: '#', newTab: true, hint: 'Открыть в Linear' },
+        phase: 'Code', state: { label: 'В работе', tone: 'accent', pulse: true },
+        meta: ['Developer продолжает после возврата из QA', 'обновлено 12 мин назад'] }),
+      page('сессия агента · действия справа', '', {
+        back: { href: '#', label: 'К задаче PIL-15' },
+        entity: { kind: 'session', id: 'S-118', title: 'Developer' },
+        phase: 'Code', state: { label: 'Идёт', tone: 'accent', pulse: true },
+        meta: ['запущена 14:02', 'раннер Claude Code · Sonnet 5.5'],
+        actions: h(React.Fragment, null, B('secondary', 'Пауза'), B('ghost', 'Остановить')) }),
+      page('страница решения · ждёт решения', '', {
+        back: { href: '#', label: 'К задаче PIL-15' },
+        entity: { kind: 'decision', id: 'D-46', title: 'Утверждение плана кампании запуска для первых команд' },
+        phase: 'Утверждение', state: { label: 'Ждёт решения', tone: 'warn' },
+        meta: ['ждёт Антона Саботовича 40 мин', 'напоминание сегодня 17:32', 'коммит 7c2e0b1'],
+        actions: B('primary', 'Утвердить') }),
+      page('375 px · «←» в строке, строки 2 нет', 'pv-narrow', {
+        back: { href: '#', label: 'К задаче PIL-15' },
+        entity: { kind: 'decision', id: 'D-44', title: 'Лимит возвратов' },
+        state: { label: 'Утверждено', tone: 'accent' } })
+    )
+  );
+</script>
+</body>
+</html>
