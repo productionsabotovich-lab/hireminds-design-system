@@ -34,7 +34,7 @@
       { type: 'p', text: ['Макет меню — в ', { text: 'Figma', href: '#' }, '.'] }
     ]
   };
-  var pil22 = { key: 'PIL-22', title: 'Экспорт отчёта QA в PDF', href: '#', tracker: 'Linear', state: { label: 'Ждёт решения', tone: 'warn', pulse: true }, priority: 'urgent', assignee: anton, phase: 'Review', epic: { name: 'Отчёты' } };
+  var pil22 = { key: 'PIL-22', title: 'Экспорт отчёта QA в PDF', href: '#', tracker: 'Linear', state: { label: 'Ждёт решения', tone: 'warn', pulse: true }, priority: 'urgent', assignee: anton, phase: 'Утверждение', epic: { name: 'Отчёты' } };
   var pil9 = { key: 'PIL-9', title: 'Приглашение по ссылке', href: '#', tracker: 'Linear', state: { label: 'Завершена', tone: 'accent' }, priority: 'low', assignee: dev };
   var pil31 = { key: 'PIL-31', title: 'Лимит возвратов на доработку для одной задачи', href: '#', tracker: 'Linear', state: { label: 'В очереди', tone: 'warn' }, priority: 'medium', queuePosition: 2 };
   var cap = function (t) { return h('span', { className: 'pv-cap' }, t); };
@@ -44,7 +44,7 @@
         T({ task: pil15, preset: 'side', reason: 'Продолжена после возврата из QA', cardHref: '#' })),
       h('div', { className: 'pv-box pv-narrow' }, cap('side · 280px: приоритет — иконкой, эпик обрезан'),
         T({ task: pil15, preset: 'side', reason: 'Продолжена после возврата из QA', cardHref: '#' })),
-      h('div', { className: 'pv-box pv-side' }, cap('decision · страница решения, фаза в строке'),
+      h('div', { className: 'pv-box pv-side' }, cap('decision · колонка 320: приоритет иконкой, фаза целиком'),
         T({ task: pil22, preset: 'decision', cardHref: '#' })),
       h('div', { className: 'pv-box' }, cap('popover · по наведению на задачу'),
         T({ task: pil15, preset: 'popover' })),

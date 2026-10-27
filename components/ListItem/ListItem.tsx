@@ -48,6 +48,8 @@ export interface ListItemProps {
   subtitleShort?: ReactNode;
   /** Состояние: Pill справа; в узкой колонке — точка с подписью во второй строке */
   state?: ListItemState | undefined;
+  /** Колонка состояния постоянной ширины, px: состояние прижато вправо, строки списка — одна сетка (строка задачи) */
+  stateWidth?: number | undefined;
   /** Справа перед состоянием */
   trailingStart?: ReactNode;
   /** Справа после состояния: мета, «+n −m», время. В узкой колонке (до 360px) trailingStart и trailing скрыты */
@@ -88,6 +90,7 @@ export function ListItem({
   subtitle,
   subtitleShort,
   state,
+  stateWidth,
   trailingStart,
   trailing,
   trailingNarrow,
@@ -196,7 +199,7 @@ export function ListItem({
       <span className={s.trail}>
         {trailingStart}
         {state && (
-          <span className={s.wstate}>
+          <span className={s.wstate} style={stateWidth ? { minWidth: stateWidth } : undefined}>
             {emphasis === "attention" ? (
               // открытое — без заливки: точка и подпись тоном состояния
               <span className={[s.plain, s[`tone-${state.tone}`]].join(" ")}>

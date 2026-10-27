@@ -158,6 +158,12 @@
   display: none;
 }
 
+/* состояние справа: при stateWidth — колонка постоянной ширины, Pill прижат вправо */
+.wstate {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
 /* состояние: широкая колонка — Pill справа; узкая — точка с подписью во второй строке */
 .nstate {
   display: none;

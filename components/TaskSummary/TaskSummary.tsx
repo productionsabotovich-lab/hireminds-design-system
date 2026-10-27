@@ -139,8 +139,8 @@ const PRIORITY: Record<TaskPriority, [string, "danger" | "warn" | "ink" | "dim"]
   low: ["Низкий", "dim"],
 };
 
-/** ширина карточки, до которой подпись приоритета свёрнута до иконки: на экране 320px — иконка, на 375px — подпись */
-const NARROW = 300;
+/** колонка состояния строки задачи: Pill «Ждёт решения» с точкой; длиннее — шире только эта строка */
+const STATE_COL = 120;
 
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ");
 
@@ -304,19 +304,45 @@ function Description({ task, lines, defaultOpen }: { task: TaskSummaryTask; line
 
 export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref, compact = false, defaultOpen = false }: TaskSummaryProps) {
   const f: TaskSummaryFields = { ...TASK_SUMMARY_PRESETS[preset], ...fields };
-  // узкая карточка (до NARROW): подпись приоритета скрыта — тогда его подсказка получает остановку Tab
-  const card = useRef<HTMLElement>(null);
+  // подпись приоритета сворачивается до иконки по факту нехватки места в строке метаданных: сначала приоритет, потом
+  // обрезка фазы и эпика. Свёрнутая иконка получает остановку Tab (подсказка — для клавиатуры)
+  const metaRef = useRef<HTMLDivElement>(null);
   const [narrow, setNarrow] = useState(false);
+  const narrowRef = useRef(false);
+  const labelW = useRef(0);
   useLayoutEffect(() => {
-    const el = card.current;
-    if (!el) return;
-    const measure = () => setNarrow(el.clientWidth <= NARROW);
+    const m = metaRef.current;
+    if (!m) return;
+    const measure = () => {
+      const items = Array.from(m.children) as HTMLElement[];
+      // обрезано ли что-то: многоточие стоит глубже (подпись фазы, имя эпика); скрытые подписи 1×1px и подсказки — не в счёт
+      const cut = Array.from(m.querySelectorAll<HTMLElement>("*")).some(
+        (el) => el.clientWidth > 1 && !el.closest('[role="tooltip"]') && el.scrollWidth > el.clientWidth + 1,
+      );
+      const label = m.querySelector<HTMLElement>(`.${s.prioLabel}`);
+      if (!narrowRef.current) {
+        if (label) labelW.current = label.offsetWidth;
+        if (label && (cut || m.scrollWidth > m.clientWidth + 1)) setNarrow((narrowRef.current = true));
+        return;
+      }
+      // свёрнуто: развернуть, только если подпись помещается целиком и ничего не обрезано
+      const gap = parseFloat(getComputedStyle(m).columnGap) || 0;
+      const used = items.reduce((a, c) => a + c.offsetWidth, 0) + gap * Math.max(items.length - 1, 0);
+      const prioGap = 4; // зазор space-1 между иконкой и подписью
+      if (!cut && m.clientWidth - used >= labelW.current + prioGap) setNarrow((narrowRef.current = false));
+    };
     measure();
+    // шрифты догружаются после первого кадра: ширина подписей меняется
+    let alive = true;
+    void document.fonts?.ready.then(() => alive && measure());
     if (typeof ResizeObserver === "undefined") return;
     const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+    ro.observe(m);
+    return () => {
+      alive = false;
+      ro.disconnect();
+    };
+  }, [narrow]);
   const hint = `Открыть в ${t.tracker ?? "трекере"}`;
   const why = reason ? reason.charAt(0).toLowerCase() + reason.slice(1) : null;
   const lines = f.description || 3;
@@ -341,6 +367,7 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
         newTab
         subtitle={f.phase && t.phase ? <PhasePill name={t.phase} /> : undefined}
         state={f.status && t.state ? { ...t.state, dot: true } : undefined}
+        stateWidth={STATE_COL}
         trailingStart={
           f.assignee ? (
             <span className={s.av} title={t.assignee ? `Исполнитель: ${t.assignee.name}` : undefined}>
@@ -459,7 +486,7 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
   const phaseLine = f.phase === true && !grid && (t.phase || why);
 
   return (
-    <section ref={card} className={cx(s.ts, f.density === "popover" ? s.popover : s.card, narrow && s.narrow)} aria-label={`Задача ${t.key}`}>
+    <section className={cx(s.ts, f.density === "popover" ? s.popover : s.card)} aria-label={`Задача ${t.key}`}>
       <div className={s.top}>
         <EntityRef kind="task" id={t.key} title={t.title} href={t.href} newTab size="title" hint={grid ? hint : undefined} />
       </div>
@@ -471,7 +498,11 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
         )
       ) : (
         <>
-          {meta.length > 0 && <div className={s.meta}>{meta}</div>}
+          {meta.length > 0 && (
+            <div ref={metaRef} className={cx(s.meta, narrow && s.narrow)}>
+              {meta}
+            </div>
+          )}
           {f.assignee && t.assignee && (
             <div className={s.meta}>
               <span className={cx(s.mi, s.epic)}>
