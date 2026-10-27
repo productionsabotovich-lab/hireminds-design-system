@@ -1,0 +1,92 @@
+/* SessionPlan по набору 2b (.k-plan): заголовок с шевроном и счётом, полоса, пункты ListItem compact.
+   Не контейнер: пункты в одну строку на любой ширине (узкая раскладка ListItem не нужна) */
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--mute);
+}
+
+.headBtn {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.headBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 13.5px; /* стиль h3-inline */
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--mute);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* заголовок группы — строка той же высоты (32px, как ListItem compact) и сетки: иконка в колонке иконок пунктов */
+.groupRow {
+  list-style: none;
+}
+
+.group {
+  display: grid;
+  grid-template-columns: 20px auto auto; /* из макета: колонка иконки пунктов */
+  justify-content: start;
+  align-items: center;
+  column-gap: var(--space-3);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 32px; /* как строка ListItem compact */
+  padding: var(--space-1) var(--space-4);
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--mute);
+  text-align: left;
+  cursor: pointer;
+}
+
+.group:hover {
+  color: var(--ink);
+}
+
+.group:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--r-xs);
+}
+
+.groupIc {
+  display: inline-flex;
+  justify-content: center;
+}

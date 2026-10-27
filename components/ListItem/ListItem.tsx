@@ -222,7 +222,8 @@ export function ListItem({
         {trailing}
       </span>
       {trailingNarrow != null && <span className={s.ntrail}>{trailingNarrow}</span>}
-      <span className={s.act}>{act}</span>
+      {/* action="none" — колонки действия нет: справа ничего не резервируется */}
+      {action !== "none" && <span className={s.act}>{act}</span>}
     </>
   );
 
@@ -230,6 +231,7 @@ export function ListItem({
     s.row,
     density === "compact" ? s.compact : "",
     lead ? "" : s.noLead,
+    action === "none" ? s.noAct : "",
     href || expand ? s.link : "",
     expand ? s.toggle : "",
     emphasis ? s[emphasis] : "",

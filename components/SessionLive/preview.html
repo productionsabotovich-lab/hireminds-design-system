@@ -1,0 +1,33 @@
+<!-- @dsCard group="Data" height=700 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>SessionLive — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 16px; max-width: 560px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-narrow { max-width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .pv-feed { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var w = function (p) { return h(H.SessionLive, Object.assign({ role: 'Developer', sessionId: 'S-118', href: '#', elapsed: '25 мин', resumed: 'transcript', plan: { done: 3, total: 6 }, operation: 'запускает проверки проекта' }, p)); };
+  var box = function (cap, el, narrow) { return h('div', { className: 'pv-box' + (narrow ? ' pv-narrow' : '') }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('widget · карточка задачи «В работе»', w({})),
+      box('widget · план ещё не получен, первая работа', w({ status: 'starting', resumed: null, elapsed: 'менее минуты', operation: 'читает спецификацию задачи' })),
+      box('widget · повтор после ошибки', w({ status: 'retrying', resumed: 'no-transcript', operation: 'повторяет запуск тестов после сбоя раннера' })),
+      box('375 px', w({ plan: { done: 11, total: 26 } }), true),
+      box('now · последняя строка ленты', h(H.SessionLive, { variant: 'now', operation: 'запускает тесты участников', detail: 'npm test -- members', elapsed: '2 мин' })),
+      box('now · повтор', h(H.SessionLive, { variant: 'now', status: 'retrying', operation: 'повторяет вызов после ошибки сети', elapsed: '30 с' })))
+  );
+</script>
+</body>
+</html>

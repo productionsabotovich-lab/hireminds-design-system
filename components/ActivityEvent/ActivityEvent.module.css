@@ -142,3 +142,109 @@
     display: none;
   }
 }
+
+/* ---------- шаг агента ---------- */
+/* вид шага — иконкой в колонке маркера */
+.ic {
+  display: flex;
+  color: var(--mute);
+}
+
+.tone-accent { color: var(--accent); }
+.tone-danger { color: var(--danger); }
+.tone-warn { color: var(--warn-2); }
+
+.arg {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+/* итог вызова — обычным шрифтом; «показать вывод» — TerminalBox под строкой */
+.res {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.resLine {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+.resFail {
+  color: var(--danger-ink);
+}
+
+.linkBtn {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-3);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.linkBtn:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+.linkBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+/* файл: чип и «+n −m»; с diff — кнопка с шевроном */
+.file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fileBtn {
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-xs);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fileBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.chev {
+  display: inline-flex;
+  color: var(--mute);
+}
+
+.fileBtn:hover .chev {
+  color: var(--ink);
+}
+
+.diff {
+  min-width: 0;
+}
+
+/* разделитель запуска: «Запуск 2» текстом вместо Pill */
+.runLabel {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}

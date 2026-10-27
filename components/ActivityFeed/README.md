@@ -20,6 +20,10 @@
 | emptyText | `ReactNode` | «Здесь появятся переходы фаз, сессии ролей и решения.» | Текст `EmptyState` «Событий пока нет»: что появится и когда. |
 | title | `string` | «Что происходило с задачей» / «Шаги» | Заголовок секции (`SectionHeader`). |
 | updatedAt | `Date \| number` | — | `session`: время последнего обновления живой ленты. |
+| header | `boolean` | `true` | `false` — без своего заголовка: журнал карточки задачи под «Результатом»; вид «Сообщения / Вся активность» — `Switcher` с `ACTIVITY_VIEWS` в строке заголовка секции экрана, управляемый (`view` + `onViewChange`). |
+| panelId | `string` | свой | `header={false}`: id панели журнала — тот же, что `panelId` у `Switcher` в заголовке экрана. |
+| live | `ReactNode` | — | `session`: последняя строка «Сейчас» — `SessionLive` `variant="now"`; всегда последней в ленте. |
+| detailed | `boolean` | `false` | Режим «Подробно» (`ToggleChip` над лентой): вывод вызовов и diff файлов раскрыты. |
 
 ## Правила
 - «Сообщения» — `message`, `decision`, `return`, `note`, `reminder`: реплики ролей, решения и их итоги, возвраты, замечания и напоминания платформы. «Вся активность» — ещё `phase`, `session`, `pr`, `error`. По умолчанию — «Вся активность».
@@ -29,6 +33,15 @@
 - Тело ленты в `task` — `role="tabpanel"` с названием выбранного вида.
 - Лента — контейнер (`container-type: inline-size`): до 600px ширины ленты записи переходят на узкую раскладку `ActivityEvent`, даже если экран шире.
 - События передаются по времени; компонент не сортирует.
+
+### Журнал без своего заголовка
+```tsx
+const panelId = useId();
+<SectionHeader action={<Switcher tabs={ACTIVITY_VIEWS} activeId={view} onSelect={setView} label="Вид журнала" panelId={panelId} />}>
+  Что происходило с задачей
+</SectionHeader>
+<ActivityFeed header={false} panelId={panelId} view={view} onViewChange={setView} events={events} />
+```
 
 ## Пример
 ```tsx

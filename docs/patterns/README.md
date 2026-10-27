@@ -48,6 +48,7 @@
 | | [AgentStatus](../../components/AgentStatus/README.md) — виджет агента: состояние, задача, очередь попапом; [PersonRef](../../components/PersonRef/README.md) — участник в тексте с карточкой по наведению | Компоненты AgentStatus, PersonRef |
 | | [PullRequestSummary](../../components/PullRequestSummary/README.md) — PR строкой или карточкой «Влить PR»; [DiffView](../../components/DiffView/README.md) — изменения одного файла | Компоненты PullRequestSummary, DiffView |
 | | [ResultReport](../../components/ResultReport/README.md) — «Что сделано» из блоков; [ArtifactView](../../components/ArtifactView/README.md) — каталог виджетов артефакта; [PhaseResult](../../components/PhaseResult/README.md) — результат по фазе | Компоненты ResultReport, ArtifactView, PhaseResult |
+| | [SessionLive](../../components/SessionLive/README.md) — идущая сессия: виджет и строка «Сейчас»; [SessionPlan](../../components/SessionPlan/README.md), [PlanProgress](../../components/PlanProgress/README.md) — план сессии | Компоненты SessionLive, SessionPlan, PlanProgress |
 | | [RouteSteps](../../components/RouteSteps/README.md) — маршрут задачи в одну строку | Компонент RouteSteps |
 | | [ActivityFeed](../../components/ActivityFeed/README.md), [ActivityEvent](../../components/ActivityEvent/README.md) — журнал задачи и лента «Шаги» сессии | Компоненты ActivityFeed, ActivityEvent |
 | | [BudgetCell](budget-cell.md), [MetaLine](meta-line.md), [RoleCard](role-card.md) | Заявка |
