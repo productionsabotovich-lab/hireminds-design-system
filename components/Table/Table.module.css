@@ -18,7 +18,7 @@
   bottom: 0;
   width: var(--space-6);
   pointer-events: none;
-  background: linear-gradient(to left, color-mix(in oklch, var(--ink) 10%, transparent), transparent);
+  background: linear-gradient(to left, color-mix(in srgb, var(--ink) 10%, transparent), transparent);
   opacity: 0;
   transition: opacity 120ms;
 }

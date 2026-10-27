@@ -76,8 +76,7 @@ export type Artifact =
       title?: string | undefined;
       items: { title: string; href: string; subtitle?: string | undefined; meta?: string | undefined; icon?: IconName | undefined; entity?: ListItemEntity | undefined; newTab?: boolean | undefined }[];
     }
-  | { type: "decision"; listTitle?: string | undefined; id: string; title: string; sub?: string | undefined; href?: string | undefined; outcome?: { label: string; tone: PillTone } | undefined }
-  | { type: string; title?: string | undefined; href?: string | undefined; sub?: string | undefined };
+  | { type: "decision"; listTitle?: string | undefined; id: string; title: string; sub?: string | undefined; href?: string | undefined; outcome?: { label: string; tone: PillTone } | undefined };
 
 export interface ArtifactViewProps {
   artifact: Artifact;

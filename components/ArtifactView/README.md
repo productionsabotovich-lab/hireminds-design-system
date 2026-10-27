@@ -21,7 +21,7 @@
 | `images` | `title?`, `items: { src, alt, caption, href? }` | Сетка миниатюр 16:10 с подписью. |
 | `link` | `title?`, `items: { title, href, subtitle?, meta?, icon?, entity?, newTab? }` | `List` ссылок: стенд, документ, внешний сервис. |
 | `decision` | `listTitle?`, `id`, `title`, `sub?`, `href?`, `outcome?: { label, tone }` | `List` с одной строкой решения и `Pill` итога. |
-| любой другой | `title?`, `href?`, `sub?` | Ссылка `ExternalLink` и подпись «Вид «figma» показан ссылкой». |
+| любой другой (пришёл из данных) | `title?`, `href?`, `sub?` | Ссылка `ExternalLink` и подпись «Вид «figma» показан ссылкой». В типе `Artifact` его нет: опечатка в коде ловится при сборке. |
 
 ## Правила
 - Внутри — только `List` и `ListItem` (кроме изображений): одна сетка строк, одни правила узкой колонки.

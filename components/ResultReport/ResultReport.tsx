@@ -105,7 +105,7 @@ function Diagram(b: Extract<ReportBlock, { type: "diagram" }>) {
   const nh = 40; // высота узла в единицах viewBox
   const by = Object.fromEntries(b.nodes.map((n) => [n.id, n]));
   return (
-    <svg className={s.dia} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label}>
+    <svg className={s.dia} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: W }}>
       <defs>
         <marker id={arrow} viewBox="0 0 10 10" refX={9} refY={5} markerWidth={7} markerHeight={7} orient="auto-start-reverse">
           <path d="M0 0L10 5L0 10z" className={s.diaHead} />
@@ -160,39 +160,42 @@ function LineChart(b: Extract<ReportBlock, { type: "chart" }>) {
   const ticks = b.ticks ?? [0, max / 2, max];
   return (
     <div className={s.chart}>
-      <svg className={s.chartSvg} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label}>
-        {ticks.map((t, j) => (
-          <g key={`t${j}`}>
-            <line x1={L} x2={W - R} y1={Y(t)} y2={Y(t)} className={s.grid} />
-            <text x={L - 8} y={Y(t) + 4} textAnchor="end" className={s.tick}>
-              {fmt(t)}
+      {/* прокручивается только поле графика; легенда — всегда видна */}
+      <div className={s.figScroll} tabIndex={0} role="region" aria-label={b.label}>
+        <svg className={s.chartSvg} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: W }}>
+          {ticks.map((t, j) => (
+            <g key={`t${j}`}>
+              <line x1={L} x2={W - R} y1={Y(t)} y2={Y(t)} className={s.grid} />
+              <text x={L - 8} y={Y(t) + 4} textAnchor="end" className={s.tick}>
+                {fmt(t)}
+              </text>
+            </g>
+          ))}
+          {b.x.map((x, j) => (
+            <text key={`x${j}`} x={X(j)} y={Hh - B + 18} textAnchor="middle" className={s.tick}>
+              {x}
             </text>
-          </g>
-        ))}
-        {b.x.map((x, j) => (
-          <text key={`x${j}`} x={X(j)} y={Hh - B + 18} textAnchor="middle" className={s.tick}>
-            {x}
-          </text>
-        ))}
-        {b.unit && (
-          <text x={L - 8} y={10} textAnchor="end" className={s.tick}>
-            {b.unit}
-          </text>
-        )}
-        {b.xLabel && (
-          <text x={W - R} y={Hh - 4} textAnchor="end" className={s.tick}>
-            {b.xLabel}
-          </text>
-        )}
-        {b.series.map((sr, k) => (
-          <g key={`s${k}`} className={s[`tone-${sr.tone ?? "ink"}`]}>
-            <polyline points={sr.values.map((v, j) => `${X(j)},${Y(v)}`).join(" ")} className={s.line} />
-            {sr.values.map((v, j) => (
-              <circle key={j} cx={X(j)} cy={Y(v)} r={j === sr.values.length - 1 ? 4 : 2.5} className={s.point} />
-            ))}
-          </g>
-        ))}
-      </svg>
+          ))}
+          {b.unit && (
+            <text x={L - 8} y={10} textAnchor="end" className={s.tick}>
+              {b.unit}
+            </text>
+          )}
+          {b.xLabel && (
+            <text x={W - R} y={Hh - 4} textAnchor="end" className={s.tick}>
+              {b.xLabel}
+            </text>
+          )}
+          {b.series.map((sr, k) => (
+            <g key={`s${k}`} className={s[`tone-${sr.tone ?? "ink"}`]}>
+              <polyline points={sr.values.map((v, j) => `${X(j)},${Y(v)}`).join(" ")} className={s.line} />
+              {sr.values.map((v, j) => (
+                <circle key={j} cx={X(j)} cy={Y(v)} r={j === sr.values.length - 1 ? 4 : 2.5} className={s.point} />
+              ))}
+            </g>
+          ))}
+        </svg>
+      </div>
       <ul className={s.legend}>
         {b.series.map((sr, k) => (
           <li key={k} className={s[`tone-${sr.tone ?? "ink"}`]}>
@@ -320,7 +323,10 @@ function Block({ b }: { b: ReportBlock }) {
     case "diagram":
       return (
         <figure className={s.fig}>
-          <Diagram {...b} />
+          {/* уже своей ширины — прокрутка в рамке: подписи остаются в кегле 10.5–12px */}
+          <div className={s.figScroll} tabIndex={0} role="region" aria-label={b.label}>
+            <Diagram {...b} />
+          </div>
           {b.caption && <figcaption>{b.caption}</figcaption>}
         </figure>
       );

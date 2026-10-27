@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { ArtifactView } from "./ArtifactView";
+import { ArtifactView, type Artifact } from "./ArtifactView";
 
 const meta: Meta<typeof ArtifactView> = {
   title: "Data/ArtifactView",
@@ -26,4 +26,5 @@ export const Checks: Story = {
   },
 };
 export const Decision: Story = { args: { artifact: { type: "decision", id: "D-44", title: "Лимит возвратов", href: "#", outcome: { label: "Утверждено", tone: "accent" } } } };
-export const Unknown: Story = { args: { artifact: { type: "figma", title: "Макет в Figma", href: "#" } } };
+// тип не из каталога пришёл из данных: в коде опечатки ловит тип Artifact, на экране — ссылка с подписью
+export const Unknown: Story = { args: { artifact: { type: "figma", title: "Макет в Figma", href: "#" } as unknown as Artifact } };

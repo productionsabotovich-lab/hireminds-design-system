@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=2280 -->
+<!-- @dsCard group="Data" height=2900 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -52,7 +52,7 @@
       box('план кампании · бюджет таблицей, макеты вложением', '', h(H.ResultReport, { blocks: plan, caption: 'Маркетинг · сегодня, 11:40' })),
       box('clamp · 3 строки и «Показать результат полностью»', '', h(H.ResultReport, { blocks: arch, clamp: true })),
       box('промежуточный', '', h(H.ResultReport, { blocks: arch.slice(0, 1), interim: true, caption: 'Developer · идёт' })),
-      box('375 px · таблица сравнения прокручивается в рамке, тень у края', 'pv-narrow', h(H.ResultReport, { blocks: [arch[0], compareTable] }))
+      box('375 px · таблица, схема и график прокручиваются в рамке — подписи читаются', 'pv-narrow', h(H.ResultReport, { blocks: [compareTable, arch[3], arch[4]] }))
     )
   );
 </script>
