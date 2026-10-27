@@ -8,7 +8,10 @@ import path from "node:path";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 
-const run = promisify(execFile);
+const execFileP = promisify(execFile);
+/** запуск с тайм-аутом: зависший Chromium не останавливает проверку на часы */
+const TIMEOUT = 60_000;
+const run = (cmd, args, opts = {}) => execFileP(cmd, args, { timeout: TIMEOUT, killSignal: "SIGKILL", ...opts });
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const chromium = process.env.CHROMIUM || "chromium-browser";
 const only = process.argv.slice(2);
@@ -26,8 +29,9 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const head = [
   '<link rel="stylesheet" href="/tokens/tokens.css">',
   '<link rel="stylesheet" href="/dist/bundle.css">',
-  '<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>',
-  '<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>',
+  // React — локальная копия из devDependencies, не CDN: загрузка по сети внутри virtual-time-budget давала сбои
+  '<script src="/node_modules/react/umd/react.production.min.js"></script>',
+  '<script src="/node_modules/react-dom/umd/react-dom.production.min.js"></script>',
   '<script src="/dist/bundle.js"></script>',
   '<script>window.onerror=function(m){document.documentElement.setAttribute("data-error",String(m))}</script>',
 ].join("");
