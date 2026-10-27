@@ -60,6 +60,9 @@
 | `queue` | очередь (Lucide `list-end`: в Lucide нет `queue`) |
 | `alert` | внимание, ошибка (Lucide `circle-alert`) |
 | `commit` | коммит (Lucide `git-commit-horizontal`) |
+| `user` | исполнитель (Lucide `user`) |
+| `target` | цель задачи (Lucide `target`) |
+| `cycle` | цикл трекера (Lucide `rotate-cw`) |
 
 ## Правила
 - Иконки типов файлов — только 16 px: на 14 px метки `file-md`, `file-yaml`, `file-css` различаются с трудом. 14 px — для объектов продукта в плотных строках.

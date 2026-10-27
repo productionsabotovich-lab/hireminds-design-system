@@ -157,6 +157,20 @@ export type { TableProps, TableColumn, TableRow } from "./Table";
 export { TaskRef } from "./TaskRef";
 export type { TaskRefProps } from "./TaskRef";
 
+export { TaskSummary, TASK_SUMMARY_PRESETS } from "./TaskSummary";
+export type {
+  TaskSummaryProps,
+  TaskSummaryTask,
+  TaskSummaryFields,
+  TaskSummaryPreset,
+  TaskSummaryState,
+  TaskSummaryLink,
+  TaskSummaryPerson,
+  TaskPriority,
+  TaskDescriptionBlock,
+  TaskInline,
+} from "./TaskSummary";
+
 export { TerminalBox, TerminalLine, TerminalLineOK, TerminalLineArr, TerminalKV, TerminalDim, TerminalAcc, TerminalWho, TerminalMuted, TerminalPulse } from "./TerminalBox";
 export type { TerminalBoxProps, TerminalVariant } from "./TerminalBox";
 

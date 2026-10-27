@@ -42,7 +42,10 @@ export type IconName =
   | "reply"
   | "queue"
   | "alert"
-  | "commit";
+  | "commit"
+  | "user"
+  | "target"
+  | "cycle";
 
 export interface IconProps {
   /** Имя иконки из набора */
@@ -287,6 +290,26 @@ const SHAPES: Record<IconName, ReactElement> = {
       <circle cx="12" cy="12" r="3" />
       <line x1="3" x2="9" y1="12" y2="12" />
       <line x1="15" x2="21" y1="12" y2="12" />
+    </>
+  ),
+  user: (
+    <>
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </>
+  ),
+  // цикл трекера (итерация) — Lucide rotate-cw
+  cycle: (
+    <>
+      <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+      <path d="M21 3v5h-5" />
     </>
   ),
 };
