@@ -1,0 +1,41 @@
+<!-- @dsCard group="Data" height=800 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PhaseResult — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 16px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  [role="tooltip"] { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var box = function (cap, el) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), el); };
+  var pr = { type: 'pr', items: [{ number: 18, title: 'Роли участников проекта', href: '#', state: 'open', head: 'hm/PIL-15-project-roles', base: 'main', additions: 312, deletions: 41, files: 7, checks: { passed: 4, total: 4 } }] };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      box('результат фазы · прошлые версии раскрыты', h(H.PhaseResult, {
+        phase: 'Code', role: 'Developer', session: { id: 'S-118', href: '#' }, at: 'сегодня, 14:20', openEarlier: true,
+        report: [{ type: 'text', text: 'Роли owner, admin и viewer: права проверяются на сервере, меню участника показывает только доступные действия.' },
+          { type: 'list', items: ['can() в API участников', 'Меню без недоступных действий', '42 теста прав'] }],
+        artifacts: [pr],
+        earlier: [{ label: 'v1 · вернул QA', report: [{ type: 'findings', items: [{ tone: 'error', text: 'viewer видел «Удалить участника»' }] }] }],
+        earlierNote: '— до возврата из QA' })),
+      box('любая роль: «Безопасность»', h(H.PhaseResult, {
+        phase: 'Security', role: 'Безопасность', session: { id: 'S-122', href: '#' }, at: 'сегодня, 15:05',
+        report: [{ type: 'findings', items: [{ tone: 'ok', text: 'Права проверяются на сервере для всех трёх ролей' }, { tone: 'warn', text: 'Нет ограничения частоты для смены роли' }] }] })),
+      box('строки состояний', h('div', { className: 'pv-col', style: { gap: 8 } },
+        h(H.PhaseResult, { phase: 'QA', role: 'QA', session: { id: 'S-121', href: '#' }, status: 'running', note: 'гоняет e2e участников' }),
+        h(H.PhaseResult, { phase: 'Review', role: 'Reviewer', status: 'error', note: 'лимит Claude Code — восстановится в 18:00' }),
+        h(H.PhaseResult, { phase: 'Утверждение', role: 'Антон Саботович', human: true, status: 'waiting', note: 'решение D-46' })))
+    )
+  );
+</script>
+</body>
+</html>

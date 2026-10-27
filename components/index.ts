@@ -7,6 +7,9 @@ export type { ActivityFeedProps, ActivityFeedEvent, ActivityFeedView } from "./A
 export { AgentStatus } from "./AgentStatus";
 export type { AgentStatusProps, AgentInfo, AgentState, AgentFix, AgentQueueItem } from "./AgentStatus";
 
+export { ArtifactView } from "./ArtifactView";
+export type { ArtifactViewProps, Artifact, ArtifactCheck, ArtifactFile, ArtifactFileGroup } from "./ArtifactView";
+
 export { BackLink } from "./BackLink";
 export type { BackLinkProps } from "./BackLink";
 
@@ -124,6 +127,9 @@ export type { PasswordStrengthMeterProps } from "./PasswordStrengthMeter";
 export { PersonRef } from "./PersonRef";
 export type { PersonRefProps, PersonInfo } from "./PersonRef";
 
+export { PhaseResult } from "./PhaseResult";
+export type { PhaseResultProps, PhaseVersion } from "./PhaseResult";
+
 export { Pill } from "./Pill";
 export type { PillProps, PillTone } from "./Pill";
 
@@ -135,6 +141,9 @@ export type { PullRequestSummaryProps, PullRequestState } from "./PullRequestSum
 
 export { ResultList } from "./ResultList";
 export type { ResultListProps } from "./ResultList";
+
+export { ResultReport } from "./ResultReport";
+export type { ResultReportProps, ReportBlock, ReportTone, DiagramNode } from "./ResultReport";
 
 export { ResultRow } from "./ResultRow";
 export type { ResultRowProps } from "./ResultRow";

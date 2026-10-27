@@ -1,0 +1,50 @@
+<!-- @dsCard group="Data" height=1520 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ArtifactView — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-col { display: flex; flex-direction: column; gap: 20px; max-width: 640px; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  [role="tooltip"] { transition: none !important; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var A = function (cap, a) { return h('div', { className: 'pv-box' }, h('span', { className: 'pv-cap' }, cap), h(H.ArtifactView, { artifact: a })); };
+  var hunk = [{ oldStart: 41, newStart: 41, context: 'function MemberRow({ member, viewer }: RowProps) {', lines: ['   return (', '     <tr>', '-      <td><RoleSelect value={member.role} /></td>', '+      <td>{viewer.permissions.changeRole ? <RoleSelect value={member.role} /> : <RoleLabel role={member.role} />}</td>', '     </tr>'] }];
+  var shot = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 100'%3E%3Crect width='160' height='100' fill='%23f5f6f8'/%3E%3Crect x='10' y='10' width='140' height='10' rx='3' fill='%23dfe2e6'/%3E%3Crect x='10' y='30' width='140' height='8' rx='3' fill='%23e8eaed'/%3E%3Crect x='10' y='44' width='140' height='8' rx='3' fill='%23cfe5d6'/%3E%3Crect x='10' y='58' width='90' height='8' rx='3' fill='%23e8eaed'/%3E%3C/svg%3E";
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-col' },
+      A('pr · строки PR', { type: 'pr', items: [
+        { number: 18, title: 'Роли участников проекта: owner, admin и viewer', href: '#', state: 'open', head: 'hm/PIL-15-project-roles', base: 'main', additions: 312, deletions: 41, files: 7, checks: { passed: 4, total: 4 } }] }),
+      A('doc · документ вложением', { type: 'doc', title: 'Объём работ', revision: 'ред. 2', path: 'docs/specs/PIL-15-roles.md', href: '#', meta: 'Аналитик · сегодня, 10:12', additions: 46, deletions: 9 }),
+      A('checks · проверки, «вывод» раскрыт', { type: 'checks', rows: [
+        { label: 'lint', source: { kind: 'github' }, result: 'без замечаний', links: [{ kind: 'ci', id: 'CI 1842', href: '#', newTab: true }] },
+        { label: 'npm run typecheck', mono: true, state: 'fail', source: { kind: 'sandbox' }, result: '3 ошибки в MemberMenu.tsx', open: true, out: ['MemberMenu.tsx:42 свойство canRemove не существует в типе Member'] },
+        { label: 'Ревью прав доступа', state: 'warn', source: { kind: 'role', role: 'QA' }, result: '1 замечание', links: [{ kind: 'session', id: 'S-121', href: '#' }] },
+        { label: 'e2e участников', state: 'running', source: { kind: 'github' }, result: 'идёт' }] }),
+      A('files · изменённые файлы по месту, diff раскрывается', { type: 'files', groups: [
+        { place: 'repo', repo: 'hireminds-pilot-app', branch: 'hm/PIL-15-project-roles', branchHref: '#', state: 'branch', pr: { number: 18, href: '#' }, files: [
+          { path: 'apps/web/src/members/MembersTable.tsx', additions: 142, deletions: 38, diff: hunk },
+          { path: 'apps/web/src/members/roles.test.ts', additions: 118, deletions: 0, href: '#' }], more: 5, moreHref: '#' },
+        { place: 'disk', state: 'saved', files: [{ path: 'docs/specs/PIL-15-roles.md', additions: 46, deletions: 9, href: '#' }] }] }),
+      A('images · скриншоты', { type: 'images', title: 'Скриншоты стенда', items: [
+        { src: shot, alt: 'Таблица участников с ролью admin', caption: 'Участники · роль admin' },
+        { src: shot, alt: 'Меню участника без «Удалить»', caption: 'Меню · viewer' },
+        { src: shot, alt: 'Диалог смены роли', caption: 'Смена роли' }] }),
+      A('link · ссылки: стенд, документ', { type: 'link', items: [
+        { title: 'Стенд PR #18', subtitle: 'pil-15.preview.hireminds.dev', icon: 'globe', href: '#' },
+        { title: 'Спецификация ролей', entity: { kind: 'doc', id: 'PIL-15-roles.md' }, href: '#', newTab: false }] }),
+      A('decision · решение', { type: 'decision', id: 'D-44', title: 'Лимит возвратов', sub: 'Антон Саботович · 22 окт', href: '#', outcome: { label: 'Утверждено', tone: 'accent' } }),
+      A('неизвестный тип · ссылкой с подписью', { type: 'figma', title: 'Макет в Figma', href: '#', sub: 'Дизайнер · вчера' })
+    )
+  );
+</script>
+</body>
+</html>

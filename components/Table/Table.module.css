@@ -1,10 +1,45 @@
-.wrap {
+/* рамка: таблица шире рамки прокручивается внутри; тень у правого края — пока есть что прокрутить */
+.frame {
+  position: relative;
   width: 100%;
-  overflow-x: auto;
+  min-width: 0;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   box-shadow: var(--sh-1);
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--space-6);
+  pointer-events: none;
+  background: linear-gradient(to left, color-mix(in srgb, var(--ink) 10%, transparent), transparent);
+  opacity: 0;
+  transition: opacity 120ms;
+}
+
+.more::after {
+  opacity: 1;
+}
+
+.wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.wrap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* от 4 колонок: колонки читаются, остальное — прокруткой */
+.wide {
+  min-width: 520px; /* из макета */
 }
 
 .table {
@@ -24,7 +59,7 @@
   white-space: nowrap;
 }
 
-.table th {
+.table thead th {
   box-sizing: border-box;
   height: 36px;
   padding: 0 var(--space-4);
@@ -53,7 +88,7 @@
   border-bottom: 0;
 }
 
-.dense th { height: 32px; }
+.dense thead th { height: 32px; }
 .dense td { height: 36px; padding-top: var(--space-1); padding-bottom: var(--space-1); }
 
 .table .right { text-align: right; }
@@ -74,4 +109,64 @@
 .clickable:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
+}
+
+/* заголовок строки (rowHeaders): как ячейка, название — ink 600 */
+.table .rowHead {
+  box-sizing: border-box;
+  height: 44px;
+  padding: var(--space-2) var(--space-4);
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+.dense .rowHead {
+  height: 36px;
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+.table tbody tr:last-child .rowHead {
+  border-bottom: 0;
+}
+
+.table .rowHead.right {
+  text-align: right;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* итоговая строка */
+.total > td,
+.total > th {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--inset);
+}
+
+/* строка-рекомендация: акцент в первой ячейке */
+.pick > :first-child {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame::after {
+    transition: none;
+  }
 }

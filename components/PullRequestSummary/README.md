@@ -17,7 +17,7 @@ Pull request одной строкой `ListItem` — в списке PR или 
 | repo | `string` | — | Репозиторий — в подсказке на ключе PR («Репозиторий hireminds-pilot-app»). |
 | head, headHref, base, baseHref | `string` | — | Ветки — `BranchRef`. |
 | additions, deletions, files | `number` | — | «+312 −41 · 7 файлов». |
-| checks | `{ passed, total }` | — | Итог CI: «✓ 4 из 4» (`accent-ink`) или «⚠ 3 из 4» (`danger-ink`). |
+| checks | `{ passed, total }` | — | Итог CI: «✓ 4 из 4» (`accent-ink`) или «✕ 3 из 4» (`danger-ink`). |
 | description | `string[]` | — | `full`: пункты «Что изменилось». |
 | commit, commitHref, author | `string` | — | `full`: «коммит a4b23ec · открыл Developer». |
 | children | `ReactNode` | — | `full`: блок ниже карточки — изменённые файлы. |
