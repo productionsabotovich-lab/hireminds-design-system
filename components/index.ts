@@ -49,6 +49,9 @@ export type { CommentFormProps, CommentMention } from "./CommentForm";
 export { ConfirmDialog } from "./ConfirmDialog";
 export type { ConfirmDialogProps } from "./ConfirmDialog";
 
+export { Conversation } from "./Conversation";
+export type { ConversationProps, ConversationItem, ConversationMessage, ConversationEvent } from "./Conversation";
+
 export { Crumb } from "./Crumb";
 export type { CrumbProps, CrumbItem } from "./Crumb";
 
@@ -120,6 +123,9 @@ export type { ListItemProps, ListItemState, ListItemEntity, ListItemTone } from 
 
 export { ListRow } from "./ListRow";
 export type { ListRowProps } from "./ListRow";
+
+export { MessageQueue } from "./MessageQueue";
+export type { MessageQueueProps, QueuedMessage } from "./MessageQueue";
 
 export { NavLink } from "./NavLink";
 export type { NavLinkProps } from "./NavLink";

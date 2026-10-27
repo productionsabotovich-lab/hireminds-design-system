@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
 import { Button } from "../Button";
 import { Caption } from "../Caption";
 import { Textarea } from "../Textarea";
@@ -38,8 +38,14 @@ export interface CommentFormProps {
   error?: string | undefined;
   /** Подпись поля; по умолчанию «Комментарий» */
   label?: string | undefined;
-  /** Подпись у кнопки: куда попадает комментарий */
+  /** Подпись у кнопки: куда попадает комментарий или кто ответит — экран меняет её по адресату */
   hint?: string | undefined;
+  /** false — без линии сверху: форма закреплена внизу ленты (беседа, сессия, журнал) */
+  divider?: boolean | undefined;
+  /** Лента прокручивается под закреплённой формой: лёгкая тень сверху */
+  raised?: boolean | undefined;
+  /** Над полем: очередь сообщений (MessageQueue) и полоса «В ответ …» */
+  above?: ReactNode;
 }
 
 /** «@» перед курсором и набранное после него */
@@ -63,6 +69,9 @@ export function CommentForm({
   error,
   label = "Комментарий",
   hint = "Комментарий попадает в журнал задачи",
+  divider = true,
+  raised = false,
+  above,
 }: CommentFormProps) {
   const [inner, setInner] = useState("");
   const [active, setActive] = useState(0);
@@ -159,7 +168,8 @@ export function CommentForm({
   };
 
   return (
-    <form className={s.form} onSubmit={submit}>
+    <form className={[s.form, divider ? "" : s.noDivider, raised ? s.raised : ""].filter(Boolean).join(" ")} onSubmit={submit}>
+      {above != null && <div className={s.above}>{above}</div>}
       <div
         ref={fieldRef}
         className={s.field}

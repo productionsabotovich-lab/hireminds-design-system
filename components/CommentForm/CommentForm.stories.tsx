@@ -27,3 +27,4 @@ export const SendError: Story = {
   args: { mentions, value: "Проверьте права owner: @Developer", error: "Не отправлено: нет связи с трекером. Повторите." },
 };
 export const NoMentions: Story = { args: {} };
+export const Docked: Story = { args: { divider: false, raised: true, hint: "Агент ответит в конце текущего шага" } };
