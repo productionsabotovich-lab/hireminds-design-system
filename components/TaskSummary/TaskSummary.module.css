@@ -1,6 +1,5 @@
 /* TaskSummary по набору 2b (.k-ts, .k-td): задача из трекера — карточка, всплывающая карточка, строка списка, описание */
 .ts {
-  container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров; узкая карточка сворачивает приоритет до иконки */
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -156,16 +155,14 @@
   padding-top: var(--space-1);
 }
 
-/* узкая карточка: подпись приоритета скрыта, остаётся иконка с подсказкой */
-@container (max-width: 360px) {
-  .meta .prioLabel {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
+/* узкая карточка (до 300px, порог NARROW в коде): подпись приоритета скрыта, остаётся иконка с подсказкой */
+.narrow .meta .prioLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* сетка «подпись — значение» (DescriptionList row) — от края до края карточки, под заголовком */
@@ -353,21 +350,6 @@
 
 .colPrio {
   min-width: 84px; /* из макета */
-}
-
-/* состояние во второй строке — только в узком списке (до 360px): там ListItem скрывает колонки справа */
-.nstate {
-  display: none;
-  align-items: center;
-  gap: var(--space-2);
-  white-space: nowrap;
-  color: var(--ink-2);
-}
-
-@container (max-width: 360px) {
-  .nstate {
-    display: inline-flex;
-  }
 }
 
 .srOnly {

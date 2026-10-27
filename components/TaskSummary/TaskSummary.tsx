@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Body } from "../Body";
 import { CodeChip } from "../CodeChip";
 import { DescriptionList, type DescriptionItem } from "../DescriptionList";
@@ -139,6 +139,9 @@ const PRIORITY: Record<TaskPriority, [string, "danger" | "warn" | "ink" | "dim"]
   low: ["Низкий", "dim"],
 };
 
+/** ширина карточки, до которой подпись приоритета свёрнута до иконки: на экране 320px — иконка, на 375px — подпись */
+const NARROW = 300;
+
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ");
 
 function StateNode({ state }: { state: TaskSummaryState }) {
@@ -220,6 +223,7 @@ function Description({ task, lines, defaultOpen }: { task: TaskSummaryTask; line
   const [open, setOpen] = useState(defaultOpen);
   const [cut, setCut] = useState(false);
   const body = useRef<HTMLDivElement>(null);
+  const id = `${useId()}desc`;
   const d = task.description;
 
   // кнопка нужна, только если текст не поместился в lines строк; пересчёт при смене ширины
@@ -238,7 +242,7 @@ function Description({ task, lines, defaultOpen }: { task: TaskSummaryTask; line
 
   const blocks: TaskDescriptionBlock[] = typeof d === "string" ? [{ type: "p", text: d }] : d!;
   const images = blocks.flatMap((b) => (b.type === "images" ? b.items : []));
-  const id = `task-desc-${task.key}`;
+
 
   return (
     <div className={s.desc}>
@@ -300,6 +304,19 @@ function Description({ task, lines, defaultOpen }: { task: TaskSummaryTask; line
 
 export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref, compact = false, defaultOpen = false }: TaskSummaryProps) {
   const f: TaskSummaryFields = { ...TASK_SUMMARY_PRESETS[preset], ...fields };
+  // узкая карточка (до NARROW): подпись приоритета скрыта — тогда его подсказка получает остановку Tab
+  const card = useRef<HTMLElement>(null);
+  const [narrow, setNarrow] = useState(false);
+  useLayoutEffect(() => {
+    const el = card.current;
+    if (!el) return;
+    const measure = () => setNarrow(el.clientWidth <= NARROW);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   const hint = `Открыть в ${t.tracker ?? "трекере"}`;
   const why = reason ? reason.charAt(0).toLowerCase() + reason.slice(1) : null;
   const lines = f.description || 3;
@@ -322,33 +339,22 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
         title={t.title}
         href={t.href}
         newTab
-        subtitle={
-          (f.phase && t.phase) || (f.status && t.state) ? (
-            <>
-              {/* узкий список: состояние во второй строке, как у ListItem; справа его колонка скрыта */}
-              {f.status && t.state && (
-                <span className={s.nstate}>
-                  <Dot variant="status" tone={t.state.tone} size="sm" pulse={!!t.state.pulse} />
-                  {t.state.label}
-                </span>
+        subtitle={f.phase && t.phase ? <PhasePill name={t.phase} /> : undefined}
+        state={f.status && t.state ? { ...t.state, dot: true } : undefined}
+        trailingStart={
+          f.assignee ? (
+            <span className={s.av} title={t.assignee ? `Исполнитель: ${t.assignee.name}` : undefined}>
+              {t.assignee && (
+                <>
+                  <Avatar person={t.assignee} />
+                  <span className={s.srOnly}>исполнитель {t.assignee.name}</span>
+                </>
               )}
-              {f.phase && t.phase && <PhasePill name={t.phase} />}
-            </>
+            </span>
           ) : undefined
         }
         trailing={
           <>
-            {f.assignee && (
-              <span className={s.av} title={t.assignee ? `Исполнитель: ${t.assignee.name}` : undefined}>
-                {t.assignee && (
-                  <>
-                    <Avatar person={t.assignee} />
-                    <span className={s.srOnly}>исполнитель {t.assignee.name}</span>
-                  </>
-                )}
-              </span>
-            )}
-            {f.status && <span className={s.col}>{t.state && <StateNode state={t.state} />}</span>}
             {f.priority && <span className={cx(s.col, s.colPrio)}>{t.priority && <PriorityNode priority={t.priority} />}</span>}
             {f.queuePosition && t.queuePosition != null && <span className={cx(s.col, s.colQueue)}>{t.queuePosition}-я в очереди</span>}
           </>
@@ -376,7 +382,7 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
       </span>
     ) : null,
     f.priority && t.priority ? (
-      <Tooltip key="prio" text={`Приоритет: ${PRIORITY[t.priority][0].toLowerCase()}`}>
+      <Tooltip key="prio" text={`Приоритет: ${PRIORITY[t.priority][0].toLowerCase()}`} focusable={narrow}>
         <PriorityNode priority={t.priority} />
       </Tooltip>
     ) : null,
@@ -453,7 +459,7 @@ export function TaskSummary({ task: t, preset = "side", fields, reason, cardHref
   const phaseLine = f.phase === true && !grid && (t.phase || why);
 
   return (
-    <section className={cx(s.ts, f.density === "popover" ? s.popover : s.card)} aria-label={`Задача ${t.key}`}>
+    <section ref={card} className={cx(s.ts, f.density === "popover" ? s.popover : s.card, narrow && s.narrow)} aria-label={`Задача ${t.key}`}>
       <div className={s.top}>
         <EntityRef kind="task" id={t.key} title={t.title} href={t.href} newTab size="title" hint={grid ? hint : undefined} />
       </div>

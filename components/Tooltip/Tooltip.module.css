@@ -29,14 +29,21 @@
   font-weight: 400;
   text-align: left;
   white-space: normal;
-  opacity: 0;
-  visibility: hidden;
+  /* закрытая подсказка не занимает места: у края экрана скрытый пузырь давал бы горизонтальную прокрутку страницы */
+  display: none;
+  opacity: 1;
   transition: opacity 120ms;
 }
 
 .open {
-  opacity: 1;
-  visibility: visible;
+  display: block;
+}
+
+/* появление — от прозрачного (в браузерах без @starting-style — сразу) */
+@starting-style {
+  .open {
+    opacity: 0;
+  }
 }
 
 /* мостик через зазор space-1: курсор переходит с элемента на подсказку, не уходя с обёртки */
