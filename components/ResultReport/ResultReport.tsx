@@ -96,6 +96,30 @@ const FIND: Record<"error" | "warn" | "ok" | "info", ["danger" | "warn" | "accen
   info: ["dim", ""],
 };
 
+/** ширина, уже которой схема и график не сжимаются, а прокручиваются: подписи 10.5–12px остаются читаемыми */
+const MIN_FIG = 480;
+
+/** Рамка схемы и графика: прокрутка, если поле уже MIN_FIG; в порядке Tab — только когда есть что прокрутить */
+function FigScroll({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scrollable, setScrollable] = useState(false);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setScrollable(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={s.figScroll} tabIndex={scrollable ? 0 : undefined}>
+      {children}
+    </div>
+  );
+}
+
 /** Схема: узлы-прямоугольники и стрелки; цвета — токены, не крупнее текста страницы */
 function Diagram(b: Extract<ReportBlock, { type: "diagram" }>) {
   const arrow = `${useId()}arr`;
@@ -105,7 +129,7 @@ function Diagram(b: Extract<ReportBlock, { type: "diagram" }>) {
   const nh = 40; // высота узла в единицах viewBox
   const by = Object.fromEntries(b.nodes.map((n) => [n.id, n]));
   return (
-    <svg className={s.dia} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: W }}>
+    <svg className={s.dia} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: Math.min(W, MIN_FIG) }}>
       <defs>
         <marker id={arrow} viewBox="0 0 10 10" refX={9} refY={5} markerWidth={7} markerHeight={7} orient="auto-start-reverse">
           <path d="M0 0L10 5L0 10z" className={s.diaHead} />
@@ -161,8 +185,8 @@ function LineChart(b: Extract<ReportBlock, { type: "chart" }>) {
   return (
     <div className={s.chart}>
       {/* прокручивается только поле графика; легенда — всегда видна */}
-      <div className={s.figScroll} tabIndex={0} role="region" aria-label={b.label}>
-        <svg className={s.chartSvg} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: W }}>
+      <FigScroll>
+        <svg className={s.chartSvg} viewBox={`0 0 ${W} ${Hh}`} role="img" aria-label={b.label} style={{ minWidth: Math.min(W, MIN_FIG) }}>
           {ticks.map((t, j) => (
             <g key={`t${j}`}>
               <line x1={L} x2={W - R} y1={Y(t)} y2={Y(t)} className={s.grid} />
@@ -195,7 +219,7 @@ function LineChart(b: Extract<ReportBlock, { type: "chart" }>) {
             </g>
           ))}
         </svg>
-      </div>
+      </FigScroll>
       <ul className={s.legend}>
         {b.series.map((sr, k) => (
           <li key={k} className={s[`tone-${sr.tone ?? "ink"}`]}>
@@ -324,9 +348,9 @@ function Block({ b }: { b: ReportBlock }) {
       return (
         <figure className={s.fig}>
           {/* уже своей ширины — прокрутка в рамке: подписи остаются в кегле 10.5–12px */}
-          <div className={s.figScroll} tabIndex={0} role="region" aria-label={b.label}>
+          <FigScroll>
             <Diagram {...b} />
-          </div>
+          </FigScroll>
           {b.caption && <figcaption>{b.caption}</figcaption>}
         </figure>
       );

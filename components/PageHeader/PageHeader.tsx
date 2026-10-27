@@ -34,7 +34,18 @@ export function PageHeader({ back, entity: e, phase, state, meta, actions }: Pag
   useLayoutEffect(() => {
     const el = root.current;
     if (!el || !back) return;
-    const measure = () => setHang(el.getBoundingClientRect().left >= HANG_FIELD);
+    // поле — от левого края ближайшей колонки с прокруткой или обрезкой (боковая колонка, панель), иначе — от окна
+    const measure = () => {
+      let edge = 0;
+      for (let p = el.parentElement; p; p = p.parentElement) {
+        const cs = getComputedStyle(p);
+        if (cs.overflowX !== "visible" || cs.overflowY !== "visible") {
+          edge = p.getBoundingClientRect().left + p.clientLeft;
+          break;
+        }
+      }
+      setHang(el.getBoundingClientRect().left - edge >= HANG_FIELD);
+    };
     measure();
     window.addEventListener("resize", measure);
     const ro = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
