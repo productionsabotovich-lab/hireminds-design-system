@@ -38,6 +38,21 @@ const comps = fs.readdirSync(path.join(root, "components"))
   .filter((c) => fs.existsSync(path.join(root, "components", c, "preview.html")))
   .filter((c) => !only.length || only.includes(c));
 
+/** попыток запуска Chromium: snap-Chromium изредка падает на старте или не пишет скриншот — это не ошибка превью */
+const ATTEMPTS = 3;
+const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+/** запуск Chromium с повтором при сбое самого браузера; ошибки страницы (data-error, пустой root) не повторяются */
+async function chrome(args, opts) {
+  for (let i = 1; ; i++) {
+    try {
+      return await run(chromium, args, opts);
+    } catch (e) {
+      if (i >= ATTEMPTS) throw e;
+      await pause(1000 * i);
+    }
+  }
+}
+
 const results = [];
 for (const c of comps) {
   const src = fs.readFileSync(path.join(root, "components", c, "preview.html"), "utf8");
@@ -49,16 +64,21 @@ for (const c of comps) {
   const flags = ["--headless=new", "--no-sandbox", "--disable-gpu", "--virtual-time-budget=4000", `--window-size=${width},${height}`];
   let status = "ok", note = "";
   try {
-    const { stdout } = await run(chromium, [...flags, "--dump-dom", url], { maxBuffer: 1 << 24 });
+    const { stdout } = await chrome([...flags, "--dump-dom", url], { maxBuffer: 1 << 24 });
     const err = stdout.match(/data-error="([^"]*)"/);
     const rootEl = stdout.match(/<div id="root">([\s\S]*?)<\/div>\s*<script/);
     if (err) { status = "error"; note = err[1]; }
     else if (c !== "Cover" && (!rootEl || rootEl[1].trim().length < 20)) { status = "blank"; }
     const shot = path.join(root, "out/shots", `${c}.png`);
-    const before = Date.now();
-    await run(chromium, [...flags, `--screenshot=${shot}`, url]);
-    // snap-Chromium со своим /tmp или без прав на запись молча не пишет файл — такой прогон не считается ok
-    if (status === "ok" && (!fs.existsSync(shot) || fs.statSync(shot).mtimeMs < before - 1000)) {
+    // snap-Chromium со своим /tmp или без прав на запись молча не пишет файл — такой прогон не считается ok; повтор
+    let written = false;
+    for (let i = 1; i <= ATTEMPTS && !written; i++) {
+      const before = Date.now();
+      await chrome([...flags, `--screenshot=${shot}`, url]);
+      written = fs.existsSync(shot) && fs.statSync(shot).mtimeMs >= before - 1000;
+      if (!written && i < ATTEMPTS) await pause(1000 * i);
+    }
+    if (status === "ok" && !written) {
       status = "error"; note = `screenshot not written: ${path.relative(root, shot)}`;
     }
   } catch (e) { status = "error"; note = String(e.message).split("\n")[0]; }
