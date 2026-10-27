@@ -1,0 +1,22 @@
+/* PlanProgress по набору 2b (.k-pp): подпись и сплошная полоса 4px */
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.bar {
+  display: block;
+  flex: 1;
+  height: 4px; /* из макета */
+  overflow: hidden;
+  background: var(--line-2);
+  border-radius: var(--r-xs);
+}
+
+.bar > i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}

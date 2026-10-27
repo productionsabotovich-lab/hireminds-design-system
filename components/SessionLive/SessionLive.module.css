@@ -1,0 +1,137 @@
+/* SessionLive по набору 2b (.k-sl): виджет идущей сессии — весь блок ссылка; now — последняя строка ленты */
+.widget {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "lead head go"
+    ". plan go"
+    ". op .";
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px; /* из макета */
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-1);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 120ms, background-color 120ms;
+}
+
+.widget:hover {
+  border-color: var(--line-2);
+  background: var(--bg);
+}
+
+.widget:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lead {
+  grid-area: lead;
+  display: flex;
+}
+
+.head {
+  grid-area: head;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: 13.5px; /* стиль h3-inline */
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.meta {
+  font-family: var(--font-ui);
+  font-size: 11.5px; /* стиль caption-ui */
+  color: var(--mute);
+}
+
+.go {
+  grid-area: go;
+  display: flex;
+  color: var(--mute);
+  transition: transform 120ms, color 120ms;
+}
+
+.widget:hover .go {
+  color: var(--ink);
+  transform: translateX(2px);
+}
+
+.plan {
+  grid-area: plan;
+  max-width: 320px; /* из макета: полоса 240px и подпись */
+  padding-top: var(--space-1);
+}
+
+.op {
+  grid-area: op;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.opKey {
+  color: var(--mute);
+}
+
+/* now — строка ленты: та же сетка, что у ActivityEvent (маркер 24px, тело, время) */
+.now {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto; /* из макета: колонка маркера ленты */
+  column-gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+
+.nowMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px; /* из макета: высота первой строки */
+}
+
+.nowLine {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+
+.nowKey {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.nowSub {
+  color: var(--mute);
+}
+
+.nowTime {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  line-height: 18px;
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .widget,
+  .go {
+    transition: none;
+  }
+}

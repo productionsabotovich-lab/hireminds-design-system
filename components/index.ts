@@ -136,6 +136,9 @@ export type { PhaseResultProps, PhaseVersion } from "./PhaseResult";
 export { Pill } from "./Pill";
 export type { PillProps, PillTone } from "./Pill";
 
+export { PlanProgress } from "./PlanProgress";
+export type { PlanProgressProps } from "./PlanProgress";
+
 export { Plate } from "./Plate";
 export type { PlateProps, PlateVariant } from "./Plate";
 
@@ -159,6 +162,12 @@ export type { SectionHeaderProps } from "./SectionHeader";
 
 export { Select } from "./Select";
 export type { SelectProps, SelectOption } from "./Select";
+
+export { SessionLive } from "./SessionLive";
+export type { SessionLiveProps, SessionLiveStatus } from "./SessionLive";
+
+export { SessionPlan } from "./SessionPlan";
+export type { SessionPlanProps, PlanItem, PlanItemStatus } from "./SessionPlan";
 
 export { Spinner } from "./Spinner";
 export type { SpinnerProps } from "./Spinner";

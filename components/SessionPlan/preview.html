@@ -1,0 +1,40 @@
+<!-- @dsCard group="Data" height=900 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>SessionPlan — preview</title>
+<style>
+  body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 13.5px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  .pv-grid { display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: flex-start; }
+  .pv-box { display: flex; flex-direction: column; gap: 6px; width: 320px; max-width: 100%; min-width: 0; }
+  .pv-narrow { width: 343px; }
+  .pv-cap { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+  var H = window.Hireminds, h = React.createElement;
+  var six = [
+    { text: 'Прочитать спецификацию ролей', status: 'done' },
+    { text: 'Права в API участников: can()', status: 'done' },
+    { text: 'Меню участника — только доступные действия', status: 'done' },
+    { text: 'Тесты прав для каждой роли', status: 'in_progress' },
+    { text: 'Проверить typecheck и тесты', status: 'pending' },
+    { text: 'Открыть PR', status: 'pending' }];
+  var titles = ['Схема ролей в БД', 'Миграция ролей', 'Сид-данные', 'API: список участников', 'API: смена роли', 'API: удаление', 'Права в API: can()', 'Меню участника', 'Диалог смены роли', 'Подтверждение удаления', 'Покинуть проект', 'Тексты ошибок 403', 'Тесты API', 'Тесты меню', 'Тесты диалога', 'E2E: owner', 'E2E: admin', 'E2E: viewer', 'Проверка typecheck', 'Проверка линтера', 'Скриншоты стенда', 'Описание PR', 'Открыть PR', 'Ответить на ревью', 'Отчёт для QA', 'Передать в QA'];
+  var long = titles.map(function (t, i) { return { text: t, status: i < 11 ? 'done' : i === 11 ? 'in_progress' : 'pending', added: i === 12 ? 'добавлен агентом' : undefined }; });
+  var interrupted = six.map(function (it, i) { return i === 3 ? { text: it.text, status: 'interrupted' } : it; });
+  var box = function (cap, el, cls) { return h('div', { className: 'pv-box' + (cls ? ' ' + cls : '') }, h('span', { className: 'pv-cap' }, cap), el); };
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { className: 'pv-grid' },
+      box('идёт · 6 пунктов', h(H.SessionPlan, { items: six, live: true })),
+      box('длинный план, 26 пунктов', h(H.SessionPlan, { items: long, live: true })),
+      box('пункт прерван', h(H.SessionPlan, { items: interrupted })),
+      box('375 px · шаг строк 32px', h(H.SessionPlan, { items: long }), 'pv-narrow'),
+      box('плана ещё нет', h(H.SessionPlan, { items: [] })))
+  );
+</script>
+</body>
+</html>

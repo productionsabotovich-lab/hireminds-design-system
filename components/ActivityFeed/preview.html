@@ -66,7 +66,7 @@
     { kind: 'step', time: at(0, '09:24'), actor: 'Developer', step: { kind: 'edit', tool: 'Edit' }, files: [{ path: 'apps/web/src/members/MemberMenu.tsx', additions: 3, deletions: 1, diff: hunk }] },
     { kind: 'step', time: at(0, '09:28'), actor: 'Developer', step: { kind: 'execute', tool: 'Bash', arg: 'npm run typecheck' }, result: { summary: '3 ошибки', ok: false, out: ['MemberMenu.tsx:42 свойство canRemove не существует в типе Member', 'MemberMenu.tsx:57 свойство canRemove не существует в типе Member'] } },
     { kind: 'step', time: at(0, '09:30'), actor: 'Developer', step: { kind: 'think' }, children: 'canRemove есть только у Viewer — нужно брать права из viewer.permissions' }];
-  var nowLine = h('span', { style: { display: 'inline-flex', alignItems: 'center', gap: 8 } }, h(H.Dot, { variant: 'status', tone: 'accent', size: 'md', pulse: true }), h(H.Body, { size: 'small', tone: 'ink-2' }, 'Сейчас: Developer правит MemberMenu.tsx'));
+  var nowLine = h(H.SessionLive, { variant: 'now', operation: 'правит меню участника', detail: 'MemberMenu.tsx', elapsed: '1 мин' });
   var team = { 'Антон Саботович': { human: true, role: 'владелец проекта', href: '#' } };
   var WITH_AUTHOR = HISTORY.slice(4, 6).map(function (e) { return Object.assign({}, e, { author: h(H.PersonRef, { name: ME, directory: team }, h('strong', null, ME)) }); });
   function Bare() {
