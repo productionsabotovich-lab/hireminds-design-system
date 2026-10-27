@@ -1,14 +1,40 @@
 /* List по набору 2b (.k-list): рамка карточки, шапка со счётчиком, секции; контейнер ds-list — узкая раскладка строк */
 .list {
+  --list-r: calc(var(--r-lg) - 1px); /* радиус внутренних углов: рамка 1px */
   container-type: inline-size; /* без имени: esbuild хеширует имена контейнеров по модулям; ближайший контейнер строки — List */
+  /* контейнер не берёт ширину от содержимого: без width в flex-ряду, auto-колонке и поповере List схлопнулся бы */
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow: hidden;
+  /* без overflow: hidden — подсказки строк (EntityRef hint) выходят за рамку; углы — радиусом у крайних слоёв ниже */
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   box-shadow: var(--sh-1);
+}
+
+/* углы: заливки шапки, секции, «Закрытые N» и полоса строки у края — по радиусу рамки */
+.list > :first-child,
+.list > .sec:first-child > .secHead {
+  border-top-left-radius: var(--list-r);
+  border-top-right-radius: var(--list-r);
+}
+
+.list > :last-child,
+.list > .fold:last-child > .foldBtn:last-child {
+  border-bottom-left-radius: var(--list-r);
+  border-bottom-right-radius: var(--list-r);
+}
+
+.list > .sec:first-child > .items:first-child {
+  --li-r-top: var(--list-r);
+}
+
+.list > .sec:last-child > .items,
+.list > .fold:last-child > .items {
+  --li-r-bottom: var(--list-r);
 }
 
 .head {

@@ -101,7 +101,8 @@
   color: var(--mute);
 }
 
-.trail {
+.trail,
+.ntrail {
   grid-column: 3;
   grid-row: 1 / 3;
   display: inline-flex;
@@ -134,17 +135,27 @@
   transition: color 120ms, transform 120ms;
 }
 
+/* без leading — на одну колонку меньше: название тянется, справа по содержимому */
+.noLead {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
 .noLead .title,
 .noLead .sub {
   grid-column: 1;
 }
 
-.noLead .trail {
+.noLead .trail,
+.noLead .ntrail {
   grid-column: 2;
 }
 
 .noLead .act {
   grid-column: 3;
+}
+
+.ntrail {
+  display: none;
 }
 
 /* состояние: широкая колонка — Pill справа; узкая — точка с подписью во второй строке */
@@ -188,7 +199,7 @@
   font-weight: 400;
 }
 
-/* наведение и фокус: без заливки — полоса 3px у левого края тоном состояния; фокус — ещё кольцо accent */
+/* наведение и фокус: без заливки — полоса 3px у левого края тоном состояния; фокус — ещё кольцо accent 2px, как во всей системе */
 .link {
   cursor: pointer;
   transition: box-shadow 120ms;
@@ -199,15 +210,26 @@
 }
 
 .edge-neutral.link:hover { box-shadow: inset 3px 0 0 var(--line-3); }
-.edge-neutral.link:focus-visible { box-shadow: inset 3px 0 0 var(--line-3), inset 0 0 0 1px var(--accent); }
+.edge-neutral.link:focus-visible { box-shadow: inset 3px 0 0 var(--line-3), inset 0 0 0 2px var(--accent); }
 .edge-warn.link:hover { box-shadow: inset 3px 0 0 var(--warn); }
-.edge-warn.link:focus-visible { box-shadow: inset 3px 0 0 var(--warn), inset 0 0 0 1px var(--accent); }
+.edge-warn.link:focus-visible { box-shadow: inset 3px 0 0 var(--warn), inset 0 0 0 2px var(--accent); }
 .edge-accent.link:hover { box-shadow: inset 3px 0 0 var(--accent); }
-.edge-accent.link:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--accent); }
+.edge-accent.link:focus-visible { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 2px var(--accent); }
 .edge-danger.link:hover { box-shadow: inset 3px 0 0 var(--danger); }
-.edge-danger.link:focus-visible { box-shadow: inset 3px 0 0 var(--danger), inset 0 0 0 1px var(--accent); }
+.edge-danger.link:focus-visible { box-shadow: inset 3px 0 0 var(--danger), inset 0 0 0 2px var(--accent); }
 .edge-mute.link:hover { box-shadow: inset 3px 0 0 var(--mute); }
-.edge-mute.link:focus-visible { box-shadow: inset 3px 0 0 var(--mute), inset 0 0 0 1px var(--accent); }
+.edge-mute.link:focus-visible { box-shadow: inset 3px 0 0 var(--mute), inset 0 0 0 2px var(--accent); }
+
+/* углы строки у края списка: List задаёт радиус первой и последней строке (у List нет overflow: hidden) */
+.wrap:first-child > .row {
+  border-top-left-radius: var(--li-r-top, 0);
+  border-top-right-radius: var(--li-r-top, 0);
+}
+
+.wrap:last-child > .row:last-child {
+  border-bottom-left-radius: var(--li-r-bottom, 0);
+  border-bottom-right-radius: var(--li-r-bottom, 0);
+}
 
 .link:hover .go,
 .link:focus-visible .go {
@@ -220,16 +242,24 @@
   padding: 0 var(--space-4) var(--space-3);
 }
 
-/* узкая колонка (List до 360px): название до двух строк, состояние точкой во второй строке, справа только шеврон */
+/* узкая колонка (List до 360px): название до двух строк, состояние точкой во второй строке,
+   справа только действие (и trailingNarrow, если задан) */
 @container (max-width: 360px) {
+  .trail {
+    display: none;
+  }
+  .ntrail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    white-space: nowrap;
+  }
   .row .title {
     white-space: normal;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-  }
-  .wstate {
-    display: none;
   }
   .nstate {
     display: inline-flex;

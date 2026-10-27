@@ -50,8 +50,10 @@ export interface ListItemProps {
   state?: ListItemState | undefined;
   /** Справа перед состоянием */
   trailingStart?: ReactNode;
-  /** Справа после состояния: мета, «+n −m», время */
+  /** Справа после состояния: мета, «+n −m», время. В узкой колонке (до 360px) trailingStart и trailing скрыты */
   trailing?: ReactNode;
+  /** Справа в узкой колонке вместо trailing: аватар и точка состояния у строки задачи; по умолчанию — ничего */
+  trailingNarrow?: ReactNode;
   /** Действие справа; по умолчанию — шеврон у ссылки, ↗ у новой вкладки, ▸/▾ у раскрытия; "none" — без действия */
   action?: ReactNode | "none";
   /** Вся строка — ссылка */
@@ -88,6 +90,7 @@ export function ListItem({
   state,
   trailingStart,
   trailing,
+  trailingNarrow,
   action,
   href,
   newTab = false,
@@ -178,8 +181,11 @@ export function ListItem({
             // узкая колонка: состояние точкой с подписью во второй строке
             <span className={[s.nstate, s[`tone-${state.tone}`]].join(" ")}>
               <Dot variant="status" tone={state.tone} size="sm" pulse={!!state.pulse} />
-              {state.label}
-              {subtitle != null && <span className={s.nsep}> · </span>}
+              {/* подпись и «·» одним текстом: зазор flex только между точкой и подписью */}
+              <span>
+                {state.label}
+                {subtitle != null && <span className={s.nsep}> · </span>}
+              </span>
             </span>
           )}
           {subtitle != null && <span className={s.subFull}>{subtitle}</span>}
@@ -206,6 +212,7 @@ export function ListItem({
         )}
         {trailing}
       </span>
+      {trailingNarrow != null && <span className={s.ntrail}>{trailingNarrow}</span>}
       <span className={s.act}>{act}</span>
     </>
   );

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Data" height=1250 -->
+<!-- @dsCard group="Data" height=1650 -->
 <!doctype html>
 <html lang="ru">
 <head>
@@ -34,6 +34,12 @@
   var closedRows = [I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-34' }, title: 'Объём согласован', subtitle: 'кнопка в треде · 22 окт', state: { tone: 'accent', label: 'Утверждено' }, emphasis: 'muted' }, 'c'),
                 I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-41' }, title: 'Ревью', subtitle: 'перенос карточки · 23 окт', state: { tone: 'accent', label: 'Утверждено' }, emphasis: 'muted' }, 'd'),
                 I({ href: '#', leading: me, entity: { kind: 'decision', id: 'D-30' }, title: 'Приёмка', subtitle: 'страница решения · 19 окт', state: { tone: 'dim', label: 'Остановлено' }, emphasis: 'muted' }, 'e')];
+  var checks = function () {
+    return h(H.List, { title: 'Проверки', count: 1, countTone: 'danger', grid: 'cells' },
+      I({ cells: true, leading: ok, leadingTone: 'accent', title: 'lint', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: 'без замечаний', action: h('a', { href: '#', className: 'pv-place' }, 'CI') }),
+      I({ cells: true, leading: bad, leadingTone: 'danger', title: 'typecheck', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: '3 ошибки в MemberMenu.tsx', resultTone: 'danger', action: h('a', { href: '#', className: 'pv-place' }, 'CI'), expand: { open: true, content: h(H.TerminalBox, { variant: 'log' }, h(H.TerminalLine, null, 'MemberMenu.tsx:42 свойство canRemove не существует в типе Member')) } }),
+      I({ cells: true, leading: ok, leadingTone: 'accent', title: 'тесты участников', badge: h(H.Icon, { name: 'hard-drive', size: 14 }), trailing: '42 из 42' }));
+  };
   var decisions = function () { return h(H.List, { title: 'Решения', count: 5, folded: { label: 'Закрытые', items: closedRows } }, openRows); };
 
   ReactDOM.createRoot(document.getElementById('root')).render(
@@ -49,10 +55,7 @@
         I({ href: '#', newTab: true, entity: { kind: 'pr', id: '#21' }, title: 'Роли участников проекта', trailing: h(H.Pill, null, 'открыт') }),
         I({ href: '#', entity: { kind: 'doc', id: 'PIL-15-roles.md' }, title: 'Спецификация, ред. 2' }),
         I({ title: 'Строка без иконки — пустая колонка' }))),
-      box('Проверки: grid="cells", «вывод» раскрывает TerminalBox', h(H.List, { title: 'Проверки', count: 1, countTone: 'danger', grid: 'cells' },
-        I({ cells: true, leading: ok, leadingTone: 'accent', title: 'lint', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: 'без замечаний', action: h('a', { href: '#', className: 'pv-place' }, 'CI') }),
-        I({ cells: true, leading: bad, leadingTone: 'danger', title: 'typecheck', badge: h(H.Icon, { name: 'workflow', size: 14 }), trailing: '3 ошибки в MemberMenu.tsx', resultTone: 'danger', expand: { content: h(H.TerminalBox, { variant: 'log' }, h(H.TerminalLine, null, 'MemberMenu.tsx:42 свойство canRemove не существует в типе Member')) } }),
-        I({ cells: true, leading: ok, leadingTone: 'accent', title: 'тесты участников', badge: h(H.Icon, { name: 'hard-drive', size: 14 }), trailing: '42 из 42' }))),
+      box('Проверки: grid="cells", «вывод» раскрыт — TerminalBox под строкой', checks()),
       box('Изменённые файлы: секции по месту, «+n −m» в колонке фиксированной ширины', h(H.List, { title: 'Изменённые файлы', count: 4, more: { label: 'ещё 11 файлов в PR #21', href: '#' },
         sections: [
           { label: 'Репозиторий hireminds-pilot-app', header: h(React.Fragment, null, h(H.Icon, { name: 'repo', size: 14 }), h('span', { className: 'pv-place' }, 'hireminds-pilot-app'), h(H.BranchRef, { name: 'hm/PIL-15-project-roles', href: '#' }), h('span', { className: 'pv-sp' }), 'в ветке'),
@@ -64,7 +67,12 @@
         box('375 px · решения', h('div', { style: { maxWidth: 343 } }, decisions())),
         box('Пусто и свёрнутый список', h('div', { className: 'pv-col', style: { gap: 12 } },
           h(H.List, { title: 'Очередь агента', count: 0, emptyText: 'Задач в очереди нет' }),
-          h(H.List, { title: 'Результат', count: 3, collapsible: true, defaultOpen: false }, I({ title: 'скрыто' }))))))
+          h(H.List, { title: 'Результат', count: 3, collapsible: true, defaultOpen: false }, I({ title: 'скрыто' }))))),
+      h('div', { className: 'pv-pair' },
+        box('375 px · проверки: три строки, «вывод» раскрыт', h('div', { style: { maxWidth: 343 } }, checks())),
+        box('В flex-ряду: ширину задаёт родитель, строка раскрыта', h('div', { style: { display: 'flex' } },
+          h(H.List, { title: 'Результат', count: 1 },
+            I({ entity: { kind: 'pr', id: '#21' }, title: 'Роли участников проекта', trailing: '12:04', expand: { open: true, content: h(H.Body, { size: 'small' }, 'Открыт 12:04 · 3 файла · проверки идут.') } }))))))
   );
 </script>
 </body>

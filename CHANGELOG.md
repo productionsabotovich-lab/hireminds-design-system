@@ -15,11 +15,15 @@
 ### Добавлено
 - `ListItem` — строка любого списка: `leading`, `leadingTone`, `entity`, `title`, `path`, `mono`, `subtitle`,
   `subtitleShort`, `state`, `trailingStart`, `trailing`, `action`, `href`, `newTab`, `hint`, `density`, `emphasis`,
-  `expand`, `cells`, `badge`, `resultTone`. Наведение и фокус — полоса 3px тоном состояния; узкая колонка (список до
-  360px, проверки до 480px) — название до двух строк, состояние точкой во второй строке.
+  `expand`, `cells`, `badge`, `resultTone`, `trailingNarrow`. Наведение — полоса 3px тоном состояния, фокус — ещё
+  кольцо `accent` 2px; узкая колонка (список до 360px, проверки до 480px) — название до двух строк, состояние точкой
+  во второй строке, справа только действие (`trailingNarrow` — что оставить справа, если экрану нужно).
 - `List` — `title`, `count`, `countTone`, `headAction`, `collapsible`, `defaultOpen`, `sections`, `grid="cells"`,
-  `folded`, `more`, `emptyText`; сам выравнивает иконки строк в `leading`. README — композиции экранов 2b.
-- `EntityRef`: экспорт `ENTITY_ICON` (иконка по типу сущности).
+  `folded`, `more`, `emptyText`; сам выравнивает иконки прямых дочерних `ListItem` в `leading`. Ширина `100%`
+  (контейнер не схлопывается в flex-ряду и поповере); без `overflow: hidden` — подсказки строк не обрезаются.
+  README — композиции экранов 2b.
+- `EntityRef`: экспорт `ENTITY_ICON` (иконка по типу сущности); со `hint`, `href` и `title` читалке описанием — только
+  `hint` (ключ и название уже в имени ссылки).
 
 ### Изменено
 - `ListRow`, `ResultList`, `ResultRow` — устарели (`@deprecated`), работают как раньше до итерации 3.
